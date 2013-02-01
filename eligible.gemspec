@@ -15,11 +15,14 @@ Gem::Specification.new do |gem|
 
   gem.files         = `git ls-files`.split($/)
   # gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  gem.test_files    = `git ls-files -- spec/*`.split("\n")
+  gem.test_files    = `git ls-files -- test/*`.split("\n")
   gem.require_paths = ["lib"]
 
-  gem.add_development_dependency "rake"
-  gem.add_development_dependency "rspec"
+  gem.add_development_dependency('mocha')
+  gem.add_development_dependency('shoulda')
+  gem.add_development_dependency('test-unit')
+  gem.add_development_dependency('rake')
 
   gem.add_dependency('rest-client', '~> 1.4')
+  gem.add_dependency('multi_json', '>= 1.0.4', '< 2')
 end
