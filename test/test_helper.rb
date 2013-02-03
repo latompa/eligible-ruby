@@ -34,6 +34,10 @@ def test_invalid_api_key_error
   { "error" => [ { "message" => "Could not authenticate you. Please re-try with a valid API key.", "code" => 1 }] }
 end
 
+def test_plan_missing_params
+  {"timestamp"=>"2013-02-01T13:25:58", "eligible_id"=>"A4F4E1D6-7DC3-4B20-87CE-B59F48811290", "mapping_version"=>"plan/all$Revision:6$$Date:13-01-110:18$", "error"=>{"response_code"=>"Y", "response_description"=>"Yes", "agency_qualifier_code"=>"", "agency_qualifier_description"=>"", "reject_reason_code"=>"41", "reject_reason_description"=>"Authorization/AccessRestrictions", "follow-up_action_code"=>"C", "follow-up_action_description"=>"PleaseCorrectandResubmit"}}
+end
+
 def test_plan
   {"timestamp"=>"2013-01-14T20:39:57", "eligible_id"=>"B97BC91A-3E84-40A9-AA5C-D416CAE5CDB1", "mapping_version"=>"plan/all$Revision:6$$Date:13-01-110:18$", "primary_insurance"=>{"name"=>"Aetna", "id"=>"00002", "group_name"=>"TOWERGROUPCOMPANIES", "plan_begins"=>"2010-01-01", "plan_ends"=>"", "comments"=>["AetnaChoicePOSII"]}, "type"=>"30", "coverage_status"=>"1", "precertification_needed"=>"", "exclusions"=>"", "deductible_in_network"=>{"individual"=>{"base_period"=>"500", "remaining"=>"500", "comments"=>["MedDent", "MedDent"]}, "family"=>{"base_period"=>"1000", "remaining"=>"1000", "comments"=>["MedDent", "MedDent"]}}, "deductible_out_network"=>{"individual"=>{"base_period"=>"1250", "remaining"=>"1250", "comments"=>["MedDent", "MedDent"]}, "family"=>{"base_period"=>"3750", "remaining"=>"3750", "comments"=>["MedDent", "MedDent"]}}, "stop_loss_in_network"=>{"individual"=>{"base_period"=>"", "remaining"=>"2000", "comments"=>[]}, "family"=>{"base_period"=>"", "remaining"=>"4000", "comments"=>[]}}, "stop_loss_out_network"=>{"individual"=>{"base_period"=>"", "remaining"=>"3000", "comments"=>[]}, "family"=>{"base_period"=>"", "remaining"=>"6000", "comments"=>[]}}, "balance"=>"", "comments"=>[], "additional_insurance"=>{"comments"=>[]}}
 end

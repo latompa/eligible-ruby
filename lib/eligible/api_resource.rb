@@ -10,6 +10,5 @@ module Eligible
       end
       "/#{CGI.escape(class_name.downcase)}/all.json"
     end
-
   end
 end

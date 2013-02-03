@@ -1,4 +1,5 @@
 require 'cgi'
+require 'set'
 require 'rubygems'
 require 'openssl'
 
@@ -12,6 +13,9 @@ require 'eligible/json'
 require 'eligible/eligible_object'
 require 'eligible/api_resource'
 require 'eligible/plan'
+require 'eligible/service'
+require 'eligible/demographic'
+require 'eligible/claim'
 
 # Errors
 require 'eligible/errors/eligible_error'
@@ -82,9 +86,10 @@ module Eligible
     case method.to_s.downcase.to_sym
     when :get, :head, :delete
       # Make params into GET parameters
+      url += "?api_key=#{api_key}"
       if params && params.count > 0
         query_string = Util.flatten_params(params).collect{|key, value| "#{key}=#{Util.url_encode(value)}"}.join('&')
-        url += "?#{query_string}"
+        url += "&#{query_string}"
       end
       payload = nil
     else
@@ -118,7 +123,7 @@ module Eligible
       :payload => payload,
       :timeout => 80
     }#.merge(ssl_opts)
-
+    
     begin
       response = execute_request(opts)
     rescue SocketError => e
