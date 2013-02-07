@@ -19,100 +19,113 @@ Or install it yourself with:
 ## Usage
 
 ### Setup
-    require eligible
+    require 'eligible'
     Eligible.api_key = YOUR_KEY
 
 ### Retrieve Plan object and query it
-    params = {
-      :payer_name => "Aetna",
-      :payer_id   => "000001",
-      :service_provider_last_name => "Last",
-      :service_provider_first_name => "First",
-      :service_provider_NPI => "1928384219",
-      :subscriber_id => "W120923801",
-      :subscriber_last_name => "Austen",
-      :subscriber_first_name => "Jane",
-      :subscriber_dob => "1955-12-14"
-    }
 
-    plan = Eligible::Plan.get(params)
-    plan.all      # returns all fields on the plan, per the plan/all endpoint
-    plan.status   # returns status fields on the plan, per the plan/status endpoint
-    ## Etc.: plan.deductible, plan.dates, plan.balance, plan.stop_loss 
+```ruby
+params = {
+  :payer_name => "Aetna",
+  :payer_id   => "000001",
+  :service_provider_last_name => "Last",
+  :service_provider_first_name => "First",
+  :service_provider_NPI => "1928384219",
+  :subscriber_id => "W120923801",
+  :subscriber_last_name => "Austen",
+  :subscriber_first_name => "Jane",
+  :subscriber_dob => "1955-12-14"
+}
+
+plan = Eligible::Plan.get(params)
+plan.all      # returns all fields on the plan, per the plan/all endpoint
+plan.status   # returns status fields on the plan, per the plan/status endpoint
+## Etc.: plan.deductible, plan.dates, plan.balance, plan.stop_loss 
+```
 
 ### Retrieve Service object and query it
-    params = {
-      :payer_name => "Aetna",
-      :payer_id   => "000001",
-      :service_provider_last_name => "Last",
-      :service_provider_first_name => "First",
-      :service_provider_NPI => "1928384219",
-      :subscriber_id => "W120923801",
-      :subscriber_last_name => "Austen",
-      :subscriber_first_name => "Jane",
-      :subscriber_dob => "1955-12-14"
-    }
 
-    service = Eligible::Service.get(params)
-    service.all     # returns all fields for the service, per service/all
-    service.visits  # returns the visits for the service, per service/visits
-    ## Etc.: service.copayment, service.coinsurance, service.deductible
+```ruby
+params = {
+  :payer_name => "Aetna",
+  :payer_id   => "000001",
+  :service_provider_last_name => "Last",
+  :service_provider_first_name => "First",
+  :service_provider_NPI => "1928384219",
+  :subscriber_id => "W120923801",
+  :subscriber_last_name => "Austen",
+  :subscriber_first_name => "Jane",
+  :subscriber_dob => "1955-12-14"
+}
+
+service = Eligible::Service.get(params)
+service.all     # returns all fields for the service, per service/all
+service.visits  # returns the visits for the service, per service/visits
+## Etc.: service.copayment, service.coinsurance, service.deductible
+```
 
 ### Retrieve Demographic object and query it
-    params = {
-      :payer_name => "Aetna",
-      :payer_id   => "000001",
-      :service_provider_last_name => "Last",
-      :service_provider_first_name => "First",
-      :service_provider_NPI => "1928384219",
-      :subscriber_id => "W120923801",
-      :subscriber_last_name => "Austen",
-      :subscriber_first_name => "Jane",
-      :subscriber_dob => "1955-12-14"
-    }
 
-    demographic = Eligible::Demographic.get(params)
-    demographic.all # returns all fields for the demographic, per demographic/all
-    demographic.zip # returns the patient's zip code, per demographic/zip
-    ## Etc.: demographic.employer, demographic.address, demographic.dob
+```ruby
+params = {
+  :payer_name => "Aetna",
+  :payer_id   => "000001",
+  :service_provider_last_name => "Last",
+  :service_provider_first_name => "First",
+  :service_provider_NPI => "1928384219",
+  :subscriber_id => "W120923801",
+  :subscriber_last_name => "Austen",
+  :subscriber_first_name => "Jane",
+  :subscriber_dob => "1955-12-14"
+}
+
+demographic = Eligible::Demographic.get(params)
+demographic.all # returns all fields for the demographic, per demographic/all
+demographic.zip # returns the patient's zip code, per demographic/zip
+## Etc.: demographic.employer, demographic.address, demographic.dob
+```
 
 ### Retrieve Claim object
 
-    params = {
-      :payer_name => "Aetna",
-      :payer_id => "000001",
-      :information_receiver_organization_name => "Organization",
-      :information_receiver_last_name => "Last",
-      :information_receiver_first_name => "First",
-      :information_receiver_etin => "1386332",
-      :service_provider_organization_name => "Marshall Group",
-      :service_provider_last_name => "Last",
-      :service_provider_first_name => "First",
-      :service_provider_npi => "1928384219",
-      :service_provider_tax_id => "1386332",
-      :subscriber_id => "W120923801",
-      :subscriber_last_name => "Last", 
-      :subscriber_first_name => "First",
-      :subscriber_dob => "1955-12-14",
-      :dependent_last_name => "Last",
-      :dependent_first_name => "First",
-      :dependent_dob => "1975-12-14",
-      :dependent_gender => "M",
-      :trace_number => "12345",
-      :claim_control_number => "67890",
-      :claim_charge_amount => "45.00",
-      :claim_start_date => "2013-01-05",
-      :claim_end_date => "2013-01-05"
-    }    
-    
-    claim = Eligible::Claim.get(params)
-    claim.status # Returns in real time the status (paid, not paid, rejected, denied, etc) of claim specified.
+```ruby
+params = {
+  :payer_name => "Aetna",
+  :payer_id => "000001",
+  :information_receiver_organization_name => "Organization",
+  :information_receiver_last_name => "Last",
+  :information_receiver_first_name => "First",
+  :information_receiver_etin => "1386332",
+  :service_provider_organization_name => "Marshall Group",
+  :service_provider_last_name => "Last",
+  :service_provider_first_name => "First",
+  :service_provider_npi => "1928384219",
+  :service_provider_tax_id => "1386332",
+  :subscriber_id => "W120923801",
+  :subscriber_last_name => "Last", 
+  :subscriber_first_name => "First",
+  :subscriber_dob => "1955-12-14",
+  :dependent_last_name => "Last",
+  :dependent_first_name => "First",
+  :dependent_dob => "1975-12-14",
+  :dependent_gender => "M",
+  :trace_number => "12345",
+  :claim_control_number => "67890",
+  :claim_charge_amount => "45.00",
+  :claim_start_date => "2013-01-05",
+  :claim_end_date => "2013-01-05"
+}    
+
+claim = Eligible::Claim.get(params)
+claim.status # Returns in real time the status (paid, not paid, rejected, denied, etc) of claim specified.
+```
 
 ## Tests
 
 You can run tests with 
 
-    rake test
+```ruby
+rake test
+```
 
 If you do send a pull request, please add passing tests for the new feature/fix.
 
