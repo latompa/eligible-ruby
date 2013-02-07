@@ -79,17 +79,48 @@ Or install it yourself with:
 ### Retrieve Claim object
 
     params = {
-      
+      :payer_name => "Aetna",
+      :payer_id => "000001",
+      :information_receiver_organization_name => "Organization",
+      :information_receiver_last_name => "Last",
+      :information_receiver_first_name => "First",
+      :information_receiver_etin => "1386332",
+      :service_provider_organization_name => "Marshall Group",
+      :service_provider_last_name => "Last",
+      :service_provider_first_name => "First",
+      :service_provider_npi => "1928384219",
+      :service_provider_tax_id => "1386332",
+      :subscriber_id => "W120923801",
+      :subscriber_last_name => "Last", 
+      :subscriber_first_name => "First",
+      :subscriber_dob => "1955-12-14",
+      :dependent_last_name => "Last",
+      :dependent_first_name => "First",
+      :dependent_dob => "1975-12-14",
+      :dependent_gender => "M",
+      :trace_number => "12345",
+      :claim_control_number => "67890",
+      :claim_charge_amount => "45.00",
+      :claim_start_date => "2013-01-05",
+      :claim_end_date => "2013-01-05"
     }    
     
     claim = Eligible::Claim.get(params)
     claim.status # Returns in real time the status (paid, not paid, rejected, denied, etc) of claim specified.
 
+## Tests
+
+You can run tests with 
+
+    rake test
+
+If you do send a pull request, please add passing tests for the new feature/fix.
 
 ## Contributing
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+4. Run tests (see above)
+5. Push to the branch (`git push origin my-new-feature`)
+6. Create new Pull Request
