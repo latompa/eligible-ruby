@@ -5,7 +5,7 @@ module Eligible
 
     attr_accessor :api_key
     attr_accessor :eligible_id
-    @@permanent_attributes = Set.new([:api_key, :error, :balance])
+    @@permanent_attributes = Set.new([:api_key, :error, :balance, :address, :dob])
 
     # The default :id method is deprecated and isn't useful to us
     if method_defined?(:id)

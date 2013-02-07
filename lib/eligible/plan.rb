@@ -3,6 +3,7 @@ module Eligible
   STATUS_ATTRIBUTES = [:type, :coverage_status]
   BALANCE_ATTRIBUTES = [:balance, :comments]
   STOP_LOSS_ATTRIBUTES = [:stop_loss_in_network, :stop_loss_out_network]
+
   class Plan < APIResource
     def self.get(params, api_key=nil)
       response, api_key = Eligible.request(:get, url, api_key, params)

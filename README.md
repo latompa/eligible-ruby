@@ -59,9 +59,16 @@ Or install it yourself with:
     ## Etc.: service.copayment, service.coinsurance, service.deductible
 
 ### Retrieve Demographic object and query it
-
     params = {
-
+      :payer_name => "Aetna",
+      :payer_id   => "000001",
+      :service_provider_last_name => "Last",
+      :service_provider_first_name => "First",
+      :service_provider_NPI => "1928384219",
+      :subscriber_id => "W120923801",
+      :subscriber_last_name => "Austen",
+      :subscriber_first_name => "Jane",
+      :subscriber_dob => "1955-12-14"
     }
 
     demographic = Eligible::Demographic.get(params)
@@ -72,7 +79,7 @@ Or install it yourself with:
 ### Retrieve Claim object
 
     params = {
-
+      
     }    
     
     claim = Eligible::Claim.get(params)
