@@ -18,21 +18,27 @@ module Eligible
 
     def visits
       keys = COMMON_ATTRIBUTES + STATUS_ATTRIBUTES + VISITS_ATTRIBUTES
-      error ? nil : to_hash.select { |k, v| keys.include?(k) }
+      k_to_hash(keys)
     end
 
     def copayment
       keys = COMMON_ATTRIBUTES + STATUS_ATTRIBUTES + COPAYMENT_ATTRIBUTES
-      error ? nil : to_hash.select { |k, v| keys.include?(k) }
+      k_to_hash(keys)
     end
 
     def coinsurance
       keys = COMMON_ATTRIBUTES + STATUS_ATTRIBUTES + COINSURANCE_ATTRIBUTES
-      error ? nil : to_hash.select { |k, v| keys.include?(k) }
+      k_to_hash(keys)
     end
 
     def deductible
       keys = COMMON_ATTRIBUTES + STATUS_ATTRIBUTES + DEDUCTIBLE_ATTRIBUTES
+      k_to_hash(keys)
+    end
+
+    private
+
+    def k_to_hash(keys)
       error ? nil : to_hash.select { |k, v| keys.include?(k) }
     end
   end
