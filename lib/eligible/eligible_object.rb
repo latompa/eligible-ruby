@@ -41,16 +41,8 @@ module Eligible
         remove_accessors(removed)
         add_accessors(added)
       end
-      removed.each do |k|
-        @values.delete(k)
-        @transient_values.add(k)
-        @unsaved_values.delete(k)
-      end
-      values.each do |k, v|
-        @values[k] = v#Util.convert_to_eligible_object(v, api_key)
-        @transient_values.delete(k)
-        @unsaved_values.delete(k)
-      end
+      process_removed_values(removed)
+      process_and_update(values)
     end
 
     def [](k)
@@ -115,7 +107,22 @@ module Eligible
           end
         end
       end
-    end    
-  end
+    end
 
+    def process_removed_values(removed)
+      removed.each do |k|
+        @values.delete(k)
+        @transient_values.add(k)
+        @unsaved_values.delete(k)
+      end
+    end 
+
+    def process_and_update(values)
+      values.each do |k, v|
+        @values[k] = v#Util.convert_to_eligible_object(v, api_key)
+        @transient_values.delete(k)
+        @unsaved_values.delete(k)
+      end
+    end
+  end
 end
