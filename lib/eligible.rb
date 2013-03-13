@@ -52,24 +52,6 @@ module Eligible
     api_key ||= @@api_key
     raise AuthenticationError.new('No API key provided. (HINT: set your API key using "Eligible.api_key = <API-KEY>".') unless api_key
 
-    # if !verify_ssl_certs
-    #   unless @no_verify
-    #     $stderr.puts "WARNING: Running without SSL cert verification.  Execute 'Eligible.verify_ssl_certs = true' to enable verification."
-    #     @no_verify = true
-    #   end
-    #   ssl_opts = { :verify_ssl => false }
-    # elsif !Util.file_readable(@@ssl_bundle_path)
-    #   unless @no_bundle
-    #     $stderr.puts "WARNING: Running without SSL cert verification because #{@@ssl_bundle_path} isn't readable"
-    #     @no_bundle = true
-    #   end
-    #   ssl_opts = { :verify_ssl => false }
-    # else
-    #   ssl_opts = {
-    #     :verify_ssl => OpenSSL::SSL::VERIFY_PEER,
-    #     :ssl_ca_file => @@ssl_bundle_path
-    #   }
-    # end
     set_ua_attributes
 
     # params = Util.objects_to_ids(params)

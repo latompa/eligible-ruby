@@ -31,6 +31,11 @@ module Eligible
       k_to_hash(keys)
     end
 
+    def self.general(params, api_key=nil)
+      response, api_key = Eligible.request(:get, "/service/general.json", api_key, params)
+      Util.convert_to_eligible_object(response, api_key)
+    end
+
     private
 
     def k_to_hash(keys)

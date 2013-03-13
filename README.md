@@ -30,8 +30,8 @@ params = {
   :payer_id   => "000001",
   :service_provider_last_name => "Last",
   :service_provider_first_name => "First",
-  :service_provider_NPI => "1928384219",
-  :subscriber_id => "W120923801",
+  :service_provider_NPI => "12345678",
+  :subscriber_id => "12345678",
   :subscriber_last_name => "Austen",
   :subscriber_first_name => "Jane",
   :subscriber_dob => "1955-12-14"
@@ -51,8 +51,8 @@ params = {
   :payer_id   => "000001",
   :service_provider_last_name => "Last",
   :service_provider_first_name => "First",
-  :service_provider_NPI => "1928384219",
-  :subscriber_id => "W120923801",
+  :service_provider_NPI => "12345678",
+  :subscriber_id => "12345678",
   :subscriber_last_name => "Austen",
   :subscriber_first_name => "Jane",
   :subscriber_dob => "1955-12-14"
@@ -72,8 +72,8 @@ params = {
   :payer_id   => "000001",
   :service_provider_last_name => "Last",
   :service_provider_first_name => "First",
-  :service_provider_NPI => "1928384219",
-  :subscriber_id => "W120923801",
+  :service_provider_NPI => "12345678",
+  :subscriber_id => "12345678",
   :subscriber_last_name => "Austen",
   :subscriber_first_name => "Jane",
   :subscriber_dob => "1955-12-14"
@@ -98,9 +98,9 @@ params = {
   :service_provider_organization_name => "Marshall Group",
   :service_provider_last_name => "Last",
   :service_provider_first_name => "First",
-  :service_provider_npi => "1928384219",
+  :service_provider_npi => "12345678",
   :service_provider_tax_id => "1386332",
-  :subscriber_id => "W120923801",
+  :subscriber_id => "12345678",
   :subscriber_last_name => "Last", 
   :subscriber_first_name => "First",
   :subscriber_dob => "1955-12-14",
@@ -137,3 +137,13 @@ If you do send a pull request, please add passing tests for the new feature/fix.
 4. Run tests (see above)
 5. Push to the branch (`git push origin my-new-feature`)
 6. Create new Pull Request
+
+## Changelog
+
+#### 1.1
+
+Additional endpoints for service/general and service/list
+
+#### 1.0
+
+Initial release
