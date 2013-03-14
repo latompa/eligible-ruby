@@ -22,6 +22,10 @@ Or install it yourself with:
     require 'eligible'
     Eligible.api_key = YOUR_KEY
 
+### Format
+
+Include `{ :format => "X12" }` in the params hash to get back the raw X12 response.
+
 ### Retrieve Plan object and query it
 
 ```ruby
@@ -142,7 +146,8 @@ If you do send a pull request, please add passing tests for the new feature/fix.
 
 #### 1.1
 
-Additional endpoints for service/general and service/list
+- Additional endpoints for service/general and service/list
+- Support x12 format in params
 
 #### 1.0
 
