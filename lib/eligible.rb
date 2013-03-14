@@ -52,35 +52,27 @@ module Eligible
     api_key ||= @@api_key
     raise AuthenticationError.new('No API key provided. (HINT: set your API key using "Eligible.api_key = <API-KEY>".') unless api_key
 
-    set_ua_attributes
-
-    # params = Util.objects_to_ids(params)
-    payload = set_payload(method, url, api_key, params)
-
-    set_headers(headers)
-    opts = set_opts(method, url, headers, payload)
-    execute_request_and_handle_errors(opts)
-
-    rbody = @response.body
-    rcode = @response.code
-    begin
-      # Would use :symbolize_names => true, but apparently there is
-      # some library out there that makes symbolize_names not work.
-      resp = Eligible::JSON.load(rbody)
-    rescue MultiJson::DecodeError
-      raise APIError.new("Invalid response object from API: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
-    end
-
-    resp = Util.symbolize_names(resp)
-    [resp, api_key]
-  end
-
-  private
-
-  def self.set_ua_attributes
+    # if !verify_ssl_certs
+    #   unless @no_verify
+    #     $stderr.puts "WARNING: Running without SSL cert verification.  Execute 'Eligible.verify_ssl_certs = true' to enable verification."
+    #     @no_verify = true
+    #   end
+    #   ssl_opts = { :verify_ssl => false }
+    # elsif !Util.file_readable(@@ssl_bundle_path)
+    #   unless @no_bundle
+    #     $stderr.puts "WARNING: Running without SSL cert verification because #{@@ssl_bundle_path} isn't readable"
+    #     @no_bundle = true
+    #   end
+    #   ssl_opts = { :verify_ssl => false }
+    # else
+    #   ssl_opts = {
+    #     :verify_ssl => OpenSSL::SSL::VERIFY_PEER,
+    #     :ssl_ca_file => @@ssl_bundle_path
+    #   }
+    # end
     uname = (@@uname ||= RUBY_PLATFORM =~ /linux|darwin/i ? `uname -a 2>/dev/null`.strip : nil)
     lang_version = "#{RUBY_VERSION} p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE})"
-    @ua = {
+    ua = {
       :bindings_version => Eligible::VERSION,
       :lang => 'ruby',
       :lang_version => lang_version,
@@ -88,9 +80,8 @@ module Eligible
       :publisher => 'eligible',
       :uname => uname
     }
-  end
 
-  def self.set_payload(method, url, api_key, params)
+    # params = Util.objects_to_ids(params)
     url = self.api_url(url)
     case method.to_s.downcase.to_sym
     when :get, :head, :delete
@@ -104,29 +95,26 @@ module Eligible
     else
       payload = Util.flatten_params(params).collect{|(key, value)| "#{key}=#{Util.url_encode(value)}"}.join('&')
     end
-  end
 
-  def self.set_headers(headers)
     begin
       headers = { :x_eligible_client_user_agent => Eligible::JSON.dump(ua) }.merge(headers)
     rescue => e
       headers = {
-        :x_eligible_client_raw_user_agent => @ua.inspect,
+        :x_eligible_client_raw_user_agent => ua.inspect,
         :error => "#{e} (#{e.class})"
       }.merge(headers)
     end
+
     headers = {
       :user_agent => "Eligible/v1 RubyBindings/#{Eligible::VERSION}",
       :authorization => "Bearer #{api_key}",
       :content_type => 'application/x-www-form-urlencoded'
     }.merge(headers)
+
     if self.api_version
       headers[:eligible_version] = self.api_version
     end
-    headers
-  end
 
-  def self.set_opts(method, url, headers, payload)
     opts = {
       :method => method,
       :url => url,
@@ -135,11 +123,9 @@ module Eligible
       :payload => payload,
       :timeout => 80
     }#.merge(ssl_opts)
-  end
-
-  def self.execute_request_and_handle_errors(opts)
+    
     begin
-      @response = execute_request(opts)
+      response = execute_request(opts)
     rescue SocketError => e
       self.handle_restclient_error(e)
     rescue NoMethodError => e
@@ -159,7 +145,22 @@ module Eligible
     rescue RestClient::Exception, Errno::ECONNREFUSED => e
       self.handle_restclient_error(e)
     end
+
+    rbody = response.body
+    rcode = response.code
+    begin
+      # Would use :symbolize_names => true, but apparently there is
+      # some library out there that makes symbolize_names not work.
+      resp = Eligible::JSON.load(rbody)
+    rescue MultiJson::DecodeError
+      raise APIError.new("Invalid response object from API: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
+    end
+
+    resp = Util.symbolize_names(resp)
+    [resp, api_key]
   end
+
+  private
 
   def self.execute_request(opts)
     RestClient::Request.execute(opts)
