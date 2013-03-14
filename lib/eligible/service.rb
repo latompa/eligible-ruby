@@ -7,6 +7,11 @@ module Eligible
     COINSURANCE_ATTRIBUTES = [:coinsurance_in_network, :coinsurance_out_network]
     DEDUCTIBLE_ATTRIBUTES = [:deductible_in_network, :deductible_out_network]
 
+    def self.get(params, api_key=nil)
+      response, api_key = Eligible.request(:get, url, api_key, params)
+      Util.convert_to_eligible_object(response, api_key)
+    end
+
     def all
       error ? nil : to_hash
     end

@@ -46,7 +46,7 @@ module Eligible
 
   def self.api_version
     @@api_version
-  end
+  end  
 
   def self.request(method, url, api_key, params={}, headers={})
     api_key ||= @@api_key
