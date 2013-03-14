@@ -38,12 +38,16 @@ module Eligible
 
     def self.general(params, api_key=nil)
       response, api_key = Eligible.request(:get, "/service/general.json", api_key, params)
-      Util.convert_to_eligible_object(response, api_key).to_hash
+      response = Util.convert_to_eligible_object(response, api_key)
+      response = response.to_hash if response.is_a? Hash
+      response
     end
 
     def self.list(params, api_key=nil)
       response, api_key = Eligible.request(:get, "/service/list.json", api_key, params)
-      Util.convert_to_eligible_object(response, api_key).to_hash
+      response = Util.convert_to_eligible_object(response, api_key)
+      response = response.to_hash if response.is_a? Hash
+      response
     end
 
     private
