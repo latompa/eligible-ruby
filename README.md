@@ -66,6 +66,10 @@ service = Eligible::Service.get(params)
 service.all     # returns all fields for the service, per service/all
 service.visits  # returns the visits for the service, per service/visits
 ## Etc.: service.copayment, service.coinsurance, service.deductible
+
+## The endpoints 'general' and 'list' have a slightly different syntax than the others: 
+json = Eligible::Service.general(params)
+json = Eligible::Service.list(params)
 ```
 
 ### Retrieve Demographic object and query it
@@ -151,4 +155,4 @@ If you do send a pull request, please add passing tests for the new feature/fix.
 
 #### 1.0
 
-Initial release
+- Initial release
