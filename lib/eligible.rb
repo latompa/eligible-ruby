@@ -25,8 +25,8 @@ require 'eligible/errors/api_error'
 
 module Eligible
   @@api_key  = nil
-  @@api_base = "https://v1.eligibleapi.net"
-  @@api_version = 1
+  @@api_base = "https://gds.eligibleapi.com/v1.1"
+  @@api_version = 1.1
 
   def self.api_url(url='')
     @@api_base + url
