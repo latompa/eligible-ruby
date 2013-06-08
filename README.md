@@ -32,13 +32,13 @@ Include `{ :format => "X12" }` in the params hash to get back the raw X12 respon
 params = {
   :payer_name => "Aetna",
   :payer_id   => "000001",
-  :service_provider_last_name => "Last",
-  :service_provider_first_name => "First",
-  :service_provider_NPI => "12345678",
-  :subscriber_id => "12345678",
-  :subscriber_last_name => "Austen",
-  :subscriber_first_name => "Jane",
-  :subscriber_dob => "1955-12-14"
+  :provider_last_name => "Last",
+  :provider_first_name => "First",
+  :provider_npi => "12345678",
+  :member_id => "12345678",
+  :member_last_name => "Austen",
+  :member_first_name => "Jane",
+  :member_dob => "1955-12-14"
 }
 
 plan = Eligible::Plan.get(params)
@@ -53,13 +53,13 @@ plan.status   # returns status fields on the plan, per the plan/status endpoint
 params = {
   :payer_name => "Aetna",
   :payer_id   => "000001",
-  :service_provider_last_name => "Last",
-  :service_provider_first_name => "First",
-  :service_provider_NPI => "12345678",
-  :subscriber_id => "12345678",
-  :subscriber_last_name => "Austen",
-  :subscriber_first_name => "Jane",
-  :subscriber_dob => "1955-12-14"
+  :provider_last_name => "Last",
+  :provider_first_name => "First",
+  :provider_npi => "12345678",
+  :member_id => "12345678",
+  :member_last_name => "Austen",
+  :member_first_name => "Jane",
+  :member_dob => "1955-12-14"
 }
 
 service = Eligible::Service.get(params)
@@ -78,13 +78,13 @@ json = Eligible::Service.list(params)
 params = {
   :payer_name => "Aetna",
   :payer_id   => "000001",
-  :service_provider_last_name => "Last",
-  :service_provider_first_name => "First",
-  :service_provider_NPI => "12345678",
-  :subscriber_id => "12345678",
-  :subscriber_last_name => "Austen",
-  :subscriber_first_name => "Jane",
-  :subscriber_dob => "1955-12-14"
+  :provider_last_name => "Last",
+  :provider_first_name => "First",
+  :provider_npi => "12345678",
+  :member_id => "12345678",
+  :member_last_name => "Austen",
+  :member_first_name => "Jane",
+  :member_dob => "1955-12-14"
 }
 
 demographic = Eligible::Demographic.get(params)
@@ -103,15 +103,15 @@ params = {
   :information_receiver_last_name => "Last",
   :information_receiver_first_name => "First",
   :information_receiver_etin => "12345678",
-  :service_provider_organization_name => "Marshall Group",
-  :service_provider_last_name => "Last",
-  :service_provider_first_name => "First",
-  :service_provider_npi => "12345678",
-  :service_provider_tax_id => "12345678",
-  :subscriber_id => "12345678",
-  :subscriber_last_name => "Last", 
-  :subscriber_first_name => "First",
-  :subscriber_dob => "1955-12-14",
+  :provider_organization_name => "Marshall Group",
+  :provider_last_name => "Last",
+  :provider_first_name => "First",
+  :provider_npi => "12345678",
+  :provider_tax_id => "12345678",
+  :member_id => "12345678",
+  :member_last_name => "Last", 
+  :member_first_name => "First",
+  :member_dob => "1955-12-14",
   :dependent_last_name => "Last",
   :dependent_first_name => "First",
   :dependent_dob => "1975-12-14",
@@ -125,6 +125,196 @@ params = {
 
 claim = Eligible::Claim.get(params)
 claim.status # Returns in real time the status (paid, not paid, rejected, denied, etc) of claim specified.
+```
+
+### Post Enrollment object
+
+```ruby
+params = {
+  "provider_list" => [
+      {
+        "facility_name" => "Quality",
+        "provider_name" => "Jane Austen",
+               "tax_id" => "12345678",
+              "address" => "125 Snow Shoe Road",
+                 "city" => "Sacramento",
+                "state" => "CA",
+                  "zip" => "94107",
+                 "ptan" => "54321",
+                  "npi" => "987654321"
+      },
+      {
+        "facility_name" => "Aetna",
+        "provider_name" => "Jack Austen",
+               "tax_id" => "12345678",
+              "address" => "985 Snow Shoe Road",
+                 "city" => "Menlo Park",
+                "state" => "CA",
+                  "zip" => "94107",
+                 "ptan" => "54321",
+                  "npi" => "987654321"
+      }
+    ],
+    "payer_ids" => [
+      "00431",
+      "00282"
+    ]
+}
+
+Eligible::Enrollment.post(params)
+```
+
+### Retrieve Enrollment object
+
+```ruby
+params = { "id" => "123" }
+
+enrollment = Eligible::Enrollment.get(params)
+enrollment.status # returns the status of the request to enroll the provider(s)
+```
+
+### Retrieve Coverage object
+
+```ruby
+params = {
+  :service_type => "33",
+  :network => "OUT",
+  :payer_id   => "000001",
+  :provider_last_name => "Last",
+  :provider_first_name => "First",
+  :provider_npi => "12345678",
+  :member_id => "12345678",
+  :member_last_name => "Austen",
+  :member_first_name => "Jane",
+  :member_dob => "1955-12-14"
+}
+
+coverage = Eligible::Coverage.get(params)
+coverage.all # returns all coverage info for the request
+```
+
+### Post Claim object
+
+```ruby
+params = {
+    "api_key": "asdfsdfsd21132ddsfsdfd",
+    "receiver": {
+        "name": "AETNA",
+        "id": "60054"
+    },
+    "billing_provider": {
+        "taxonomy_code": "332B00000X",
+        "practice_name": "Jane Austen Practice",
+        "npi": "1922222222",
+        "address": {
+            "street_line_1": "419 Fulton",
+            "street_line_2": "",
+            "city": "San Francisco",
+            "state": "CA",
+            "zip": "94102"
+        },
+        "tin": "43291023",
+        "insurance_provider_id": "129873210"
+    },
+    "pay_to_provider": {
+        "address": {
+            "street_line_1": "",
+            "street_line_2": "",
+            "city": "",
+            "state": "",
+            "zip": ""
+        }
+    },
+    "subscriber": {
+        "last_name": "Franklin",
+        "first_name": "Benjamin",
+        "member_id": "W2832032427",
+        "group_id": "455716",
+        "group_name": "none",
+        "dob": "1734-05-04",
+        "gender": "M",
+        "address": {
+            "street_line_1": "435 Sugar Lane",
+            "street_line_2": "",
+            "city": "Sweet",
+            "state": "OH",
+            "zip": "436233127"
+        }
+    },
+    "payer": {
+        "name": "AETNA",
+        "id": "60054",
+        "address": {
+            "street_line_1": "Po Box 981106",
+            "street_line_2": "",
+            "city": "El Paso",
+            "state": "TX",
+            "zip": "799981222"
+        }
+    },
+    "dependent": {
+        "relationship": "",
+        "last_name": "",
+        "first_name": "",
+        "dob": "",
+        "gender": "",
+        "address": {
+            "street_line_1": "",
+            "street_line_2": "",
+            "city": "",
+            "state": "",
+            "zip": ""
+        }
+    },
+    "claim": {
+        "claim_number": "412",
+        "total_charge_amount": "275",
+        "claim_frequency": "1",
+        "patient_signature_on_file": "Y",
+        "provider_plan_participation": "A",
+        "direct_payment_authorized": "Y",
+        "release_of_information": "I",
+        "service_lines": [
+            {
+                "line_number": "1",
+                "place_of_service": "11",
+                "charge_amount": "275",
+                "product_service": "99213",
+                "qualifier": "HC",
+                "description": "",
+                "modifier_1": "",
+                "modifier_2": "",
+                "modifier_3": "",
+                "modifier_4": "",
+                "diagnosis_1": "32723",
+                "diagnosis_2": "",
+                "diagnosis_3": "",
+                "diagnosis_4": "",
+                "service_start": "2013-03-07",
+                "service_end": "2013-03-07",
+                "authorization_code": ""
+            }
+        ]
+    }
+}
+
+Eligible::Claim.post(params)
+```
+
+### Retrieve all Claim objects/acknowledgments
+
+```ruby
+claims = Eligible::Claim.all # returns status information for all claims that have been submitted with the API key
+```
+
+### Retrieve individual Claim object/acknowledgment
+
+```ruby
+params = { 
+  :response_id => "12345"
+}
+
+claim = Eligible::Claim.get(params) # returns status information on an individual claim
 ```
 
 ## Tests
