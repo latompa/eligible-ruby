@@ -167,7 +167,7 @@ Eligible::Enrollment.post(params)
 ### Retrieve Enrollment object
 
 ```ruby
-params = { "id" => "123" }
+params = { "enrollment_request_id" => "123" }
 
 enrollment = Eligible::Enrollment.get(params)
 enrollment.status # returns the status of the request to enroll the provider(s)

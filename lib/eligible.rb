@@ -2,6 +2,7 @@ require 'cgi'
 require 'set'
 require 'rubygems'
 require 'openssl'
+require 'json' 
 
 gem 'rest-client', '~> 1.4'
 require 'rest_client'
@@ -95,7 +96,7 @@ module Eligible
       end
       payload = nil
     else
-      payload = Util.flatten_params(params).collect{|(key, value)| "#{key}=#{Util.url_encode(value)}"}.join('&')
+      payload = params.merge!({"api_key" => api_key }).to_json #Util.flatten_params(params).collect{|(key, value)| "#{key}=#{Util.url_encode(value)}"}.join('&')
     end
 
     begin
