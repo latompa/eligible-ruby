@@ -20,15 +20,25 @@ module Eligible
         'plan' => Plan,
         'service' => Service,
         'demographic' => Demographic,
-        'claim' => Claim
+        'claim' => Claim,
+        'coverage' => Coverage,
+        'enrollment' => Enrollment
       }
       case resp
       when Array
-        resp.map { |i| convert_to_eligible_object(i, api_key) }
+        if resp[0] && resp[0][:enrollment_npi]
+          Enrollment.construct_from({ :enrollments => resp }, api_key)
+        else
+          resp.map { |i| convert_to_eligible_object(i, api_key) }
+        end
       when Hash
         # Try converting to a known object class.  If none available, fall back to generic APIResource
         if resp[:mapping_version] && klass_name = resp[:mapping_version].match(/^[^\/]*/)[0]
           klass = types[klass_name]
+        elsif resp[:enrollment_request]
+          klass = Enrollment
+        elsif resp[:demographics]
+          klass = Coverage
         end
         klass ||= EligibleObject
         klass.construct_from(resp, api_key)

@@ -307,7 +307,7 @@ class TestEligible < Test::Unit::TestCase
       @mock.expects(:get).returns(response)
       coverage = Eligible::Coverage.get(params)
 
-      assert_not_nil coverage.all[:timestamp]
+      assert_not_nil coverage.all[:eligible_id]
     end
   end
 
@@ -330,7 +330,7 @@ class TestEligible < Test::Unit::TestCase
       @mock.expects(:post).returns(response)
       enrollment = Eligible::Enrollment.post(params)
 
-      assert_not_nil enrollment.all["enrollment_request"]
+      assert_not_nil enrollment.all[:enrollment_request]
     end
 
     should "get the status of an enrollment request" do
@@ -338,8 +338,7 @@ class TestEligible < Test::Unit::TestCase
       response = test_response(test_get_enrollment)
       @mock.expects(:get).returns(response)
       enrollment = Eligible::Enrollment.get(params)
-
-      assert_not_nil enrollment.all[0]["enrollment_npi"]
+      assert_not_nil enrollment.all[:enrollments]
     end
   end
 end
