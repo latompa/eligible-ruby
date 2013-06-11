@@ -14,5 +14,9 @@ module Eligible
       response, api_key = Eligible.request(:get, "/claims/acknowledgements.json", api_key)
       Util.convert_to_eligible_object(response, api_key)
     end
+
+    def status
+      error ? nil : to_hash
+    end
   end
 end
