@@ -338,6 +338,10 @@ If you do send a pull request, please add passing tests for the new feature/fix.
 
 ## Changelog
 
+#### 2.0
+
+- Additional endpoints for claims, enrollments, and coverage
+
 #### 1.1
 
 - Additional endpoints for service/general and service/list
