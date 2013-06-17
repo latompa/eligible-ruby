@@ -198,10 +198,6 @@ coverage.all # returns all coverage info for the request
 ```ruby
 params = {
     "api_key": "asdfsdfsd21132ddsfsdfd",
-    "receiver": {
-        "name": "AETNA",
-        "id": "60054"
-    },
     "billing_provider": {
         "taxonomy_code": "332B00000X",
         "practice_name": "Jane Austen Practice",
@@ -213,24 +209,14 @@ params = {
             "state": "CA",
             "zip": "94102"
         },
-        "tin": "43291023",
-        "insurance_provider_id": "129873210"
-    },
-    "pay_to_provider": {
-        "address": {
-            "street_line_1": "",
-            "street_line_2": "",
-            "city": "",
-            "state": "",
-            "zip": ""
-        }
+        "tin": "43291023"
     },
     "subscriber": {
         "last_name": "Franklin",
         "first_name": "Benjamin",
         "member_id": "W2832032427",
         "group_id": "455716",
-        "group_name": "none",
+        "group_name": "",
         "dob": "1734-05-04",
         "gender": "M",
         "address": {
@@ -252,22 +238,7 @@ params = {
             "zip": "799981222"
         }
     },
-    "dependent": {
-        "relationship": "",
-        "last_name": "",
-        "first_name": "",
-        "dob": "",
-        "gender": "",
-        "address": {
-            "street_line_1": "",
-            "street_line_2": "",
-            "city": "",
-            "state": "",
-            "zip": ""
-        }
-    },
     "claim": {
-        "claim_number": "412",
         "total_charge_amount": "275",
         "claim_frequency": "1",
         "patient_signature_on_file": "Y",
@@ -277,26 +248,18 @@ params = {
         "service_lines": [
             {
                 "line_number": "1",
+                "service_start": "2013-03-07",
+                "service_end": "2013-03-07",
                 "place_of_service": "11",
                 "charge_amount": "275",
                 "product_service": "99213",
                 "qualifier": "HC",
-                "description": "",
-                "modifier_1": "",
-                "modifier_2": "",
-                "modifier_3": "",
-                "modifier_4": "",
-                "diagnosis_1": "32723",
-                "diagnosis_2": "",
-                "diagnosis_3": "",
-                "diagnosis_4": "",
-                "service_start": "2013-03-07",
-                "service_end": "2013-03-07",
-                "authorization_code": ""
+                "diagnosis_1": "32723"
             }
         ]
     }
 }
+
 
 Eligible::Claim.post(params)
 ```
@@ -306,6 +269,19 @@ Eligible::Claim.post(params)
 ```ruby
 claims = Eligible::Claim.all # returns status information for all claims that have been submitted with the API key
 ```
+
+### Retrieve Payment
+
+params = {
+  :reference_id => "12345"
+}
+
+payment = Eligible::Payment.get(params) # returns information about the claim with the given reference id. 
+
+### Retrieve all Payment objects
+
+payments = Eligible::Payment.all # returns claim information for all claims that have been submitted with the API key
+payments[:statuses]
 
 ### Retrieve individual Claim object/acknowledgment
 
@@ -337,6 +313,10 @@ If you do send a pull request, please add passing tests for the new feature/fix.
 6. Create new Pull Request
 
 ## Changelog
+
+#### 2.1 
+
+- New endpoint for payment status
 
 #### 2.0
 

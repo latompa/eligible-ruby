@@ -19,6 +19,7 @@ require 'eligible/demographic'
 require 'eligible/claim'
 require 'eligible/enrollment'
 require 'eligible/coverage'
+require 'eligible/payment'
 
 # Errors
 require 'eligible/errors/eligible_error'
