@@ -44,7 +44,7 @@ params = {
 
 coverage = Eligible::Coverage.get(params)
 coverage.all      # returns all fields on the plan, per the plan/all endpoint
-
+```
 ### Retrieve Demographic object and query it
 
 ```ruby
