@@ -27,7 +27,7 @@ Or install it yourself with:
 
 Include `{ :format => "X12" }` in the params hash to get back the raw X12 response.
 
-### Retrieve Plan object and query it
+### Retrieve Coverage object and query it
 
 ```ruby
 params = {
@@ -42,36 +42,8 @@ params = {
   :member_dob => "1955-12-14"
 }
 
-plan = Eligible::Plan.get(params)
-plan.all      # returns all fields on the plan, per the plan/all endpoint
-plan.status   # returns status fields on the plan, per the plan/status endpoint
-## Etc.: plan.deductible, plan.dates, plan.balance, plan.stop_loss 
-```
-
-### Retrieve Service object and query it
-
-```ruby
-params = {
-  :payer_name => "Aetna",
-  :payer_id   => "000001",
-  :provider_last_name => "Last",
-  :provider_first_name => "First",
-  :provider_npi => "12345678",
-  :member_id => "12345678",
-  :member_last_name => "Austen",
-  :member_first_name => "Jane",
-  :member_dob => "1955-12-14"
-}
-
-service = Eligible::Service.get(params)
-service.all     # returns all fields for the service, per service/all
-service.visits  # returns the visits for the service, per service/visits
-## Etc.: service.copayment, service.coinsurance, service.deductible
-
-## The endpoints 'general' and 'list' have a slightly different syntax than the others: 
-json = Eligible::Service.general(params)
-json = Eligible::Service.list(params)
-```
+coverage = Eligible::Coverage.get(params)
+coverage.all      # returns all fields on the plan, per the plan/all endpoint
 
 ### Retrieve Demographic object and query it
 
