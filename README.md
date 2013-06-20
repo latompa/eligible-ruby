@@ -47,6 +47,28 @@ demographic = Eligible::Demographic.get(params)
 demographic.all # returns all fields for the demographic, per demographic/all
 ```
 
+
+### Retrieve Coverage object
+
+```ruby
+params = {
+  :service_type => "33",
+  :network => "OUT",
+  :payer_id   => "000001",
+  :provider_last_name => "Last",
+  :provider_first_name => "First",
+  :provider_npi => "12345678",
+  :member_id => "12345678",
+  :member_last_name => "Austen",
+  :member_first_name => "Jane",
+  :member_dob => "1955-12-14"
+}
+
+coverage = Eligible::Coverage.get(params)
+coverage.all # returns all coverage info for the request
+```
+
+
 ### Post Enrollment object
 
 ```ruby
@@ -91,26 +113,6 @@ params = { "enrollment_request_id" => "123" }
 
 enrollment = Eligible::Enrollment.get(params)
 enrollment.status # returns the status of the request to enroll the provider(s)
-```
-
-### Retrieve Coverage object
-
-```ruby
-params = {
-  :service_type => "33",
-  :network => "OUT",
-  :payer_id   => "000001",
-  :provider_last_name => "Last",
-  :provider_first_name => "First",
-  :provider_npi => "12345678",
-  :member_id => "12345678",
-  :member_last_name => "Austen",
-  :member_first_name => "Jane",
-  :member_dob => "1955-12-14"
-}
-
-coverage = Eligible::Coverage.get(params)
-coverage.all # returns all coverage info for the request
 ```
 
 ### Post Claim object
@@ -191,31 +193,19 @@ Eligible::Claim.post(params)
 ### Retrieve all Claim objects/acknowledgments
 
 ```ruby
-claims = Eligible::Claim.all # returns status information for all claims that have been submitted with the API key
+claims = Eligible::Claim.all # returns acknowlegdement information for all claims that have been submitted with the API key
 ```
-
-### Retrieve Payment
-
-params = {
-  :reference_id => "12345"
-}
-
-payment = Eligible::Payment.get(params) # returns information about the claim with the given reference id. 
-
-### Retrieve all Payment objects
-
-payments = Eligible::Payment.all # returns claim information for all claims that have been submitted with the API key
-payments[:statuses]
 
 ### Retrieve individual Claim object/acknowledgment
 
 ```ruby
 params = { 
-  :response_id => "12345"
+  :reference_id => "12345"
 }
 
-claim = Eligible::Claim.get(params) # returns status information on an individual claim
+claim = Eligible::Claim.get(params) # returns acknoweldement information on an individual claim identified by its reference_id
 ```
+
 
 ## Tests
 
