@@ -27,24 +27,7 @@ Or install it yourself with:
 
 Include `{ :format => "X12" }` in the params hash to get back the raw X12 response.
 
-### Retrieve Coverage object and query it
 
-```ruby
-params = {
-  :payer_name => "Aetna",
-  :payer_id   => "000001",
-  :provider_last_name => "Last",
-  :provider_first_name => "First",
-  :provider_npi => "12345678",
-  :member_id => "12345678",
-  :member_last_name => "Austen",
-  :member_first_name => "Jane",
-  :member_dob => "1955-12-14"
-}
-
-coverage = Eligible::Coverage.get(params)
-coverage.all      # returns all fields on the plan, per the plan/all endpoint
-```
 ### Retrieve Demographic object and query it
 
 ```ruby
@@ -62,42 +45,6 @@ params = {
 
 demographic = Eligible::Demographic.get(params)
 demographic.all # returns all fields for the demographic, per demographic/all
-demographic.zip # returns the patient's zip code, per demographic/zip
-## Etc.: demographic.employer, demographic.address, demographic.dob
-```
-
-### Retrieve Claim object
-
-```ruby
-params = {
-  :payer_name => "Aetna",
-  :payer_id => "000001",
-  :information_receiver_organization_name => "Organization",
-  :information_receiver_last_name => "Last",
-  :information_receiver_first_name => "First",
-  :information_receiver_etin => "12345678",
-  :provider_organization_name => "Marshall Group",
-  :provider_last_name => "Last",
-  :provider_first_name => "First",
-  :provider_npi => "12345678",
-  :provider_tax_id => "12345678",
-  :member_id => "12345678",
-  :member_last_name => "Last", 
-  :member_first_name => "First",
-  :member_dob => "1955-12-14",
-  :dependent_last_name => "Last",
-  :dependent_first_name => "First",
-  :dependent_dob => "1975-12-14",
-  :dependent_gender => "M",
-  :trace_number => "12345",
-  :claim_control_number => "67890",
-  :claim_charge_amount => "45.00",
-  :claim_start_date => "2013-01-05",
-  :claim_end_date => "2013-01-05"
-}    
-
-claim = Eligible::Claim.get(params)
-claim.status # Returns in real time the status (paid, not paid, rejected, denied, etc) of claim specified.
 ```
 
 ### Post Enrollment object
@@ -171,6 +118,10 @@ coverage.all # returns all coverage info for the request
 ```ruby
 params = {
     "api_key": "asdfsdfsd21132ddsfsdfd",
+    "receiver": {
+        "name": "AETNA",
+        "id": "60054"
+    },
     "billing_provider": {
         "taxonomy_code": "332B00000X",
         "practice_name": "Jane Austen Practice",
