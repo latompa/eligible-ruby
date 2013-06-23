@@ -26,6 +26,7 @@ require 'eligible/errors/eligible_error'
 require 'eligible/errors/api_connection_error'
 require 'eligible/errors/authentication_error'
 require 'eligible/errors/api_error'
+require 'eligible/errors/invalid_request_error'
 
 module Eligible
   @@api_key  = nil
@@ -105,11 +106,11 @@ module Eligible
         query_string = Util.flatten_params(params).collect{|key, value| "#{key}=#{Util.url_encode(value)}"}.join('&')
         url += "&#{query_string}"
       end
+      url +="&test=#{@@test}"
       payload = nil
     else
-      payload = params.merge!({"api_key" => api_key }).to_json #Util.flatten_params(params).collect{|(key, value)| "#{key}=#{Util.url_encode(value)}"}.join('&')
+      payload = params.merge!({'api_key' => api_key ,'test' => @@test }).to_json #Util.flatten_params(params).collect{|(key, value)| "#{key}=#{Util.url_encode(value)}"}.join('&')
     end
-
     begin
       headers = { :x_eligible_client_user_agent => Eligible::JSON.dump(ua) }.merge(headers)
     rescue => e
@@ -171,7 +172,6 @@ module Eligible
     end
 
     resp = Util.symbolize_names(resp)
-    resp[:test] = @@test  unless resp.class == Array
     [resp, api_key]
   end
 
@@ -201,7 +201,7 @@ module Eligible
   end
 
   def self.invalid_request_error(error, rcode, rbody, error_obj)
-    InvalidRequestError.new(error[0][:message], error[:param], rcode, rbody, error_obj)
+    InvalidRequestError.new(error, rcode, rbody, error_obj)
   end
 
   def self.authentication_error(error, rcode, rbody, error_obj)
