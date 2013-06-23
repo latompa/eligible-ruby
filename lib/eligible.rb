@@ -171,7 +171,7 @@ module Eligible
     end
 
     resp = Util.symbolize_names(resp)
-    resp[:test] = @@test
+    resp[:test] = @@test  unless resp.class == Array
     [resp, api_key]
   end
 
