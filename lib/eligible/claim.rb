@@ -6,7 +6,7 @@ module Eligible
     end
 
     def self.post(params, api_key=nil)
-      response, api_key = Eligible.request(:get, "/claims.json", api_key, params)
+      response, api_key = Eligible.request(:post, "/claims.json", api_key, params)
       Util.convert_to_eligible_object(response, api_key)
     end
 
