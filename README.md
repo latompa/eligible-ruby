@@ -22,10 +22,10 @@ Or install it yourself with:
     require 'eligible'
     Eligible.api_key = 'YOUR_KEY'
 ### Test
-Include { :test => "true" } in the params for sandbox access.
 ```ruby
-    Eligible.test = true
+Eligible.test = true
  ```
+Include `{ :test => "true" }` in the params for sandbox access.
 ### Format
 
 Include `{ :format => "X12" }` in the params hash to get back the raw X12 response.
