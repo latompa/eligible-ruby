@@ -122,68 +122,68 @@ enrollment.status # returns the status of the request to enroll the provider(s)
 
 ```ruby
 params = {
-    "api_key": "asdfsdfsd21132ddsfsdfd",
-    "receiver": {
-        "name": "AETNA",
-        "id": "60054"
+    "api_key" => "asdfsdfsd21132ddsfsdfd",
+    "receiver" => {
+        "name" => "AETNA",
+        "id" => "60054"
     },
-    "billing_provider": {
-        "taxonomy_code": "332B00000X",
-        "practice_name": "Jane Austen Practice",
-        "npi": "1922222222",
-        "address": {
-            "street_line_1": "419 Fulton",
-            "street_line_2": "",
-            "city": "San Francisco",
-            "state": "CA",
-            "zip": "94102"
+    "billing_provider" => {
+        "taxonomy_code" => "332B00000X",
+        "practice_name" => "Jane Austen Practice",
+        "npi" => "1922222222",
+        "address" => {
+            "street_line_1" => "419 Fulton",
+            "street_line_2" => "",
+            "city" => "San Francisco",
+            "state" => "CA",
+            "zip" => "94102"
         },
-        "tin": "43291023"
+        "tin" => "43291023"
     },
-    "subscriber": {
-        "last_name": "Franklin",
-        "first_name": "Benjamin",
-        "member_id": "W2832032427",
-        "group_id": "455716",
-        "group_name": "",
-        "dob": "1734-05-04",
-        "gender": "M",
-        "address": {
-            "street_line_1": "435 Sugar Lane",
-            "street_line_2": "",
-            "city": "Sweet",
-            "state": "OH",
-            "zip": "436233127"
+    "subscriber" => {
+        "last_name" => "Franklin",
+        "first_name" => "Benjamin",
+        "member_id" => "W2832032427",
+        "group_id" => "455716",
+        "group_name" => "",
+        "dob" => "1734-05-04",
+        "gender" => "M",
+        "address" => {
+            "street_line_1" => "435 Sugar Lane",
+            "street_line_2" => "",
+            "city" => "Sweet",
+            "state" => "OH",
+            "zip" => "436233127"
         }
     },
-    "payer": {
-        "name": "AETNA",
-        "id": "60054",
-        "address": {
-            "street_line_1": "Po Box 981106",
-            "street_line_2": "",
-            "city": "El Paso",
-            "state": "TX",
-            "zip": "799981222"
+    "payer" => {
+        "name" => "AETNA",
+        "id" => "60054",
+        "address" => {
+            "street_line_1" => "Po Box 981106",
+            "street_line_2" => "",
+            "city" => "El Paso",
+            "state" => "TX",
+            "zip" => "799981222"
         }
     },
-    "claim": {
-        "total_charge_amount": "275",
-        "claim_frequency": "1",
-        "patient_signature_on_file": "Y",
-        "provider_plan_participation": "A",
-        "direct_payment_authorized": "Y",
-        "release_of_information": "I",
-        "service_lines": [
+    "claim" => {
+        "total_charge_amount" => "275",
+        "claim_frequency" => "1",
+        "patient_signature_on_file" => "Y",
+        "provider_plan_participation" => "A",
+        "direct_payment_authorized" => "Y",
+        "release_of_information" => "I",
+        "service_lines" => [
             {
-                "line_number": "1",
-                "service_start": "2013-03-07",
-                "service_end": "2013-03-07",
-                "place_of_service": "11",
-                "charge_amount": "275",
-                "product_service": "99213",
-                "qualifier": "HC",
-                "diagnosis_1": "32723"
+                "line_number" => "1",
+                "service_start" => "2013-03-07",
+                "service_end" => "2013-03-07",
+                "place_of_service" => "11",
+                "charge_amount" => "275",
+                "product_service" => "99213",
+                "qualifier" => "HC",
+                "diagnosis_1" => "32723"
             }
         ]
     }
