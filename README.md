@@ -207,6 +207,14 @@ params = {
 claim = Eligible::Claim.get(params) # returns acknoweldement information on an individual claim identified by its reference_id
 ```
 
+### Retrieve  Payment status
+
+```ruby
+params = { :reference_id => "89898989" }
+
+Eligible::Payment.get(params) # returns status information on an individual payment identified by its reference_id
+```
+
 
 ## Tests
 
