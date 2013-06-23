@@ -29,6 +29,7 @@ require 'eligible/errors/api_error'
 
 module Eligible
   @@api_key  = nil
+  @@test = false
   @@api_base = "https://gds.eligibleapi.com/v1.1"
   @@api_version = 1.1
 
@@ -42,6 +43,15 @@ module Eligible
 
   def self.api_key=(api_key)
     @@api_key = api_key
+  end
+
+
+  def self.test
+    @@test
+  end
+
+  def self.test=(is_test)
+    @@test = is_test
   end
 
   def self.api_version=(version)
@@ -161,6 +171,7 @@ module Eligible
     end
 
     resp = Util.symbolize_names(resp)
+    resp[:test] = @@test
     [resp, api_key]
   end
 
