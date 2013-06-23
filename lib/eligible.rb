@@ -48,7 +48,7 @@ module Eligible
 
 
   def self.test
-    @@test
+    @@test? 'true':'false'
   end
 
   def self.test=(is_test)
@@ -106,10 +106,10 @@ module Eligible
         query_string = Util.flatten_params(params).collect{|key, value| "#{key}=#{Util.url_encode(value)}"}.join('&')
         url += "&#{query_string}"
       end
-      url +="&test=#{@@test}"
+      url +="&test=#{self.test}"
       payload = nil
     else
-      payload = params.merge!({'api_key' => api_key ,'test' => @@test }).to_json #Util.flatten_params(params).collect{|(key, value)| "#{key}=#{Util.url_encode(value)}"}.join('&')
+      payload = params.merge!({'api_key' => api_key ,'test' => self.test }).to_json #Util.flatten_params(params).collect{|(key, value)| "#{key}=#{Util.url_encode(value)}"}.join('&')
     end
     begin
       headers = { :x_eligible_client_user_agent => Eligible::JSON.dump(ua) }.merge(headers)
