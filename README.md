@@ -76,7 +76,7 @@ coverage.all # returns all coverage info for the request
 
 ```ruby
 params = {
-  "provider_list" => [
+  "service_provider_list" => [
       {
         "facility_name" => "Quality",
         "provider_name" => "Jane Austen",
