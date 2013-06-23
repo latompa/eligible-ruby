@@ -22,7 +22,7 @@ Or install it yourself with:
     require 'eligible'
     Eligible.api_key = 'YOUR_KEY'
 ### Test
-    Eligible.api_key = 'TEST'
+    Include param test=true for sandbox access
 ### Format
 
 Include `{ :format => "X12" }` in the params hash to get back the raw X12 response.
