@@ -122,7 +122,6 @@ enrollment.status # returns the status of the request to enroll the provider(s)
 
 ```ruby
 params = {
-    "api_key" => "asdfsdfsd21132ddsfsdfd",
     "receiver" => {
         "name" => "AETNA",
         "id" => "60054"
@@ -143,7 +142,7 @@ params = {
     "subscriber" => {
         "last_name" => "Franklin",
         "first_name" => "Benjamin",
-        "member_id" => "W2832032427",
+        "member_id" => "12312312",
         "group_id" => "455716",
         "group_name" => "",
         "dob" => "1734-05-04",
@@ -188,7 +187,6 @@ params = {
         ]
     }
 }
-
 
 Eligible::Claim.post(params)
 ```
