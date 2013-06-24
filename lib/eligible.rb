@@ -20,6 +20,7 @@ require 'eligible/claim'
 require 'eligible/enrollment'
 require 'eligible/coverage'
 require 'eligible/payment'
+require 'eligible/x12'
 
 # Errors
 require 'eligible/errors/eligible_error'
