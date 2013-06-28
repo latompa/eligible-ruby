@@ -115,7 +115,8 @@ Eligible::Enrollment.post(params)
 params = { "enrollment_request_id" => "123" }
 
 enrollment = Eligible::Enrollment.get(params)
-enrollment.status # returns the status of the request to enroll the provider(s)
+
+enrollment.enrollment_npis # returns a list of enroll the provider(s)
 ```
 
 ### Post Claim object

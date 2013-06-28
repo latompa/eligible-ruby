@@ -15,6 +15,14 @@ module Eligible
     def all
       error ? nil : to_hash
     end
+
+    def enrollment_npis
+      r = Array.new
+      values[0].each do |value|
+        r << value[:enrollment_npi]
+      end
+      r
+    end
   end
 
 end
