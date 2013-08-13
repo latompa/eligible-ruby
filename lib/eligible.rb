@@ -32,7 +32,7 @@ require 'eligible/errors/invalid_request_error'
 module Eligible
   @@api_key  = nil
   @@test = false
-  @@api_base = "https://gds.eligibleapi.com/v1.1"
+  @@api_base = 'https://gds.eligibleapi.com/v1.1'
   @@api_version = 1.1
 
   def self.api_url(url='')
@@ -112,6 +112,7 @@ module Eligible
     else
       payload = params.merge!({'api_key' => api_key ,'test' => self.test }).to_json #Util.flatten_params(params).collect{|(key, value)| "#{key}=#{Util.url_encode(value)}"}.join('&')
     end
+
     begin
       headers = { :x_eligible_client_user_agent => Eligible::JSON.dump(ua) }.merge(headers)
     rescue => e
@@ -142,6 +143,7 @@ module Eligible
     
     begin
       response = execute_request(opts)
+
     rescue SocketError => e
       self.handle_restclient_error(e)
     rescue NoMethodError => e
@@ -220,9 +222,9 @@ module Eligible
     when RestClient::SSLCertificateNotVerified
       message = "Could not verify Eligible's SSL certificate."
     when SocketError
-      message = "Unexpected error communicating when trying to connect to Eligible."
+      message = 'Unexpected error communicating when trying to connect to Eligible.'
     else
-      message = "Unexpected error communicating with Eligible. If this problem persists, let us know at support@eligible.com."
+      message = 'Unexpected error communicating with Eligible. If this problem persists, let us know at support@eligible.com.'
     end
     message += "\n\n(Network error: #{e.message})"
     raise APIConnectionError.new(message)

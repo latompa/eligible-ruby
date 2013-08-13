@@ -36,5 +36,13 @@ module Eligible
       keys = COMMON_ATTRIBUTES + DOB_ATTRIBUTES
       error ? nil : to_hash.select { |k, v| keys.include?(k) }
     end
+
+
+    def self.batch_post(params, api_key=nil)
+      #POST https://gds.eligibleapi.com/v1.1/demographics/all/batch.json
+      response, api_key = Eligible.request(:post, '/demographics/all/batch.json', api_key, params)
+      raise 'hola'
+      Util.convert_to_eligible_object(response, api_key)
+    end
   end
 end
