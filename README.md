@@ -88,13 +88,11 @@ params = {
 }
 Eligible::Demographic.batch_post params
 # return
-# => #<Eligible::EligibleObject:0x000000058914a8 @api_key="XXX",
-                                                 @values={:reference_id=>"1ea06414-2132-52e1-1580-aea92f37720b",
-                                                          :number_of_items=>2},
-                                                 @unsaved_values=#<Set: {}>,
-                                                 @transient_values=#<Set: {}>>
-
-
+Eligible::EligibleObject:0x000000058914a8 @api_key="XXX",
+                                          @values={:reference_id=>"1ea06414-2132-52e1-1580-aea92f37720b",
+                                                   :number_of_items=>2},
+                                          @unsaved_values=#<Set: {}>,
+                                          @transient_values=#<Set: {}>>
 ```
 
 ### Retrieve Coverage object
@@ -152,11 +150,12 @@ params = {
 }
 
 Eligible::Coverage.batch_post params
-# => #<Eligible::EligibleObject:0x000000059a11b8 @api_key="XXX",
-                                                 @values={:reference_id=>"1ea06414-2132-52e1-1580-aea92f37720b",
-                                                          :number_of_items=>2},
-                                                 @unsaved_values=#<Set: {}>,
-                                                 @transient_values=#<Set: {}>>
+#Return:
+Eligible::EligibleObject:0x000000059a11b8 @api_key="XXX",
+                                          @values={:reference_id=>"1ea06414-2132-52e1-1580-aea92f37720b",
+                                                    :number_of_items=>2},
+                                          @unsaved_values=#<Set: {}>,
+                                          @transient_values=#<Set: {}>>
 
 ```
 ##Batch post Medicare
@@ -190,11 +189,12 @@ params = {
 }
 
 Eligible::Coverage.batch_medicare_post params
- #=> #<Eligible::EligibleObject:0x00000004db0188 @api_key="72cbca2e-1da7-b030-d2e6-a05cbae11c1b",
-                                                 @values={:reference_id=>"1ea06414-2132-52e1-1580-aea92f37720b",
-                                                           :number_of_items=>2},
-                                                 @unsaved_values=#<Set: {}>,
-                                                 @transient_values=#<Set: {}>>
+#Return:
+ Eligible::EligibleObject:0x00000004db0188 @api_key="72cbca2e-1da7-b030-d2e6-a05cbae11c1b",
+                                           @values={:reference_id=>"1ea06414-2132-52e1-1580-aea92f37720b",
+                                                    :number_of_items=>2},
+                                           @unsaved_values=#<Set: {}>,
+                                           @transient_values=#<Set: {}>>
 ```
 
 
