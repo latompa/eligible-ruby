@@ -18,6 +18,10 @@ module Eligible
       response, api_key = Eligible.request(:post, '/coverage/all/batch.json', api_key, params)
       Util.convert_to_eligible_object(response, api_key)
     end
+
+    def self.batch_medicare_post(params, api_key=nil)
+      response, api_key = Eligible.request(:post, '/medicare/coverage/batch.json', api_key, params)
+      Util.convert_to_eligible_object(response, api_key)
   end
 
 end
