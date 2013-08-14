@@ -39,9 +39,7 @@ module Eligible
 
 
     def self.batch_post(params, api_key=nil)
-      #POST https://gds.eligibleapi.com/v1.1/demographics/all/batch.json
-      response, api_key = Eligible.request(:post, '/demographics/all/batch.json', api_key, params)
-      raise 'hola'
+      response, api_key = Eligible.request(:post, '/demographic/all/batch.json', api_key, params)
       Util.convert_to_eligible_object(response, api_key)
     end
   end
