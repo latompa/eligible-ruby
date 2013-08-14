@@ -11,6 +11,13 @@ module Eligible
       error ? nil : to_hash
     end
 
+
+
+    def self.batch_post(params, api_key=nil)
+      #https://gds.eligibleapi.com/v1.1/coverage/all/batch.json
+      response, api_key = Eligible.request(:post, '/coverage/all/batch.json', api_key, params)
+      Util.convert_to_eligible_object(response, api_key)
+    end
   end
 
 end
