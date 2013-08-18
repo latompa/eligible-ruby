@@ -265,7 +265,7 @@ enrollment.enrollment_npis # returns a list of enroll the provider(s)
 
 ## Claims
 
-### Post Claim object
+### Create Claim object
 
 ```ruby
 params = {
