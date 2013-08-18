@@ -24,14 +24,16 @@ Or install it yourself with:
 ### Test
 ```ruby
 Eligible.test = true
- ```
+```
+
 Include `{ :test => "true" }` in the params for sandbox access.
 ### Format
 
 Include `{ :format => "X12" }` in the params hash to get back the raw X12 response.
 
+## Demographic
 
-### Retrieve Demographic object and query it
+### Retrieve single object
 
 ```ruby
 params = {
@@ -52,8 +54,7 @@ demographic.all # returns all fields for the demographic, per demographic/all
 
 
 
-##Batch post Demographic
-**POST** `https://gds.eligibleapi.com/v1.1/demographic/all/batch.json`
+### Create batch object
 
 ```ruby
 
@@ -95,7 +96,19 @@ Eligible::EligibleObject:0x000000058914a8 @api_key="XXX",
                                           @transient_values=#<Set: {}>>
 ```
 
-### Retrieve Coverage object
+
+### Retrieve batch object
+
+To use Batch api you have to add production webhook url. Result of batch api call will be posted to webhook url with following events
+
+| Types |
+|:-------------------|
+| batch_created |
+| batch_processed |
+
+## Coverage
+
+### Retrieve single object
 
 ```ruby
 params = {
@@ -114,8 +127,7 @@ params = {
 coverage = Eligible::Coverage.get(params)
 coverage.all # returns all coverage info for the request
 ```
-##Batch post Coverage
-**POST** `https://gds.eligibleapi.com/v1.1/coverage/all/batch.json`
+### Create batch object
 
 ```ruby
 Eligible.test = true
@@ -158,8 +170,9 @@ Eligible::EligibleObject:0x000000059a11b8 @api_key="XXX",
                                           @transient_values=#<Set: {}>>
 
 ```
-##Batch post Medicare
-**POST** `https://gds.eligibleapi.com/v1.1/medicare/coverage/batch.json`
+## Medicare
+
+### Create batch coverage object
 
 ```ruby
 Eligible.test = true
@@ -200,8 +213,9 @@ Eligible::Coverage.batch_medicare_post params
 
 
 
+## Enrollment
 
-### Post Enrollment object
+### Create object
 
 ```ruby
 params = {
@@ -247,6 +261,9 @@ enrollment = Eligible::Enrollment.get(params)
 
 enrollment.enrollment_npis # returns a list of enroll the provider(s)
 ```
+
+
+## Claims
 
 ### Post Claim object
 
@@ -376,10 +393,14 @@ If you do send a pull request, please add passing tests for the new feature/fix.
 6. Create new Pull Request
 
 ## Changelog
+
+#### 2.3
+- New endpoint for Batch
+
 #### 2.2
 - New endpoint for x12 POST
-#### 2.1 
 
+#### 2.1 
 - New endpoint for payment status
 
 #### 2.0
