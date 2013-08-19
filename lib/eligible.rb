@@ -21,6 +21,7 @@ require 'eligible/enrollment'
 require 'eligible/coverage'
 require 'eligible/payment'
 require 'eligible/x12'
+require 'eligible/medicare'
 
 # Errors
 require 'eligible/errors/eligible_error'

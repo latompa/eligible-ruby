@@ -158,48 +158,6 @@ Eligible::EligibleObject:0x000000059a11b8 @api_key="XXX",
                                           @transient_values=#<Set: {}>>
 
 ```
-##Batch post Medicare
-**POST** `https://gds.eligibleapi.com/v1.1/medicare/coverage/batch.json`
-
-```ruby
-Eligible.test = true
-params = {
-    "parameters"=>[
-        {
-            "id"=>1,
-            "service_provider_npi"=>"12341234",
-            "subscriber_id"=>"98769876",
-            "subscriber_first_name"=>"Jane",
-            "subscriber_last_name"=>"Austen",
-            "service_provider_last_name"=>"Gaurav",
-            "service_provider_first_name"=>"Gupta",
-            "subscriber_dob"=>"1947-10-07"
-        },
-        {
-            "id"=>2,
-            "service_provider_npi"=>"67676767",
-            "subscriber_id"=>"98989898",
-            "subscriber_first_name"=>"Gaurav",
-            "subscriber_last_name"=>"Gupta",
-            "service_provider_last_name"=>"Jane",
-            "service_provider_first_name"=>"Austen",
-            "subscriber_dob"=>"1947-08-15"
-        }
-    ]
-}
-
-Eligible::Coverage.batch_medicare_post params
-#Return:
- Eligible::EligibleObject:0x00000004db0188 @api_key="72cbca2e-1da7-b030-d2e6-a05cbae11c1b",
-                                           @values={:reference_id=>"1ea06414-2132-52e1-1580-aea92f37720b",
-                                                    :number_of_items=>2},
-                                           @unsaved_values=#<Set: {}>,
-                                           @transient_values=#<Set: {}>>
-```
-
-
-
-
 
 ### Post Enrollment object
 
@@ -320,6 +278,66 @@ params = {
 
 Eligible::Claim.post(params)
 ```
+
+
+
+
+
+### Medicare
+##  Retrieve single medicare object
+**GET** `https://gds.eligibleapi.com/v1.1/medicare/coverage.json?`
+
+**PARAMS** `https://github.com/EligibleAPI/tools/wiki/Medicare`
+
+```ruby
+Eligible::Medicare.get params
+
+```
+
+##Batch post Medicare
+**POST** `https://gds.eligibleapi.com/v1.1/medicare/coverage/batch.json`
+
+```ruby
+Eligible.test = true
+params = {
+    "parameters"=>[
+        {
+            "id"=>1,
+            "service_provider_npi"=>"12341234",
+            "subscriber_id"=>"98769876",
+            "subscriber_first_name"=>"Jane",
+            "subscriber_last_name"=>"Austen",
+            "service_provider_last_name"=>"Gaurav",
+            "service_provider_first_name"=>"Gupta",
+            "subscriber_dob"=>"1947-10-07"
+        },
+        {
+            "id"=>2,
+            "service_provider_npi"=>"67676767",
+            "subscriber_id"=>"98989898",
+            "subscriber_first_name"=>"Gaurav",
+            "subscriber_last_name"=>"Gupta",
+            "service_provider_last_name"=>"Jane",
+            "service_provider_first_name"=>"Austen",
+            "subscriber_dob"=>"1947-08-15"
+        }
+    ]
+}
+
+Eligible::Medicare.batch_post params
+#Return:
+ Eligible::EligibleObject:0x00000004db0188 @api_key="xxxxx",
+                                           @values={:reference_id=>"1ea06414-2132-52e1-1580-aea92f37720b",
+                                                    :number_of_items=>2},
+                                           @unsaved_values=#<Set: {}>,
+                                           @transient_values=#<Set: {}>>
+```
+
+
+
+
+
+
 
 ### Retrieve all Claim objects/acknowledgments
 
