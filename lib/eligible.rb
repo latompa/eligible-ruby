@@ -22,6 +22,7 @@ require 'eligible/coverage'
 require 'eligible/payment'
 require 'eligible/x12'
 require 'eligible/medicare'
+require 'eligible/ticket'
 
 # Errors
 require 'eligible/errors/eligible_error'
