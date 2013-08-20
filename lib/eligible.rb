@@ -102,7 +102,7 @@ module Eligible
     # params = Util.objects_to_ids(params)
     url = self.api_url(url)
     case method.to_s.downcase.to_sym
-    when :get, :head, :delete
+    when :get, :head
       # Make params into GET parameters
       url += "?api_key=#{api_key}"
       if params && params.count > 0
