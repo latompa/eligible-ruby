@@ -450,7 +450,7 @@ possible params
   params = { :reference_id => "89898989",
              :body => 'Your comment'}
   Eligible::Ticket.comments params
-
+```
 
 ###Retrieve
 One ticket
