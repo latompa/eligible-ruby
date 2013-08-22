@@ -24,14 +24,16 @@ Or install it yourself with:
 ### Test
 ```ruby
 Eligible.test = true
- ```
+```
+
 Include `{ :test => "true" }` in the params for sandbox access.
 ### Format
 
 Include `{ :format => "X12" }` in the params hash to get back the raw X12 response.
 
+## Demographic
 
-### Retrieve Demographic object and query it
+### Retrieve single object
 
 ```ruby
 params = {
@@ -52,8 +54,7 @@ demographic.all # returns all fields for the demographic, per demographic/all
 
 
 
-##Batch post Demographic
-**POST** `https://gds.eligibleapi.com/v1.1/demographic/all/batch.json`
+### Create batch object
 
 ```ruby
 
@@ -95,7 +96,19 @@ Eligible::EligibleObject:0x000000058914a8 @api_key="XXX",
                                           @transient_values=#<Set: {}>>
 ```
 
-### Retrieve Coverage object
+
+### Retrieve batch object
+
+To use Batch api you have to add production webhook url. Result of batch api call will be posted to webhook url with following events
+
+| Types |
+|:-------------------|
+| batch_created |
+| batch_processed |
+
+## Coverage
+
+### Retrieve single object
 
 ```ruby
 params = {
@@ -114,8 +127,7 @@ params = {
 coverage = Eligible::Coverage.get(params)
 coverage.all # returns all coverage info for the request
 ```
-##Batch post Coverage
-**POST** `https://gds.eligibleapi.com/v1.1/coverage/all/batch.json`
+### Create batch object
 
 ```ruby
 Eligible.test = true
@@ -159,7 +171,49 @@ Eligible::EligibleObject:0x000000059a11b8 @api_key="XXX",
 
 ```
 
-### Post Enrollment object
+## Medicare
+
+### Create batch coverage object
+
+```ruby
+Eligible.test = true
+params = {
+    "parameters"=>[
+        {
+            "id"=>1,
+            "service_provider_npi"=>"12341234",
+            "subscriber_id"=>"98769876",
+            "subscriber_first_name"=>"Jane",
+            "subscriber_last_name"=>"Austen",
+            "service_provider_last_name"=>"Gaurav",
+            "service_provider_first_name"=>"Gupta",
+            "subscriber_dob"=>"1947-10-07"
+        },
+        {
+            "id"=>2,
+            "service_provider_npi"=>"67676767",
+            "subscriber_id"=>"98989898",
+            "subscriber_first_name"=>"Gaurav",
+            "subscriber_last_name"=>"Gupta",
+            "service_provider_last_name"=>"Jane",
+            "service_provider_first_name"=>"Austen",
+            "subscriber_dob"=>"1947-08-15"
+        }
+    ]
+}
+
+Eligible::Coverage.batch_medicare_post params
+#Return:
+ Eligible::EligibleObject:0x00000004db0188 @api_key="72cbca2e-1da7-b030-d2e6-a05cbae11c1b",
+                                           @values={:reference_id=>"1ea06414-2132-52e1-1580-aea92f37720b",
+                                                    :number_of_items=>2},
+                                           @unsaved_values=#<Set: {}>,
+                                           @transient_values=#<Set: {}>>
+```
+
+## Enrollment
+
+### Create object
 
 ```ruby
 params = {
@@ -206,7 +260,10 @@ enrollment = Eligible::Enrollment.get(params)
 enrollment.enrollment_npis # returns a list of enroll the provider(s)
 ```
 
-### Post Claim object
+
+## Claims
+
+### Create Claim object
 
 ```ruby
 params = {
@@ -374,11 +431,11 @@ Eligible::X12.post param # <Net::HTTPOK 200 OK readbody=true>
 ```
 
 
-###Tickets
+##Tickets
 possible params
 `https://github.com/EligibleAPI/tools/wiki/Tickets`
 
-#Create a ticket
+###Create a ticket
 ```ruby
 
   params = { :priority => 'normal',
@@ -388,14 +445,14 @@ possible params
 
  Eligible::Ticket.create params
 ```
-#Comments
+###Comments
 ```ruby
   params = { :reference_id => "89898989",
              :body => 'Your comment'}
   Eligible::Ticket.comments params
 
 
-#Retrieve
+###Retrieve
 One ticket
 ```ruby
  params = { :reference_id => "89898989" }
@@ -406,12 +463,12 @@ All tickets
   Eligible::Ticket.all
 ```
 
-#Delete
+###Delete
 ```ruby
   params = { :reference_id => "89898989" }
   Eligible::Ticket.delete params
 ```
-#Update
+###Update
 ```ruby
   params = { :reference_id => "89898989",
              :priority => 'normal',
@@ -441,10 +498,14 @@ If you do send a pull request, please add passing tests for the new feature/fix.
 6. Create new Pull Request
 
 ## Changelog
+
+#### 2.3
+- New endpoint for Batch
+
 #### 2.2
 - New endpoint for x12 POST
-#### 2.1 
 
+#### 2.1 
 - New endpoint for payment status
 
 #### 2.0
