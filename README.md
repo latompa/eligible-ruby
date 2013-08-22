@@ -374,7 +374,54 @@ Eligible::X12.post param # <Net::HTTPOK 200 OK readbody=true>
 ```
 
 
-## Tests
+###Tickets
+possible params
+`https://github.com/EligibleAPI/tools/wiki/Tickets`
+
+#Create a ticket
+```ruby
+
+  params = { :priority => 'normal',
+             :title => 'TITLE',
+             :notification_email => 'admin@eligibleapi.com',
+             :body => 'Your comment'}
+
+ Eligible::Ticket.create params
+```
+#Comments
+```ruby
+  params = { :reference_id => "89898989",
+             :body => 'Your comment'}
+  Eligible::Ticket.comments params
+
+
+#Retrieve
+One ticket
+```ruby
+ params = { :reference_id => "89898989" }
+ Eligible::Ticket.get params
+```
+All tickets
+```ruby
+  Eligible::Ticket.all
+```
+
+#Delete
+```ruby
+  params = { :reference_id => "89898989" }
+  Eligible::Ticket.delete params
+```
+#Update
+```ruby
+  params = { :reference_id => "89898989",
+             :priority => 'normal',
+             :title => 'TITLE',
+             :notification_email => 'admin@eligibleapi.com',
+             :body => 'Your comment'}
+  Eligible::Ticket.update params
+```
+
+### Tests
 
 You can run tests with 
 
