@@ -13,16 +13,13 @@ class TestEligible < Test::Unit::TestCase
     end
   end
 
-  context' "General API"' do
+  context '"General API"' do
     setup do
-      Eligible.api_key = 'TEST'
-      @mock = mock
-      Eligible.mock_rest_client = @mock
+      Eligible.mock_rest_client = @mock = mock
     end
 
     teardown do
-      Eligible.mock_rest_client = nil
-      Eligible.api_key = nil
+      Eligible.mock_rest_client = Eligible.api_key = nil
     end
 
     should 'not specifying api credentials should raise an exception' do
@@ -65,7 +62,7 @@ class TestEligible < Test::Unit::TestCase
     should 'return plan information if valid params are supplied' do
       params = {
         :payer_name => "Aetna",
-        :payer_id   => "000001",
+        :payer_id => "000001",
         :provider_last_name => "Last",
         :provider_first_name => "First",
         :provider_npi => "1028384219",
@@ -84,7 +81,7 @@ class TestEligible < Test::Unit::TestCase
     should 'return the right subsets of the data when requested' do
       params = {
         :payer_name => "Aetna",
-        :payer_id   => "000001",
+        :payer_id => "000001",
         :provider_last_name => "Last",
         :provider_first_name => "First",
         :provider_npi => "1028384219",
@@ -97,17 +94,17 @@ class TestEligible < Test::Unit::TestCase
       @mock.expects(:get).returns(response)
       plan = Eligible::Plan.get(params)
 
-      assert_not_nil  plan.all[:primary_insurance]
-      assert_not_nil  plan.status[:coverage_status]
-      assert_nil      plan.status[:deductible_in_network]
-      assert_not_nil  plan.deductible[:deductible_in_network]
-      assert_nil      plan.deductible[:balance]
-      assert_not_nil  plan.dates[:primary_insurance][:plan_begins]
-      assert_nil      plan.dates[:deductible_in_network]
-      assert_not_nil  plan.balance[:balance]
-      assert_nil      plan.balance[:deductible_in_network]
-      assert_not_nil  plan.stop_loss[:stop_loss_in_network]
-      assert_nil      plan.stop_loss[:deductible_in_network]
+      assert_not_nil plan.all[:primary_insurance]
+      assert_not_nil plan.status[:coverage_status]
+      assert_nil plan.status[:deductible_in_network]
+      assert_not_nil plan.deductible[:deductible_in_network]
+      assert_nil plan.deductible[:balance]
+      assert_not_nil plan.dates[:primary_insurance][:plan_begins]
+      assert_nil plan.dates[:deductible_in_network]
+      assert_not_nil plan.balance[:balance]
+      assert_nil plan.balance[:deductible_in_network]
+      assert_not_nil plan.stop_loss[:stop_loss_in_network]
+      assert_nil plan.stop_loss[:deductible_in_network]
     end
   end
 
@@ -134,7 +131,7 @@ class TestEligible < Test::Unit::TestCase
     should 'return eligibility information if valid params are supplied' do
       params = {
         :payer_name => "Aetna",
-        :payer_id   => "000001",
+        :payer_id => "000001",
         :provider_last_name => "Last",
         :provider_first_name => "First",
         :provider_npi => "1028384219",
@@ -153,7 +150,7 @@ class TestEligible < Test::Unit::TestCase
     should 'return the right subsets of the data when requested' do
       params = {
         :payer_name => "Aetna",
-        :payer_id   => "000001",
+        :payer_id => "000001",
         :provider_last_name => "Last",
         :provider_first_name => "First",
         :provider_npi => "1028384219",
@@ -166,15 +163,15 @@ class TestEligible < Test::Unit::TestCase
       @mock.expects(:get).returns(response)
       service = Eligible::Service.get(params)
 
-      assert_not_nil  service.all[:service_begins]
-      assert_not_nil  service.visits[:visits_in_network]
-      assert_nil      service.visits[:copayment_in_network]
-      assert_not_nil  service.copayment[:copayment_in_network]
-      assert_nil      service.copayment[:visits_in_network]
-      assert_not_nil  service.coinsurance[:coinsurance_in_network]
-      assert_nil      service.coinsurance[:visits_in_network]
-      assert_not_nil  service.deductible[:deductible_in_network]
-      assert_nil      service.deductible[:visits_in_network]
+      assert_not_nil service.all[:service_begins]
+      assert_not_nil service.visits[:visits_in_network]
+      assert_nil service.visits[:copayment_in_network]
+      assert_not_nil service.copayment[:copayment_in_network]
+      assert_nil service.copayment[:visits_in_network]
+      assert_not_nil service.coinsurance[:coinsurance_in_network]
+      assert_nil service.coinsurance[:visits_in_network]
+      assert_not_nil service.deductible[:deductible_in_network]
+      assert_nil service.deductible[:visits_in_network]
     end
   end
 
@@ -201,7 +198,7 @@ class TestEligible < Test::Unit::TestCase
     should 'return demographic information if valid params are supplied' do
       params = {
         :payer_name => "Aetna",
-        :payer_id   => "000001",
+        :payer_id => "000001",
         :provider_last_name => "Last",
         :provider_first_name => "First",
         :provider_npi => "1028384219",
@@ -220,7 +217,7 @@ class TestEligible < Test::Unit::TestCase
     should 'return the right subsets of the data when requested' do
       params = {
         :payer_name => "Aetna",
-        :payer_id   => "000001",
+        :payer_id => "000001",
         :provider_last_name => "Last",
         :provider_first_name => "First",
         :provider_npi => "1028384219",
@@ -233,15 +230,15 @@ class TestEligible < Test::Unit::TestCase
       @mock.expects(:get).returns(response)
       demographic = Eligible::Demographic.get(params)
 
-      assert_not_nil  demographic.all[:timestamp]
-      assert_not_nil  demographic.zip[:zip]
-      assert_nil      demographic.zip[:group_id]
-      assert_not_nil  demographic.employer[:group_id]
-      assert_nil      demographic.employer[:zip]
-      assert_not_nil  demographic.address[:address]
-      assert_nil      demographic.address[:group_id]
-      assert_not_nil  demographic.dob[:dob]
-      assert_nil      demographic.dob[:address]
+      assert_not_nil demographic.all[:timestamp]
+      assert_not_nil demographic.zip[:zip]
+      assert_nil demographic.zip[:group_id]
+      assert_not_nil demographic.employer[:group_id]
+      assert_nil demographic.employer[:zip]
+      assert_not_nil demographic.address[:address]
+      assert_nil demographic.address[:group_id]
+      assert_not_nil demographic.dob[:dob]
+      assert_nil demographic.dob[:address]
     end
   end
 
@@ -266,7 +263,7 @@ class TestEligible < Test::Unit::TestCase
     end
 
     should 'post a claim' do
-      params = {"api_key"=>"asdfsdfsd21132ddsfsdfd", "billing_provider"=>{"taxonomy_code"=>"332B00000X", "practice_name"=>"Jane Austen Practice", "npi"=>"1922222222", "address"=>{"street_line_1"=>"419 Fulton", "street_line_2"=>"", "city"=>"San Francisco", "state"=>"CA", "zip"=>"94102"}, "tin"=>"43291023", "insurance_provider_id"=>"129873210"}, "pay_to_provider"=>{"address"=>{"street_line_1"=>"", "street_line_2"=>"", "city"=>"", "state"=>"", "zip"=>""}}, "subscriber"=>{"last_name"=>"Franklin", "first_name"=>"Benjamin", "member_id"=>"W2832032427", "group_id"=>"455716", "group_name"=>"none", "dob"=>"1734-05-04", "gender"=>"M", "address"=>{"street_line_1"=>"435 Sugar Lane", "street_line_2"=>"", "city"=>"Sweet", "state"=>"OH", "zip"=>"436233127"}}, "payer"=>{"name"=>"AETNA", "id"=>"60054", "address"=>{"street_line_1"=>"Po Box 981106", "street_line_2"=>"", "city"=>"El Paso", "state"=>"TX", "zip"=>"799981222"}}, "dependent"=>{"relationship"=>"", "last_name"=>"", "first_name"=>"", "dob"=>"", "gender"=>"", "address"=>{"street_line_1"=>"", "street_line_2"=>"", "city"=>"", "state"=>"", "zip"=>""}}, "claim"=>{"total_charge_amount"=>"275", "claim_frequency"=>"1", "patient_signature_on_file"=>"Y", "provider_plan_participation"=>"A", "direct_payment_authorized"=>"Y", "release_of_information"=>"I", "service_lines"=>[{"line_number"=>"1", "service_start"=>"2013-03-07", "service_end"=>"2013-03-07", "authorization_code"=>"", "place_of_service"=>"11", "charge_amount"=>"275", "product_service"=>"99213", "qualifier"=>"HC", "description"=>"", "modifier_1"=>"", "diagnosis_1"=>"32723"}]}}
+      params = { "api_key" => "asdfsdfsd21132ddsfsdfd", "billing_provider" => { "taxonomy_code" => "332B00000X", "practice_name" => "Jane Austen Practice", "npi" => "1922222222", "address" => { "street_line_1" => "419 Fulton", "street_line_2" => "", "city" => "San Francisco", "state" => "CA", "zip" => "94102" }, "tin" => "43291023", "insurance_provider_id" => "129873210" }, "pay_to_provider" => { "address" => { "street_line_1" => "", "street_line_2" => "", "city" => "", "state" => "", "zip" => "" } }, "subscriber" => { "last_name" => "Franklin", "first_name" => "Benjamin", "member_id" => "W2832032427", "group_id" => "455716", "group_name" => "none", "dob" => "1734-05-04", "gender" => "M", "address" => { "street_line_1" => "435 Sugar Lane", "street_line_2" => "", "city" => "Sweet", "state" => "OH", "zip" => "436233127" } }, "payer" => { "name" => "AETNA", "id" => "60054", "address" => { "street_line_1" => "Po Box 981106", "street_line_2" => "", "city" => "El Paso", "state" => "TX", "zip" => "799981222" } }, "dependent" => { "relationship" => "", "last_name" => "", "first_name" => "", "dob" => "", "gender" => "", "address" => { "street_line_1" => "", "street_line_2" => "", "city" => "", "state" => "", "zip" => "" } }, "claim" => { "total_charge_amount" => "275", "claim_frequency" => "1", "patient_signature_on_file" => "Y", "provider_plan_participation" => "A", "direct_payment_authorized" => "Y", "release_of_information" => "I", "service_lines" => [{ "line_number" => "1", "service_start" => "2013-03-07", "service_end" => "2013-03-07", "authorization_code" => "", "place_of_service" => "11", "charge_amount" => "275", "product_service" => "99213", "qualifier" => "HC", "description" => "", "modifier_1" => "", "diagnosis_1" => "32723" }] } }
       response = test_response(test_post_claim)
     end
   end
@@ -294,7 +291,7 @@ class TestEligible < Test::Unit::TestCase
     should 'return coverage information if valid params are supplied' do
       params = {
         :payer_name => "Aetna",
-        :payer_id   => "000001",
+        :payer_id => "000001",
         :provider_last_name => "Last",
         :provider_first_name => "First",
         :provider_npi => "1028384219",
@@ -324,7 +321,7 @@ class TestEligible < Test::Unit::TestCase
     end
 
     should 'post an enrollment request' do
-      params = {"service_provider_list"=>[{"facility_name"=>"Quality", "provider_name"=>"Jane Austen", "tax_id"=>"12345678", "address"=>"125 Snow Shoe Road", "city"=>"Sacramento", "state"=>"CA", "zip"=>"94107", "ptan"=>"54321", "npi"=>"987654321"}, {"facility_name"=>"Aetna", "provider_name"=>"Jack Austen", "tax_id"=>"12345678", "address"=>"985 Snow Shoe Road", "city"=>"Menlo Park", "state"=>"CA", "zip"=>"94107", "ptan"=>"54321", "npi"=>"987654321"}], "payer_ids"=>["00431", "00282"]}
+      params = { "service_provider_list" => [{ "facility_name" => "Quality", "provider_name" => "Jane Austen", "tax_id" => "12345678", "address" => "125 Snow Shoe Road", "city" => "Sacramento", "state" => "CA", "zip" => "94107", "ptan" => "54321", "npi" => "987654321" }, { "facility_name" => "Aetna", "provider_name" => "Jack Austen", "tax_id" => "12345678", "address" => "985 Snow Shoe Road", "city" => "Menlo Park", "state" => "CA", "zip" => "94107", "ptan" => "54321", "npi" => "987654321" }], "payer_ids" => ["00431", "00282"] }
       response = test_response(test_post_enrollment)
 
       @mock.expects(:post).returns(response)

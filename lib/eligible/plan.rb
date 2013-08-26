@@ -5,10 +5,16 @@ module Eligible
   STOP_LOSS_ATTRIBUTES = [:stop_loss_in_network, :stop_loss_out_network]
 
   class Plan < APIResource
-    def self.get(params, api_key=nil)
-      response, api_key = Eligible.request(:get, url, api_key, params)
-      Util.convert_to_eligible_object(response, api_key)
+
+    class << self
+
+      def get(params, api_key=nil)
+        response, api_key = Eligible.request(:get, url, api_key, params)
+        Util.convert_to_eligible_object(response, api_key)
+      end
+
     end
+
 
     def all
       error ? nil : to_hash

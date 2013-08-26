@@ -1,15 +1,18 @@
 module Eligible
-
   class Enrollment < APIResource
 
-    def self.get(params, api_key=nil)
-      response, api_key = Eligible.request(:get, "/enrollment.json", api_key, params)
-      Util.convert_to_eligible_object(response, api_key)
-    end
+    class << self
 
-    def self.post(params, api_key=nil)
-      response, api_key = Eligible.request(:post, "/enrollment.json", api_key, params)
-      Util.convert_to_eligible_object(response, api_key)
+      def get(params, api_key=nil)
+        response, api_key = Eligible.request(:get, "/enrollment.json", api_key, params)
+        Util.convert_to_eligible_object(response, api_key)
+      end
+
+      def post(params, api_key=nil)
+        response, api_key = Eligible.request(:post, "/enrollment.json", api_key, params)
+        Util.convert_to_eligible_object(response, api_key)
+      end
+
     end
 
     def all
@@ -17,12 +20,8 @@ module Eligible
     end
 
     def enrollment_npis
-      r = Array.new
-      values[0].each do |value|
-        r << value[:enrollment_npi]
-      end
-      r
+      values[0].collect {|v| v[:enrollment_npi]}
     end
-  end
 
+  end
 end

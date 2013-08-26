@@ -7,9 +7,27 @@ module Eligible
     COINSURANCE_ATTRIBUTES = [:coinsurance_in_network, :coinsurance_out_network]
     DEDUCTIBLE_ATTRIBUTES = [:deductible_in_network, :deductible_out_network]
 
-    def self.get(params, api_key=nil)
-      response, api_key = Eligible.request(:get, url, api_key, params)
-      Util.convert_to_eligible_object(response, api_key)
+    class << self
+
+      def get(params, api_key=nil)
+        response, api_key = Eligible.request(:get, url, api_key, params)
+        Util.convert_to_eligible_object(response, api_key)
+      end
+
+      def general(params, api_key=nil)
+        response, api_key = Eligible.request(:get, '/service/general.json', api_key, params)
+        response = Util.convert_to_eligible_object(response, api_key)
+        response = response.to_hash if response.is_a? Hash
+        response
+      end
+
+      def list(params, api_key=nil)
+        response, api_key = Eligible.request(:get, '/service/list.json', api_key, params)
+        response = Util.convert_to_eligible_object(response, api_key)
+        response = response.to_hash if response.is_a? Hash
+        response
+      end
+
     end
 
     def all
@@ -34,20 +52,6 @@ module Eligible
     def deductible
       keys = COMMON_ATTRIBUTES + STATUS_ATTRIBUTES + DEDUCTIBLE_ATTRIBUTES
       k_to_hash(keys)
-    end
-
-    def self.general(params, api_key=nil)
-      response, api_key = Eligible.request(:get, '/service/general.json', api_key, params)
-      response = Util.convert_to_eligible_object(response, api_key)
-      response = response.to_hash if response.is_a? Hash
-      response
-    end
-
-    def self.list(params, api_key=nil)
-      response, api_key = Eligible.request(:get, '/service/list.json', api_key, params)
-      response = Util.convert_to_eligible_object(response, api_key)
-      response = response.to_hash if response.is_a? Hash
-      response
     end
 
     private

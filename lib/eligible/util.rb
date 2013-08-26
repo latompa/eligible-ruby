@@ -1,20 +1,5 @@
 module Eligible
   module Util
-    def self.objects_to_ids(h)
-      case h
-        when APIResource
-          h.id
-        when Hash
-          res = {}
-          h.each { |k, v| res[k] = objects_to_ids(v) unless v.nil? }
-          res
-        when Array
-          h.map { |v| objects_to_ids(v) }
-        else
-          h
-      end
-    end
-
     def self.convert_to_eligible_object(resp, api_key)
       types = {
           'plan' => Plan,
@@ -44,16 +29,6 @@ module Eligible
           klass.construct_from(resp, api_key)
         else
           resp
-      end
-    end
-
-    def self.file_readable(file)
-      begin
-        File.open(file) { |f|}
-      rescue
-        false
-      else
-        true
       end
     end
 
