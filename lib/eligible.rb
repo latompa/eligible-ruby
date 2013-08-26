@@ -4,7 +4,6 @@ require 'rubygems'
 require 'openssl'
 require 'net/https'
 
-require 'json'
 require 'rest_client'
 require 'multi_json'
 
