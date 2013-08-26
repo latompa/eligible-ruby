@@ -2,7 +2,6 @@ module Eligible
   module Util
     def self.convert_to_eligible_object(resp, api_key)
       types = {
-          'plan' => Plan,
           'service' => Service,
           'demographic' => Demographic,
           'claim' => Claim,
