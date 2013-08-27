@@ -47,6 +47,14 @@ module Eligible
     @@api_key = api_key
   end
 
+  def self.api_base
+    @@api_base
+  end
+
+  def self.api_base=(api_base)
+    @@api_base = api_base
+  end
+
   def self.test
     @@test ? 'true' : 'false'
   end
