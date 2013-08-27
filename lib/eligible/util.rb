@@ -16,10 +16,7 @@ module Eligible
             resp.map { |i| convert_to_eligible_object(i, api_key) }
           end
         when Hash
-          # Try converting to a known object class.  If none available, fall back to generic APIResource
-          if resp[:mapping_version] && klass_name = resp[:mapping_version].match(/^[^\/]*/)[0]
-            klass = types[klass_name]
-          elsif resp[:enrollment_request]
+          if resp[:enrollment_request]
             klass = Enrollment
           elsif resp[:demographics]
             klass = Coverage
