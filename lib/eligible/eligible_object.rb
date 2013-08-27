@@ -47,7 +47,7 @@ module Eligible
         @unsaved_values.delete(k)
       end
       values.each do |k, v|
-        @values[k] = v#Util.convert_to_eligible_object(v, api_key)
+        @values[k] = v
         @transient_values.delete(k)
         @unsaved_values.delete(k)
       end
