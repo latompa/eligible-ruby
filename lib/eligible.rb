@@ -98,7 +98,7 @@ module Eligible
         url +="&test=#{self.test}"
         payload = nil
       else
-        payload = params.merge!({ 'api_key' => api_key, 'test' => self.test }).to_json
+        payload = Eligible::JSON.dump(params.merge!({ 'api_key' => api_key, 'test' => self.test }))
     end
 
     begin
