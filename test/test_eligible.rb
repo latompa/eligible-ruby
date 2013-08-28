@@ -39,73 +39,6 @@ class TestEligible < Test::Unit::TestCase
     end
   end
 
-  context 'Service' do
-    setup do
-      Eligible.api_key = 'TEST'
-      @mock = mock
-      Eligible.mock_rest_client = @mock
-    end
-
-    teardown do
-      Eligible.mock_rest_client = nil
-      Eligible.api_key = nil
-    end
-
-    should 'return an error if no params are supplied' do
-      params = {}
-      response = test_response(test_service_missing_params)
-      @mock.expects(:get).returns(response)
-      service = Eligible::Service.get(params)
-      assert_not_nil service.error
-    end
-
-    should 'return eligibility information if valid params are supplied' do
-      params = {
-        :payer_name => "Aetna",
-        :payer_id => "000001",
-        :provider_last_name => "Last",
-        :provider_first_name => "First",
-        :provider_npi => "1028384219",
-        :member_id => "W120923801",
-        :member_last_name => "Austen",
-        :member_first_name => "Jane",
-        :member_dob => "1955-12-14"
-      }
-      response = test_response(test_service)
-      @mock.expects(:get).returns(response)
-      service = Eligible::Service.get(params)
-      assert_nil service.error
-      assert_not_nil service.all
-    end
-
-    should 'return the right subsets of the data when requested' do
-      params = {
-        :payer_name => "Aetna",
-        :payer_id => "000001",
-        :provider_last_name => "Last",
-        :provider_first_name => "First",
-        :provider_npi => "1028384219",
-        :member_id => "W120923801",
-        :member_last_name => "Austen",
-        :member_first_name => "Jane",
-        :member_dob => "1955-12-14"
-      }
-      response = test_response(test_service)
-      @mock.expects(:get).returns(response)
-      service = Eligible::Service.get(params)
-
-      assert_not_nil service.all[:service_begins]
-      assert_not_nil service.visits[:visits_in_network]
-      assert_nil service.visits[:copayment_in_network]
-      assert_not_nil service.copayment[:copayment_in_network]
-      assert_nil service.copayment[:visits_in_network]
-      assert_not_nil service.coinsurance[:coinsurance_in_network]
-      assert_nil service.coinsurance[:visits_in_network]
-      assert_not_nil service.deductible[:deductible_in_network]
-      assert_nil service.deductible[:visits_in_network]
-    end
-  end
-
   context 'Demographic' do
     setup do
       Eligible.api_key = 'TEST'
@@ -142,34 +75,7 @@ class TestEligible < Test::Unit::TestCase
       @mock.expects(:get).returns(response)
       demographic = Eligible::Demographic.get(params)
       assert_nil demographic.error
-      assert_not_nil demographic.all
-    end
-
-    should 'return the right subsets of the data when requested' do
-      params = {
-        :payer_name => "Aetna",
-        :payer_id => "000001",
-        :provider_last_name => "Last",
-        :provider_first_name => "First",
-        :provider_npi => "1028384219",
-        :member_id => "W120923801",
-        :member_last_name => "Austen",
-        :member_first_name => "Jane",
-        :member_dob => "1955-12-14"
-      }
-      response = test_response(test_demographic)
-      @mock.expects(:get).returns(response)
-      demographic = Eligible::Demographic.get(params)
-
-      assert_not_nil demographic.all[:timestamp]
-      assert_not_nil demographic.zip[:zip]
-      assert_nil demographic.zip[:group_id]
-      assert_not_nil demographic.employer[:group_id]
-      assert_nil demographic.employer[:zip]
-      assert_not_nil demographic.address[:address]
-      assert_nil demographic.address[:group_id]
-      assert_not_nil demographic.dob[:dob]
-      assert_nil demographic.dob[:address]
+      assert_not_nil demographic.to_hash
     end
   end
 
@@ -235,7 +141,7 @@ class TestEligible < Test::Unit::TestCase
       @mock.expects(:get).returns(response)
       coverage = Eligible::Coverage.get(params)
 
-      assert_not_nil coverage.all[:eligible_id]
+      assert_not_nil coverage.to_hash[:eligible_id]
     end
   end
 
@@ -258,7 +164,7 @@ class TestEligible < Test::Unit::TestCase
       @mock.expects(:post).returns(response)
       enrollment = Eligible::Enrollment.post(params)
 
-      assert_not_nil enrollment.all[:enrollment_request]
+      assert_not_nil enrollment.to_hash[:enrollment_request]
     end
 
     should 'get the status of an enrollment request' do
@@ -266,7 +172,7 @@ class TestEligible < Test::Unit::TestCase
       response = test_response(test_get_enrollment)
       @mock.expects(:get).returns(response)
       enrollment = Eligible::Enrollment.get(params)
-      assert_not_nil enrollment.all[:enrollments]
+      assert_not_nil enrollment.to_hash[:enrollments]
     end
   end
 end

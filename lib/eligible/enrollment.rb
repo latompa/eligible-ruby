@@ -15,12 +15,8 @@ module Eligible
 
     end
 
-    def all
-      error ? nil : to_hash
-    end
-
     def enrollment_npis
-      values[0].collect {|v| v[:enrollment_npi]}
+      values.first[:enrollment_npis]
     end
 
   end

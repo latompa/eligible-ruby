@@ -261,7 +261,7 @@ result.error   # return error, if any
 Its important to notice than an Enrollment Request can have multiple Enrollment NPIs, and that the API has been designed
 in a way that you can repeat the enrollment for a NPI multiple times across different Enrollment request.
 
-### Create object
+### Create an Enrollment Request
 
 ```ruby
 params = {
@@ -300,18 +300,26 @@ result.error   # return error, if any
 
 ```
 
-### Retrieve Enrollment object
+### Retrieve an Enrollment Request
 
 ```ruby
-params = { "enrollment_request_id" => "123" }
+params = { :enrollment_request_id => 123 }
+enrollment = Eligible::Enrollment.get(params)
+enrollment.to_ash # return the api call results
+enrollment.error  # return error, if any
+enrollment.enrollment_npis # quick access to the enrollment npis within the enrollment request object
 
+params = { :npis => %w(123 456 789).join(',') }
 enrollment = Eligible::Enrollment.get(params)
 
-enrollment.enrollment_npis # returns a list of enroll the provider(s)
 ```
 
 
 ## Claims
+
+### Reference
+
+[https://github.com/EligibleAPI/tools/wiki/Claims](https://github.com/EligibleAPI/tools/wiki/Claims)
 
 ### Create Claim object
 
@@ -383,55 +391,10 @@ params = {
     }
 }
 
-Eligible::Claim.post(params)
+result = Eligible::Claim.post(params)
+enrollment.to_ash # return the api call results
+enrollment.error  # return error, if any
 ```
-
-
-
-##Batch post Medicare
-**POST** `https://gds.eligibleapi.com/v1.1/medicare/coverage/batch.json`
-
-```ruby
-Eligible.test = true
-params = {
-    "parameters"=>[
-        {
-            "id"=>1,
-            "service_provider_npi"=>"12341234",
-            "subscriber_id"=>"98769876",
-            "subscriber_first_name"=>"Jane",
-            "subscriber_last_name"=>"Austen",
-            "service_provider_last_name"=>"Gaurav",
-            "service_provider_first_name"=>"Gupta",
-            "subscriber_dob"=>"1947-10-07"
-        },
-        {
-            "id"=>2,
-            "service_provider_npi"=>"67676767",
-            "subscriber_id"=>"98989898",
-            "subscriber_first_name"=>"Gaurav",
-            "subscriber_last_name"=>"Gupta",
-            "service_provider_last_name"=>"Jane",
-            "service_provider_first_name"=>"Austen",
-            "subscriber_dob"=>"1947-08-15"
-        }
-    ]
-}
-
-Eligible::Medicare.batch_post params
-#Return:
- Eligible::EligibleObject:0x00000004db0188 @api_key="xxxxx",
-                                           @values={:reference_id=>"1ea06414-2132-52e1-1580-aea92f37720b",
-                                                    :number_of_items=>2},
-                                           @unsaved_values=#<Set: {}>,
-                                           @transient_values=#<Set: {}>>
-```
-
-
-
-
-
-
 
 ### Retrieve all Claim objects/acknowledgments
 
@@ -449,6 +412,12 @@ params = {
 claim = Eligible::Claim.get(params) # returns acknoweldement information on an individual claim identified by its reference_id
 ```
 
+## Payment Status
+
+### Reference
+
+[https://eligibleapi.com/rest-api-v1-1/beta/payment-status#apiPaymentStatus](https://eligibleapi.com/rest-api-v1-1/beta/payment-status#apiPaymentStatus)
+
 ### Retrieve  Payment status
 
 ```ruby
@@ -457,14 +426,18 @@ params = { :reference_id => "89898989" }
 Eligible::Payment.get(params) # returns status information on an individual payment identified by its reference_id
 ```
 
+## X12
 
+### Reference
+
+[https://github.com/EligibleAPI/tools/wiki/X12](https://github.com/EligibleAPI/tools/wiki/X12)
 
 ### X12 post
 
 ```ruby
 param = "ISA*00*          *00*          *ZZ*SENDERID       *ZZ*ELIGIB         *130610*0409*^*00501*100000001*0*T*:~GS*HS*SENDERID*ELIGIB*20130610*0409*1*X*005010X279A1~ST*270*0001*005010X279A1~BHT*0022*13*137083739083716126837*20130610*0409~HL*1**20*1~NM1*PR*2*UnitedHealthCare*****PI*112~HL*2*1*21*1~NM1*1P*1*AUSTEN*JANE****XX*1222494919~HL*3*2*22*0~TRN*1*1*1453915417~NM1*IL*1*FRANKLIN*BENJAMIN****MI*23412342~DMG*D8*17371207~DTP*291*D8*20130610~EQ*30~SE*13*0001~GE*1*1~IEA*1*100000001~"
 
-Eligible::X12.post param # <Net::HTTPOK 200 OK readbody=true>
+Eligible::X12.post(param) # <Net::HTTPOK 200 OK readbody=true>
 ```
 
 
