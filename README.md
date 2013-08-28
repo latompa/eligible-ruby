@@ -524,7 +524,7 @@ If you do send a pull request, please add passing tests for the new feature/fix.
 
 ## Changelog
 
-#### 2.5
+#### 2.4
 - Refactoring Code
 - More test cases
 - Removed legacy endpoint for *plans*, *coverage* should be used instead.
@@ -533,8 +533,6 @@ If you do send a pull request, please add passing tests for the new feature/fix.
 - Gemfile updated, dependencies updated as well.
 - Removed json gem in favor of multi_json
 - Fixed the code to let the users make x12 requests at anytime.
-
-#### 2.4
 - New endpoint for Tickets
 
 #### 2.3
