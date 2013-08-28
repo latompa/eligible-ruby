@@ -20,6 +20,8 @@ module Eligible
             klass = Enrollment
           elsif resp[:demographics]
             klass = Coverage
+          elsif resp[:subscriber] && resp[:dependent]
+            klass = Demographic
           end
           klass ||= EligibleObject
           klass.construct_from(resp, api_key)

@@ -16,99 +16,52 @@ Or install it yourself with:
 
     $ gem install eligible
 
-## Usage
+# Usage
 
 ### Setup
+```ruby
     require 'eligible'
     Eligible.api_key = 'YOUR_KEY'
+```
+
 ### Test
 ```ruby
 Eligible.test = true
 ```
 
-Include `{ :test => "true" }` in the params for sandbox access.
-### Format
+### Parameters overwrite
 
-Include `{ :format => "X12" }` in the params hash to get back the raw X12 response.
-
-## Demographic
-
-### Retrieve single object
+On each api call, you can overwrite the api key or the test parameter, i.e.
 
 ```ruby
-params = {
-  :payer_name => "Aetna",
-  :payer_id   => "000001",
-  :provider_last_name => "Last",
-  :provider_first_name => "First",
-  :provider_npi => "12345678",
-  :member_id => "12345678",
-  :member_last_name => "Austen",
-  :member_first_name => "Jane",
-  :member_dob => "1955-12-14"
-}
+   Eligible::Demographic.get(params.merge({:api_key => 'NEW_KEY', :test => false})
+```
 
+### Response Format
+
+By default, all the responses came in JSON, but you can request raw access to X12 by adding is as a parameter on the api call.
+
+```ruby
+   Eligible::Demographic.get(params.merge({:format => "x12"}))
+```
+
+### Api Call Results
+
+On all the results, you can check for errors in *result.error*, you can get get the raw json format in a has by using *result.to_hash*.
+
+```ruby
 demographic = Eligible::Demographic.get(params)
-demographic.all # returns all fields for the demographic, per demographic/all
+demographic.error
+demographic.to_hash
 ```
-
-
-
-### Create batch object
-
-```ruby
-
-Eligible.test = true
-params = {
-    "parameters"=>[
-        {
-            "id"=>1,
-            "payer_name"=>"UnitedHealthCare",
-            "payer_id"=>"00112",
-            "service_provider_npi"=>"12341234",
-            "subscriber_id"=>"98769876",
-            "subscriber_first_name"=>"Jane",
-            "subscriber_last_name"=>"Austen",
-            "service_provider_last_name"=>"Gaurav",
-            "service_provider_first_name"=>"Gupta",
-            "subscriber_dob"=>"1947-10-07"
-        },
-        {
-            "id"=>2,
-            "payer_name"=>"UnitedHealthCare",
-            "payer_id"=>"00112",
-            "service_provider_npi"=>"67676767",
-            "subscriber_id"=>"98989898",
-            "subscriber_first_name"=>"Gaurav",
-            "subscriber_last_name"=>"Gupta",
-            "service_provider_last_name"=>"Jane",
-            "service_provider_first_name"=>"Austen",
-            "subscriber_dob"=>"1947-08-15"
-        }
-    ]
-}
-Eligible::Demographic.batch_post params
-# return
-Eligible::EligibleObject:0x000000058914a8 @api_key="XXX",
-                                          @values={:reference_id=>"1ea06414-2132-52e1-1580-aea92f37720b",
-                                                   :number_of_items=>2},
-                                          @unsaved_values=#<Set: {}>,
-                                          @transient_values=#<Set: {}>>
-```
-
-
-### Retrieve batch object
-
-To use Batch api you have to add production webhook url. Result of batch api call will be posted to webhook url with following events
-
-| Types |
-|:-------------------|
-| batch_created |
-| batch_processed |
 
 ## Coverage
 
-### Retrieve single object
+### Reference
+
+[https://eligibleapi.com/rest-api-v1-1/coverage-all#apiCoverageInfo](https://eligibleapi.com/rest-api-v1-1/coverage-all#apiCoverageInfo)
+
+### Retrieve eligibility & benefit information
 
 ```ruby
 params = {
@@ -125,12 +78,76 @@ params = {
 }
 
 coverage = Eligible::Coverage.get(params)
-coverage.all # returns all coverage info for the request
+coverage.to_hash # returns all coverage info for the request
+coverage.error   # return error, if any
 ```
-### Create batch object
+
+## Demographic
+
+### Reference
+
+[https://eligibleapi.com/rest-api-v1-1/demographic-all#apiDemographics](https://eligibleapi.com/rest-api-v1-1/demographic-all#apiDemographics)
+
+### Fetch demographics for a patient
 
 ```ruby
-Eligible.test = true
+params = {
+  :payer_name => "Aetna",
+  :payer_id   => "000001",
+  :provider_last_name => "Last",
+  :provider_first_name => "First",
+  :provider_npi => "12345678",
+  :member_id => "12345678",
+  :member_last_name => "Austen",
+  :member_first_name => "Jane",
+  :member_dob => "1955-12-14"
+}
+
+demographic = Eligible::Demographic.get(params)
+demographic.to_hash # returns all coverage info for the request
+demographic.error   # return error, if any
+```
+
+## Medicare
+
+### Reference
+
+[https://eligibleapi.com/rest-api-v1-1/medicare#apiMedicare](https://eligibleapi.com/rest-api-v1-1/medicare#apiMedicare)
+
+### Retrieve eligibility & benefit information from CMS Medicare for a patient.
+
+```ruby
+params = {
+  :payer_id   => "000001",
+  :provider_last_name => "Last",
+  :provider_first_name => "First",
+  :provider_npi => "12345678",
+  :member_id => "12345678",
+  :member_last_name => "Austen",
+  :member_first_name => "Jane",
+  :member_dob => "1955-12-14"
+}
+medicare = Eligible::Medicare.get(params)
+medicare.to_hash # returns all coverage info for the request
+medicare.error   # return error, if any
+
+```
+
+## Batch API
+
+### Reference
+
+[https://github.com/EligibleAPI/tools/wiki/Batch-Api](https://github.com/EligibleAPI/tools/wiki/Batch-Api)
+
+Its important to notice that all the batch api calls, will notify the results by a webhook.
+
+You can setup a webhook in your [Dashboard](https://www.eligibleapi.com/dashboard/webhooks).
+
+All the batch api calls, returns a *reference_id* value and the *number_of_items* submitted.
+
+### Coverage Batch API
+
+```ruby
 params = {
     "api_key"=>"81ef98e5-4584-19fb-0d8c-6e987b95d695",
     "parameters"=>[
@@ -161,22 +178,50 @@ params = {
     ]
 }
 
-Eligible::Coverage.batch_post params
-#Return:
-Eligible::EligibleObject:0x000000059a11b8 @api_key="XXX",
-                                          @values={:reference_id=>"1ea06414-2132-52e1-1580-aea92f37720b",
-                                                    :number_of_items=>2},
-                                          @unsaved_values=#<Set: {}>,
-                                          @transient_values=#<Set: {}>>
-
+result = Eligible::Coverage.batch_post(params)
+result.to_hash # returns the api call results
+result.error   # return error, if any
 ```
 
-## Medicare
-
-### Create batch coverage object
+### Demographic Batch API
 
 ```ruby
-Eligible.test = true
+params = {
+    "parameters"=>[
+        {
+            "id"=>1,
+            "payer_name"=>"UnitedHealthCare",
+            "payer_id"=>"00112",
+            "service_provider_npi"=>"12341234",
+            "subscriber_id"=>"98769876",
+            "subscriber_first_name"=>"Jane",
+            "subscriber_last_name"=>"Austen",
+            "service_provider_last_name"=>"Gaurav",
+            "service_provider_first_name"=>"Gupta",
+            "subscriber_dob"=>"1947-10-07"
+        },
+        {
+            "id"=>2,
+            "payer_name"=>"UnitedHealthCare",
+            "payer_id"=>"00112",
+            "service_provider_npi"=>"67676767",
+            "subscriber_id"=>"98989898",
+            "subscriber_first_name"=>"Gaurav",
+            "subscriber_last_name"=>"Gupta",
+            "service_provider_last_name"=>"Jane",
+            "service_provider_first_name"=>"Austen",
+            "subscriber_dob"=>"1947-08-15"
+        }
+    ]
+}
+result = Eligible::Demographic.batch_post(params)
+result.to_hash # returns the api call results
+result.error   # return error, if any
+```
+
+### Medicare Batch API
+
+```ruby
 params = {
     "parameters"=>[
         {
@@ -203,15 +248,18 @@ params = {
 }
 
 Eligible::Coverage.batch_medicare_post params
-#Return:
- Eligible::EligibleObject:0x00000004db0188 @api_key="72cbca2e-1da7-b030-d2e6-a05cbae11c1b",
-                                           @values={:reference_id=>"1ea06414-2132-52e1-1580-aea92f37720b",
-                                                    :number_of_items=>2},
-                                           @unsaved_values=#<Set: {}>,
-                                           @transient_values=#<Set: {}>>
+result.to_hash # returns the api call results
+result.error   # return error, if any
 ```
 
 ## Enrollment
+
+### Reference
+
+[https://github.com/EligibleAPI/tools/wiki/Enrollments](https://github.com/EligibleAPI/tools/wiki/Enrollments)
+
+Its important to notice than an Enrollment Request can have multiple Enrollment NPIs, and that the API has been designed
+in a way that you can repeat the enrollment for a NPI multiple times across different Enrollment request.
 
 ### Create object
 
@@ -246,8 +294,10 @@ params = {
       "00282"
     ]
 }
+result = Eligible::Enrollment.post(params)
+result.to_hash # returns the api call results
+result.error   # return error, if any
 
-Eligible::Enrollment.post(params)
 ```
 
 ### Retrieve Enrollment object
@@ -337,19 +387,6 @@ Eligible::Claim.post(params)
 ```
 
 
-
-
-
-### Medicare
-##  Retrieve single medicare object
-**GET** `https://gds.eligibleapi.com/v1.1/medicare/coverage.json?`
-
-**PARAMS** `https://github.com/EligibleAPI/tools/wiki/Medicare`
-
-```ruby
-Eligible::Medicare.get params
-
-```
 
 ##Batch post Medicare
 **POST** `https://gds.eligibleapi.com/v1.1/medicare/coverage/batch.json`

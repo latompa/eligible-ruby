@@ -20,9 +20,5 @@ module Eligible
 
     end
 
-    def all
-      error ? nil : to_hash
-    end
-
   end
 end
