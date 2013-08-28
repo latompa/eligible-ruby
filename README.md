@@ -16,6 +16,40 @@ Or install it yourself with:
 
     $ gem install eligible
 
+# Important notes
+
+## Payer List for Eligibility
+
+the parameter *payer_id*, required for most of the api calls, is provided by EligibleAPI from its website,
+in xml and json format, which you can embed into your applications.
+
+[https://eligibleapi.com/resources/information-sources.xml](https://eligibleapi.com/resources/information-sources.xml)
+[https://eligibleapi.com/resources/information-sources.json](https://eligibleapi.com/resources/information-sources.json)
+
+## Payer List for Claims
+
+the parameter *payer_id*, required for claims, is provided by EligibleAPI from its website,
+in xml and json format, which you can embed into your applications.
+
+[https://eligibleapi.com/resources/claims-payer.xml](https://eligibleapi.com/resources/claims-payer.xml)
+[https://eligibleapi.com/resources/claims-payer.json](https://eligibleapi.com/resources/claims-payer.json)
+
+## Service Type Codes
+
+the parameter *service_type*, required on the api calls, is provided by EligibleAPI from its website,
+in xml and json format, which you can embed into your applications.
+[https://eligibleapi.com/resources/service-codes.xml](https://eligibleapi.com/resources/service-codes.xml)
+https://eligibleapi.com/resources/service-codes.json](ttps://eligibleapi.com/resources/service-codes.json)
+
+## Place of Service
+
+[https://eligibleapi.com/resources/place_of_service.json](https://eligibleapi.com/resources/place_of_service.json)
+
+## Health Care Provider Taxonomy
+
+[https://eligibleapi.com/resources/health-care-provider-taxonomy-code-set.json](https://eligibleapi.com/resources/health-care-provider-taxonomy-code-set.json)
+
+
 # Usage
 
 ### Setup
