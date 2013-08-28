@@ -305,7 +305,7 @@ result.error   # return error, if any
 ```ruby
 params = { :enrollment_request_id => 123 }
 enrollment = Eligible::Enrollment.get(params)
-enrollment.to_ash # return the api call results
+enrollment.to_hash # return the api call results
 enrollment.error  # return error, if any
 enrollment.enrollment_npis # quick access to the enrollment npis within the enrollment request object
 
@@ -392,7 +392,7 @@ params = {
 }
 
 result = Eligible::Claim.post(params)
-enrollment.to_ash # return the api call results
+enrollment.to_hash # return the api call results
 enrollment.error  # return error, if any
 ```
 
@@ -448,56 +448,62 @@ result = Eligible::X12.post(params)
 
 ### Create a ticket
 
-
-
-##Tickets
-possible params
-`https://github.com/EligibleAPI/tools/wiki/Tickets`
-
-###Create a ticket
 ```ruby
-
-  params = { :priority => 'normal',
-             :title => 'TITLE',
-             :notification_email => 'admin@eligibleapi.com',
-             :body => 'Your comment'}
-
- Eligible::Ticket.create params
-```
-###Comments
-```ruby
-  params = { :reference_id => "89898989",
-             :body => 'Your comment'}
-  Eligible::Ticket.comments params
+params = {:priority => 'normal',
+          :title => 'TITLE',
+          :notification_email => 'admin@eligibleapi.com',
+          :body => 'Your comment'}
+result = Eligible::Ticket.create params
+result.to_hash # return the api call results
+enrollment.error  # return error, if any
 ```
 
-###Retrieve
-One ticket
+### Get a ticket
+
 ```ruby
- params = { :reference_id => "89898989" }
- Eligible::Ticket.get params
-```
-All tickets
-```ruby
-  Eligible::Ticket.all
+ticket = Eligible::Ticket.get(:id => 1)
+ticket.to_hash # return the api call result
+ticket.error   # return error, if any
 ```
 
-###Delete
+### Update a ticket
+
 ```ruby
-  params = { :reference_id => "89898989" }
-  Eligible::Ticket.delete params
-```
-###Update
-```ruby
-  params = { :reference_id => "89898989",
-             :priority => 'normal',
-             :title => 'TITLE',
-             :notification_email => 'admin@eligibleapi.com',
-             :body => 'Your comment'}
-  Eligible::Ticket.update params
+params = { :id => 1,
+           :priority => 'normal',
+           :title => 'TITLE',
+           :notification_email => 'your_email@test.com',
+           :body => 'Your comment'}
+result = Eligible::Ticket.update(params)
+result.to_hash # return the api call results
+enrollment.error  # return error, if any
 ```
 
-### Tests
+### Get comments for a ticket
+
+```ruby
+comments = Eligible::Ticket.get(:id => 1)
+comments.to_hash # return the api call result
+comments.error   # return error, if any
+
+```
+
+### Delete a ticket
+```ruby
+result = Eligible::Ticket.delete(:id => 1)
+comments.to_hash # return the api call result
+comments.error   # return error, if any
+```
+
+
+### Get all tickets
+
+```ruby
+Eligible::Ticket.all
+```
+
+
+# Tests
 
 You can run tests with 
 
@@ -522,9 +528,11 @@ If you do send a pull request, please add passing tests for the new feature/fix.
 - Refactoring Code
 - More test cases
 - Removed legacy endpoint for *plans*, *coverage* should be used instead.
+- Removed legacy endpoint for *services*, *coverage* should be used instead.
 - List of contributors and documentation updated.
 - Gemfile updated, dependencies updated as well.
 - Removed json gem in favor of multi_json
+- Fixed the code to let the users make x12 requests at anytime.
 
 #### 2.4
 - New endpoint for Tickets
