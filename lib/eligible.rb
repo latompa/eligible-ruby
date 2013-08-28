@@ -154,7 +154,11 @@ module Eligible
     begin
       # Would use :symbolize_names => true, but apparently there is
       # some library out there that makes symbolize_names not work.
-      resp = params[:format] && params[:format].match(/x12/i) ? rbody : Eligible::JSON.load(rbody)
+      resp = if params[:format] && params[:format].downcase == 'x12' || url[-4..-1].downcase == '/x12'
+               rbody
+             else
+               Eligible::JSON.load(rbody)
+             end
     rescue MultiJson::DecodeError
       raise APIError.new("Invalid response object from API: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
     end
