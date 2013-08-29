@@ -146,7 +146,7 @@ demographic.error   # return error, if any
 
 ### Reference
 
-[https://eligibleapi.com/rest-api-v1-1/medicare#apiMedicare](https://eligibleapi.com/rest-api-v1-1/medicare#apiMedicare)
+[https://github.com/EligibleAPI/tools/wiki/Medicare](https://github.com/EligibleAPI/tools/wiki/Medicare)
 
 ### Retrieve eligibility & benefit information from CMS Medicare for a patient.
 
