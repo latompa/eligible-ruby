@@ -68,7 +68,7 @@ Eligible.test = true
 On each api call, you can overwrite the api key or the test parameter, i.e.
 
 ```ruby
-   Eligible::Demographic.get(params.merge({:api_key => 'NEW_KEY', :test => false})
+   Eligible::Demographic.get({:api_key => 'NEW_KEY', :test => false})
 ```
 
 ### Response Format
@@ -76,7 +76,7 @@ On each api call, you can overwrite the api key or the test parameter, i.e.
 By default, all the responses came in JSON, but you can request raw access to X12 by adding is as a parameter on the api call.
 
 ```ruby
-   Eligible::Demographic.get(params.merge({:format => "x12"}))
+   Eligible::Demographic.get({:format => "x12"})
 ```
 
 ### Api Call Results
@@ -455,9 +455,22 @@ claim = Eligible::Claim.get(params) # returns acknoweldement information on an i
 ### Retrieve  Payment status
 
 ```ruby
-params = { :reference_id => "89898989" }
+params = { :payer_id => '00001',
+           :provider_tax_id => '4373208923',
+           :provider_npi => '1234567890',
+           :provider_first_name => 'Thomas',
+           :provider_first_name => 'Thomas',
+           :member_id => '123',
+           :member_first_name => 'Benjamin',
+           :member_last_name => 'Franklin',
+           :member_dob => '01-01-1980',
+           :charge_amount => '100.00',
+           :start_date => '2013-03-25',
+           :end_date => '2013-03-25' }
 
-Eligible::Payment.get(params) # returns status information on an individual payment identified by its reference_id
+result = Eligible::Payment.get(params)
+result.to_hash   # return the api call results
+result.error     # return error, if any
 ```
 
 ## X12

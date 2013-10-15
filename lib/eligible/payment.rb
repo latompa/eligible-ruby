@@ -4,16 +4,10 @@ module Eligible
     class << self
 
       def get(params, api_key=nil)
-        response, api_key = Eligible.request(:get, "/payment/status/#{params[:reference_id]}.json", api_key, params)
-        Util.convert_to_eligible_object(response, api_key)
-      end
-
-      def all(api_key=nil)
-        response, api_key = Eligible.request(:get, '/payment/status.json', api_key, {})
+        response, api_key = Eligible.request(:get, "/payment/status.json", api_key, params)
         Util.convert_to_eligible_object(response, api_key)
       end
 
     end
-
   end
 end
