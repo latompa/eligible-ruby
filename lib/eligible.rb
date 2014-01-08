@@ -72,6 +72,10 @@ module Eligible
 
   def self.request(method, url, api_key, params={}, headers={})
     api_key ||= @@api_key
+    test = self.test
+    api_key = params[:api_key] if params.has_key?(:api_key)
+    test = params[:test] if params.has_key?(:test)
+
     raise AuthenticationError.new('No API key provided. (HINT: set your API key using "Eligible.api_key = <API-KEY>".') unless api_key
 
     lang_version = "#{RUBY_VERSION} p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE})"
@@ -94,10 +98,10 @@ module Eligible
           query_string = Util.flatten_params(params).collect { |key, value| "#{key}=#{Util.url_encode(value)}" }.join('&')
           url += "&#{query_string}"
         end
-        url +="&test=#{self.test}"
+        url +="&test=#{test}"
         payload = nil
       else
-        payload = Eligible::JSON.dump(params.merge!({ 'api_key' => api_key, 'test' => self.test }))
+        payload = Eligible::JSON.dump(params.merge!({ 'api_key' => api_key, 'test' => test }))
     end
 
     begin
