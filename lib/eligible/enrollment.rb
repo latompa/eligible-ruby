@@ -4,14 +4,19 @@ module Eligible
     class << self
 
       def get(params, api_key=nil)
-        response, api_key = Eligible.request(:get, "/enrollment.json", api_key, params)
+        response, api_key = Eligible.request(:get, "/enrollment_npis/#{params[:enrollment_npi_id]}.json", api_key, params)
         Util.convert_to_eligible_object(response, api_key)
       end
 
       def post(params, api_key=nil)
-        response, api_key = Eligible.request(:post, "/enrollment.json", api_key, params)
+        response, api_key = Eligible.request(:post, "/enrollment_npis.json", api_key, params)
         Util.convert_to_eligible_object(response, api_key)
       end
+      
+      def update(params, api_key=nil)
+        response, api_key = Eligible.request(:put, "/enrollment_npis/#{params[:enrollment_npi_id]}.json", api_key, params)
+        Util.convert_to_eligible_object(response, api_key)
+      end 
 
     end
 
