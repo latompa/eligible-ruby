@@ -190,26 +190,28 @@ module Eligible
       raise APIError.new("Invalid response object from API: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
     end
 
+    error_msg = error[:details] or error[:reject_reason_description]
+
     case rcode
       when 400, 404 then
-        raise invalid_request_error(error, rcode, rbody, error_obj)
+        raise invalid_request_error(error_msg, rcode, rbody, error_obj)
       when 401
-        raise authentication_error(error, rcode, rbody, error_obj)
+        raise authentication_error(error_msg, rcode, rbody, error_obj)
       else
-        raise api_error(error, rcode, rbody, error_obj)
+        raise api_error(error_msg, rcode, rbody, error_obj)
     end
   end
 
-  def self.invalid_request_error(error, rcode, rbody, error_obj)
-    InvalidRequestError.new(error, rcode, rbody, error_obj)
+  def self.invalid_request_error(error_msg, rcode, rbody, error_obj)
+    InvalidRequestError.new(error_msg, rcode, rbody, error_obj)
   end
 
-  def self.authentication_error(error, rcode, rbody, error_obj)
-    AuthenticationError.new(error[0][:message], rcode, rbody, error_obj)
+  def self.authentication_error(error_msg, rcode, rbody, error_obj)
+    AuthenticationError.new(error_msg, rcode, rbody, error_obj)
   end
 
-  def self.api_error(error, rcode, rbody, error_obj)
-    APIError.new(error[0][:message], rcode, rbody, error_obj)
+  def self.api_error(error_msg, rcode, rbody, error_obj)
+    APIError.new(error_msg, rcode, rbody, error_obj)
   end
 
   def self.handle_restclient_error(e)
