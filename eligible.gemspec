@@ -22,6 +22,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency('test-unit')
   gem.add_development_dependency('rake')
 
-  gem.add_dependency('rest-client', '~> 1.6.7')
-  gem.add_dependency('multi_json', '~> 1.7.9')
+  gem.add_dependency('rest-client', '~> 1.6')
+  gem.add_dependency('multi_json', '~> 1.7')
 end
