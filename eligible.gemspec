@@ -7,10 +7,10 @@ Gem::Specification.new do |gem|
   gem.name          = "eligible"
   gem.version       = Eligible::VERSION
   gem.authors       = ["Katelyn Gleaon", "Rodrigo Dominguez", "Andry Brett"]
-  gem.email         = ["k@eligibleapi.com", "rod@eligibleapi.com", "andy@andybrett.com"]
-  gem.description   = 'Eligible is a developer-friendly way to process health care eligibility checks. Learn more at https://www.eligibleapi.com'
-  gem.summary       = 'Ruby wrapper for the Eligible API'
-  gem.homepage      = "https://www.eligibleapi.com/"
+  gem.email         = ["k@eligible.com", "rod@eligible.com", "andy@andybrett.com"]
+  gem.description   = 'Eligible is a developer-friendly way to process health care eligibility checks. Learn more at https://eligible.com'
+  gem.summary       = 'Ruby wrapper for the Eligible'
+  gem.homepage      = "https://eligible.com/"
   gem.license       = "MIT"
 
   gem.files         = `git ls-files`.split($/)

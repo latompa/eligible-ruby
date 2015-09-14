@@ -1,6 +1,6 @@
 # Eligible
 
-Ruby bindings for the [Eligible API](https://eligibleapi.com/rest-api-v1)
+Ruby bindings for the [Eligible](https://eligible.com/rest-api-v1)
 
 ## Installation
 
@@ -20,34 +20,34 @@ Or install it yourself with:
 
 ## Payer List for Eligibility
 
-the parameter *payer_id*, required for most of the api calls, is provided by EligibleAPI from its website,
+the parameter *payer_id*, required for most of the api calls, is provided by Eligible from its website,
 in xml and json format, which you can embed into your applications.
 
-[https://eligibleapi.com/resources/information-sources.xml](https://eligibleapi.com/resources/information-sources.xml)
-[https://eligibleapi.com/resources/information-sources.json](https://eligibleapi.com/resources/information-sources.json)
+[https://eligible.com/resources/information-sources.xml](https://eligible.com/resources/information-sources.xml)
+[https://eligible.com/resources/information-sources.json](https://eligible.com/resources/information-sources.json)
 
 ## Payer List for Claims
 
-the parameter *payer_id*, required for claims, is provided by EligibleAPI from its website,
+the parameter *payer_id*, required for claims, is provided by Eligible from its website,
 in xml and json format, which you can embed into your applications.
 
-[https://eligibleapi.com/resources/claims-payer.xml](https://eligibleapi.com/resources/claims-payer.xml)
-[https://eligibleapi.com/resources/claims-payer.json](https://eligibleapi.com/resources/claims-payer.json)
+[https://eligible.com/resources/claims-payer.xml](https://eligible.com/resources/claims-payer.xml)
+[https://eligible.com/resources/claims-payer.json](https://eligible.com/resources/claims-payer.json)
 
 ## Service Type Codes
 
-the parameter *service_type*, required on the api calls, is provided by EligibleAPI from its website,
+the parameter *service_type*, required on the api calls, is provided by Eligible from its website,
 in xml and json format, which you can embed into your applications.
-[https://eligibleapi.com/resources/service-codes.xml](https://eligibleapi.com/resources/service-codes.xml)
-https://eligibleapi.com/resources/service-codes.json](ttps://eligibleapi.com/resources/service-codes.json)
+[https://eligible.com/resources/service-codes.xml](https://eligible.com/resources/service-codes.xml)
+https://eligible.com/resources/service-codes.json](ttps://eligible.com/resources/service-codes.json)
 
 ## Place of Service
 
-[https://eligibleapi.com/resources/place_of_service.json](https://eligibleapi.com/resources/place_of_service.json)
+[https://eligible.com/resources/place_of_service.json](https://eligible.com/resources/place_of_service.json)
 
 ## Health Care Provider Taxonomy
 
-[https://eligibleapi.com/resources/health-care-provider-taxonomy-code-set.json](https://eligibleapi.com/resources/health-care-provider-taxonomy-code-set.json)
+[https://eligible.com/resources/health-care-provider-taxonomy-code-set.json](https://eligible.com/resources/health-care-provider-taxonomy-code-set.json)
 
 
 # Usage
@@ -93,7 +93,7 @@ demographic.to_hash
 
 ### Reference
 
-[https://eligibleapi.com/rest-api-v1-1/coverage-all#apiCoverageInfo](https://eligibleapi.com/rest-api-v1-1/coverage-all#apiCoverageInfo)
+[https://eligible.com/rest-api-v1-1/coverage-all#apiCoverageInfo](https://eligible.com/rest-api-v1-1/coverage-all#apiCoverageInfo)
 
 ### Retrieve eligibility & benefit information
 
@@ -120,7 +120,7 @@ coverage.error   # return error, if any
 
 ### Reference
 
-[https://eligibleapi.com/rest-api-v1-1/demographic-all#apiDemographics](https://eligibleapi.com/rest-api-v1-1/demographic-all#apiDemographics)
+[https://eligible.com/rest-api-v1-1/demographic-all#apiDemographics](https://eligible.com/rest-api-v1-1/demographic-all#apiDemographics)
 
 ### Fetch demographics for a patient
 
@@ -146,7 +146,7 @@ demographic.error   # return error, if any
 
 ### Reference
 
-[https://github.com/EligibleAPI/tools/wiki/Medicare](https://github.com/EligibleAPI/tools/wiki/Medicare)
+[https://github.com/Eligible/tools/wiki/Medicare](https://github.com/eligible/tools/wiki/Medicare)
 
 ### Retrieve eligibility & benefit information from CMS Medicare for a patient.
 
@@ -171,11 +171,11 @@ medicare.error   # return error, if any
 
 ### Reference
 
-[https://github.com/EligibleAPI/tools/wiki/Batch-Api](https://github.com/EligibleAPI/tools/wiki/Batch-Api)
+[https://github.com/Eligible/tools/wiki/Batch-Api](https://github.com/ligible/tools/wiki/Batch-Api)
 
 Its important to notice that all the batch api calls, will notify the results by a webhook.
 
-You can setup a webhook in your [Dashboard](https://www.eligibleapi.com/dashboard/webhooks).
+You can setup a webhook in your [Dashboard](https://ligible.com/dashboard/webhooks).
 
 All the batch api calls, returns a *reference_id* value and the *number_of_items* submitted.
 
@@ -290,7 +290,7 @@ result.error   # return error, if any
 
 ### Reference
 
-[https://github.com/EligibleAPI/tools/wiki/Enrollments](https://github.com/EligibleAPI/tools/wiki/Enrollments)
+[https://github.com/eligible/tools/wiki/Enrollments](https://github.com/eligible/tools/wiki/Enrollments)
 
 Its important to notice than an Enrollment Request can have multiple Enrollment NPIs, and that the API has been designed
 in a way that you can repeat the enrollment for a NPI multiple times across different Enrollment request.
@@ -353,7 +353,7 @@ enrollment = Eligible::Enrollment.get(params)
 
 ### Reference
 
-[https://github.com/EligibleAPI/tools/wiki/Claims](https://github.com/EligibleAPI/tools/wiki/Claims)
+[https://github.com/eligible/tools/wiki/Claims](https://github.com/eligible/tools/wiki/Claims)
 
 ### Create Claim object
 
@@ -450,7 +450,7 @@ claim = Eligible::Claim.get(params) # returns acknoweldement information on an i
 
 ### Reference
 
-[https://eligibleapi.com/rest-api-v1-1/beta/payment-status#apiPaymentStatus](https://eligibleapi.com/rest-api-v1-1/beta/payment-status#apiPaymentStatus)
+[https://eligible.com/rest-api-v1-1/beta/payment-status#apiPaymentStatus](https://eligible.com/rest-api-v1-1/beta/payment-status#apiPaymentStatus)
 
 ### Retrieve  Payment status
 
@@ -498,7 +498,7 @@ result = Eligible::X12.post(params)
 ```ruby
 params = {:priority => 'normal',
           :title => 'TITLE',
-          :notification_email => 'admin@eligibleapi.com',
+          :notification_email => 'admin@eligible.com',
           :body => 'Your comment'}
 result = Eligible::Ticket.create params
 result.to_hash # return the api call results
