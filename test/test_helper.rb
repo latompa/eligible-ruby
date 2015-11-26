@@ -1,6 +1,9 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'eligible'
 
+require 'test/unit'
+require 'mocha/test_unit'
+
 module Eligible
   @mock_rest_client = nil
 
