@@ -44,7 +44,7 @@ def test_response(body, code=200)
 end
 
 def test_invalid_api_key_error
-  { "error" => [{ "message" => "Could not authenticate you. Please re-try with a valid API key.", "code" => 1 }] }
+  "Could not authenticate you. Please re-try with a valid API key."
 end
 
 def test_plan_missing_params

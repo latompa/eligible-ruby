@@ -32,7 +32,7 @@ class TestEligible < Test::Unit::TestCase
     should 'specifying invalid api credentials should raise an exception' do
       Eligible.api_key = 'invalid'
       response = test_response(test_invalid_api_key_error, 401)
-      assert_raises Eligible::AuthenticationError do
+      assert_raises Eligible::APIError.new('Invalid response object from API: "Could not authenticate you. Please re-try with a valid API key." (HTTP response code was 401)') do
         @mock.expects(:get).once.raises(RestClient::ExceptionWithResponse.new(response, 401))
         Eligible::Coverage.get({})
       end
