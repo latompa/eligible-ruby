@@ -1,5 +1,7 @@
 # Eligible
 
+[![Circle CI](https://circleci.com/gh/eligible/eligible-ruby.svg?style=svg)](https://circleci.com/gh/eligible/eligible-ruby)
+
 Ruby bindings for the [Eligible](https://eligible.com/rest-api-v1)
 
 ## Installation
