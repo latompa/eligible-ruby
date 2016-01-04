@@ -1,18 +1,16 @@
 module Eligible
-
   class EligibleObject
     include Enumerable
 
     attr_accessor :api_key
     attr_accessor :eligible_id
+    # rubocop:disable Style/ClassVars
     @@permanent_attributes = Set.new([:api_key, :error, :balance, :address, :dob])
 
     # The default :id method is deprecated and isn't useful to us
-    if method_defined?(:id)
-      undef :id
-    end
+    undef :id if method_defined?(:id)
 
-    def initialize(id=nil, api_key=nil)
+    def initialize(id = nil, api_key = nil)
       @api_key = api_key
       @values = {}
       # This really belongs in APIResource, but not putting it there allows us
@@ -22,13 +20,14 @@ module Eligible
       self.eligible_id = id if id
     end
 
-    def self.construct_from(values, api_key=nil)
-      obj = self.new(values[:eligible_id], api_key)
+    def self.construct_from(values, api_key = nil)
+      obj = new(values[:eligible_id], api_key)
       obj.refresh_from(values, api_key)
       obj
     end
 
-    def refresh_from(values, api_key, partial=false)
+    # rubocop:disable Metrics/AbcSize
+    def refresh_from(values, api_key, partial = false)
       @api_key = api_key
 
       removed = partial ? Set.new : Set.new(@values.keys - values.keys)
@@ -54,7 +53,7 @@ module Eligible
     end
 
     def [](k)
-      k = k.to_sym if k.kind_of?(String)
+      k = k.to_sym if k.is_a?(String)
       @values[k]
     end
 
@@ -70,7 +69,7 @@ module Eligible
       @values.values
     end
 
-    def to_json(*a)
+    def to_json
       Eligible::JSON.dump(@values)
     end
 
@@ -90,7 +89,7 @@ module Eligible
 
     def metaclass
       class << self; self; end
-    end    
+    end
 
     def remove_accessors(keys)
       metaclass.instance_eval do
@@ -115,7 +114,6 @@ module Eligible
           end
         end
       end
-    end    
+    end
   end
-
 end
