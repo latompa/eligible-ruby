@@ -91,7 +91,7 @@ module Eligible
     fail AuthenticationError, 'No API key provided. (HINT: set your API key using "Eligible.api_key = <API-KEY>".' unless api_key
 
     lang_version = "#{RUBY_VERSION} p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE})"
-    ua = {
+    debug_info = {
       bindings_version: Eligible::VERSION,
       lang: 'ruby',
       lang_version: lang_version,
@@ -117,16 +117,16 @@ module Eligible
     end
 
     begin
-      headers = { x_eligible_client_user_agent: Eligible::JSON.dump(ua) }.merge(headers)
+      headers = { x_eligible_debuginfo: Eligible::JSON.dump(debug_info) }.merge(headers)
     rescue => e
       headers = {
-        x_eligible_client_raw_user_agent: ua.inspect,
+        x_eligible_client_raw_user_agent: debug_info.inspect,
         error: "#{e} (#{e.class})"
       }.merge(headers)
     end
 
     headers = {
-      user_agent: "Eligible/v1 RubyBindings/#{Eligible::VERSION}",
+      user_agent: "eligible-ruby/#{Eligible::VERSION}",
       authorization: "Bearer #{api_key}",
       content_type: 'application/x-www-form-urlencoded'
     }.merge(headers)
