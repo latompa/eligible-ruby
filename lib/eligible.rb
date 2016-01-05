@@ -129,12 +129,12 @@ module Eligible
       headers: headers,
       open_timeout: 30,
       payload: payload,
-      timeout: 80
+      timeout: 80,
+      ssl_verify_callback: verify_certificate
     }
 
     begin
       response = execute_request(opts)
-
     rescue SocketError => e
       handle_restclient_error(e)
     rescue NoMethodError => e
@@ -172,6 +172,20 @@ module Eligible
 
     resp = Util.symbolize_names(resp)
     [resp, api_key]
+  end
+
+  def self.verify_certificate
+    lambda do |preverify_ok, certificate_store|
+      return true if test == 'true'
+      return false unless preverify_ok
+      received = certificate_store.chain.first
+      return true unless received.to_der == certificate_store.current_cert.to_der
+      valid_fingerprint?(received)
+    end
+  end
+
+  def self.valid_fingerprint?(received)
+    OpenSSL::Digest::SHA1.hexdigest(received.to_der) == '79d62e8a9d59ae687372f8e71345c76d92527fac'
   end
 
   private

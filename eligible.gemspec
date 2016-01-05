@@ -16,11 +16,12 @@ Gem::Specification.new do |gem|
   gem.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   gem.require_paths = ['lib']
 
-  gem.add_dependency('rest-client', '~> 1.6')
+  gem.add_dependency('rest-client', '~> 1.8')
   gem.add_dependency('multi_json', '~> 1.7')
 
   gem.add_development_dependency('rake')
   gem.add_development_dependency('test-unit')
+  gem.add_development_dependency('rspec')
   gem.add_development_dependency('mocha')
   gem.add_development_dependency('shoulda')
   gem.add_development_dependency('rubocop')

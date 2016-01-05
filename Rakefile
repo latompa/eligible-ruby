@@ -1,6 +1,9 @@
 require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'rubocop/rake_task'
+require 'rspec/core/rake_task'
+
+RSpec::Core::RakeTask.new(:spec)
 
 desc 'Run RuboCop on the lib directory'
 RuboCop::RakeTask.new(:rubocop) do |task|
@@ -10,4 +13,4 @@ end
 
 Rake::TestTask.new(:test)
 
-task default: [:rubocop, :test]
+task default: [:rubocop, :test, :spec]
