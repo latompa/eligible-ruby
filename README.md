@@ -2,7 +2,7 @@
 
 [![Circle CI](https://circleci.com/gh/eligible/eligible-ruby.svg?style=svg)](https://circleci.com/gh/eligible/eligible-ruby)
 
-Ruby bindings for the [Eligible](https://eligible.com/rest-api-v1)
+Ruby bindings for the [Eligible API](https://eligible.com/rest)
 
 ## Installation
 
@@ -18,12 +18,43 @@ Or install it yourself with:
 
     $ gem install eligible
 
+## Usage
+
+### Setup
+```ruby
+require 'eligible'
+Eligible.api_key = 'YOUR_KEY'
+```
+
+### Test
+```ruby
+Eligible.test = true
+```
+
+### Parameters overwrite
+
+On each api call, you can overwrite the api key or the test parameter:
+
+```ruby
+Eligible::Demographic.get({:api_key => 'NEW_KEY', :test => false})
+```
+
+### Response Format
+
+By default, all the responses came in JSON, but you can request raw
+access to X12 by adding is as a parameter on the api call:
+
+```ruby
+   Eligible::Demographic.get({:format => "x12"})
+```
+
 # Important notes
 
 ## Payer List for Eligibility
 
-the parameter *payer_id*, required for most of the api calls, is provided by Eligible from its website,
-in xml and json format, which you can embed into your applications.
+the parameter *payer_id*, required for most of the api calls, is
+provided by Eligible from its website, in xml and json format, which
+you can embed into your applications.
 
 [https://eligible.com/resources/information-sources.xml](https://eligible.com/resources/information-sources.xml)
 [https://eligible.com/resources/information-sources.json](https://eligible.com/resources/information-sources.json)
@@ -50,36 +81,6 @@ https://eligible.com/resources/service-codes.json](ttps://eligible.com/resources
 ## Health Care Provider Taxonomy
 
 [https://eligible.com/resources/health-care-provider-taxonomy-code-set.json](https://eligible.com/resources/health-care-provider-taxonomy-code-set.json)
-
-
-# Usage
-
-### Setup
-```ruby
-    require 'eligible'
-    Eligible.api_key = 'YOUR_KEY'
-```
-
-### Test
-```ruby
-Eligible.test = true
-```
-
-### Parameters overwrite
-
-On each api call, you can overwrite the api key or the test parameter, i.e.
-
-```ruby
-   Eligible::Demographic.get({:api_key => 'NEW_KEY', :test => false})
-```
-
-### Response Format
-
-By default, all the responses came in JSON, but you can request raw access to X12 by adding is as a parameter on the api call.
-
-```ruby
-   Eligible::Demographic.get({:format => "x12"})
-```
 
 ### Api Call Results
 
@@ -551,18 +552,12 @@ comments.error   # return error, if any
 Eligible::Ticket.all
 ```
 
-
-# Tests
-
-You can run tests with 
-
-```ruby
-rake test
-```
-
-If you do send a pull request, please add passing tests for the new feature/fix.
-
 ## Contributing
+
+Running `rake` will run the test suite along with rubocop as a basic
+style assessment. If you are going to submit a pull request, please
+verify that all tests pass and there are no rubocop errors. Please add
+additional tests for any features or fixes provided.
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
@@ -572,6 +567,11 @@ If you do send a pull request, please add passing tests for the new feature/fix.
 6. Create new Pull Request
 
 ## Changelog
+
+#### 2.5.0
+- Added certificate pinning
+- Added rubocop and fixed style/linting/metrics issues
+- Migrated from outdated test-unit/mocha to current rspec for test suite
 
 #### 2.4
 - Refactoring Code
@@ -590,7 +590,7 @@ If you do send a pull request, please add passing tests for the new feature/fix.
 #### 2.2
 - New endpoint for x12 POST
 
-#### 2.1 
+#### 2.1
 - New endpoint for payment status
 
 #### 2.0

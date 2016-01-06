@@ -28,13 +28,15 @@ require 'eligible/errors/authentication_error'
 require 'eligible/errors/api_error'
 require 'eligible/errors/invalid_request_error'
 
+# rubocop:disable Metrics/ModuleLength, Style/ClassVars
 module Eligible
   @@api_key = nil
   @@test = false
   @@api_base = 'https://gds.eligibleapi.com/v1.1'
   @@api_version = 1.1
+  @@fingerprint = '79d62e8a9d59ae687372f8e71345c76d92527fac'
 
-  def self.api_url(url='')
+  def self.api_url(url = '')
     @@api_base + url.to_s
   end
 
@@ -70,87 +72,98 @@ module Eligible
     @@api_version
   end
 
-  def self.request(method, url, api_key, params={}, headers={})
+  def self.fingerprint
+    @@fingerprint
+  end
+
+  def self.fingerprint=(digest)
+    $stderr.puts 'The embedded certificate fingerprint was modified. This should only be done if instructed to by eligible support staff'
+    @@fingerprint = digest
+  end
+
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def self.request(method, url, api_key, params = {}, headers = {})
     api_key ||= @@api_key
     test = self.test
-    api_key = params[:api_key] if params.has_key?(:api_key)
-    test = params[:test] if params.has_key?(:test)
+    api_key = params[:api_key] if params.key?(:api_key)
+    test = params[:test] if params.key?(:test)
 
-    raise AuthenticationError.new('No API key provided. (HINT: set your API key using "Eligible.api_key = <API-KEY>".') unless api_key
+    fail AuthenticationError, 'No API key provided. (HINT: set your API key using "Eligible.api_key = <API-KEY>".' unless api_key
 
     lang_version = "#{RUBY_VERSION} p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE})"
-    ua = {
-      :bindings_version => Eligible::VERSION,
-      :lang => 'ruby',
-      :lang_version => lang_version,
-      :platform => RUBY_PLATFORM,
-      :publisher => 'eligible',
-      :uname => uname
+    debug_info = {
+      bindings_version: Eligible::VERSION,
+      lang: 'ruby',
+      lang_version: lang_version,
+      platform: RUBY_PLATFORM,
+      publisher: 'eligible',
+      uname: uname
     }
 
     # GET requests, parameters on the query string
     # POST requests, parameters as json in the body
-    url = self.api_url(url)
+    url = api_url(url)
     case method.to_s.downcase.to_sym
-      when :get, :head
-        url += "?api_key=#{api_key}"
-        if params && params.count > 0
-          query_string = Util.flatten_params(params).collect { |key, value| "#{key}=#{Util.url_encode(value)}" }.join('&')
-          url += "&#{query_string}"
-        end
-        url +="&test=#{test}"
-        payload = nil
-      else
-        payload = Eligible::JSON.dump(params.merge!({ 'api_key' => api_key, 'test' => test }))
+    when :get, :head
+      url += "?api_key=#{api_key}"
+      if params && params.count > 0
+        query_string = Util.flatten_params(params).collect { |key, value| "#{key}=#{Util.url_encode(value)}" }.join('&')
+        url += "&#{query_string}"
+      end
+      url += "&test=#{test}"
+      payload = nil
+    else
+      payload = Eligible::JSON.dump(params.merge!('api_key' => api_key, 'test' => test))
     end
 
     begin
-      headers = { :x_eligible_client_user_agent => Eligible::JSON.dump(ua) }.merge(headers)
+      headers = { x_eligible_debuginfo: Eligible::JSON.dump(debug_info) }.merge(headers)
     rescue => e
       headers = {
-        :x_eligible_client_raw_user_agent => ua.inspect,
-        :error => "#{e} (#{e.class})"
+        x_eligible_client_raw_user_agent: debug_info.inspect,
+        error: "#{e} (#{e.class})"
       }.merge(headers)
     end
 
     headers = {
-      :user_agent => "Eligible/v1 RubyBindings/#{Eligible::VERSION}",
-      :authorization => "Bearer #{api_key}",
-      :content_type => 'application/x-www-form-urlencoded'
+      user_agent: "eligible-ruby/#{Eligible::VERSION}",
+      authorization: "Bearer #{api_key}",
+      content_type: 'application/x-www-form-urlencoded'
     }.merge(headers)
 
-    headers[:eligible_version] = self.api_version if self.api_version
+    headers[:eligible_version] = api_version if api_version
 
     opts = {
-      :method => method,
-      :url => url,
-      :headers => headers,
-      :open_timeout => 30,
-      :payload => payload,
-      :timeout => 80
+      method: method,
+      url: url,
+      headers: headers,
+      open_timeout: 30,
+      payload: payload,
+      timeout: 80,
+      ssl_verify_callback: verify_certificate
     }
 
     begin
       response = execute_request(opts)
-
     rescue SocketError => e
-      self.handle_restclient_error(e)
+      handle_restclient_error(e)
     rescue NoMethodError => e
       # Work around RestClient bug
       if e.message =~ /\WRequestFailed\W/
         e = APIConnectionError.new('Unexpected HTTP response code')
-        self.handle_restclient_error(e)
+        handle_restclient_error(e)
       else
         raise
       end
+    # rubocop:disable Lint/AssignmentInCondition, Style/AndOr
     rescue RestClient::ExceptionWithResponse => e
       if rcode = e.http_code and rbody = e.http_body
-        self.handle_api_error(rcode, rbody)
+        handle_api_error(rcode, rbody)
       else
-        self.handle_restclient_error(e)
+        handle_restclient_error(e)
       end
     rescue RestClient::Exception, Errno::ECONNREFUSED => e
-      self.handle_restclient_error(e)
+      handle_restclient_error(e)
     end
 
     rbody = response.body
@@ -171,6 +184,20 @@ module Eligible
     [resp, api_key]
   end
 
+  def self.verify_certificate
+    lambda do |preverify_ok, certificate_store|
+      return true if test == 'true'
+      return false unless preverify_ok
+      received = certificate_store.chain.first
+      return true unless received.to_der == certificate_store.current_cert.to_der
+      valid_fingerprint?(received)
+    end
+  end
+
+  def self.valid_fingerprint?(received)
+    OpenSSL::Digest::SHA1.hexdigest(received.to_der) == fingerprint
+  end
+
   private
 
   def self.uname
@@ -181,24 +208,26 @@ module Eligible
     RestClient::Request.execute(opts)
   end
 
+  # rubocop:disable Style/SignalException
   def self.handle_api_error(rcode, rbody)
     begin
       error_obj = Eligible::JSON.load(rbody)
       error_obj = Util.symbolize_names(error_obj)
-      error = error_obj[:error] or raise EligibleError.new # escape from parsing
+      fail EligibleError unless error_obj.key?(:error)
+      error = error_obj[:error]
     rescue MultiJson::DecodeError, EligibleError
       raise APIError.new("Invalid response object from API: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
     end
 
-    error_msg = error[:details] or error[:reject_reason_description]
+    error_msg = error[:details] || error[:reject_reason_description]
 
     case rcode
-      when 400, 404 then
-        raise invalid_request_error(error_msg, rcode, rbody, error_obj)
-      when 401
-        raise authentication_error(error_msg, rcode, rbody, error_obj)
-      else
-        raise api_error(error_msg, rcode, rbody, error_obj)
+    when 400, 404 then
+      raise invalid_request_error(error_msg, rcode, rbody, error_obj)
+    when 401
+      raise authentication_error(error_msg, rcode, rbody, error_obj)
+    else
+      raise api_error(error_msg, rcode, rbody, error_obj)
     end
   end
 
@@ -216,18 +245,15 @@ module Eligible
 
   def self.handle_restclient_error(e)
     case e
-      when RestClient::ServerBrokeConnection, RestClient::RequestTimeout
-        message = "Could not connect to Eligible (#{@@api_base}).  Please check your internet connection and try again."
-      when RestClient::SSLCertificateNotVerified
-        message = "Could not verify Eligible's SSL certificate."
-      when SocketError
-        message = 'Unexpected error communicating when trying to connect to Eligible.'
-      else
-        message = 'Unexpected error communicating with Eligible. If this problem persists, let us know at support@eligible.com.'
+    when RestClient::ServerBrokeConnection, RestClient::RequestTimeout
+      message = "Could not connect to Eligible (#{@@api_base}).  Please check your internet connection and try again."
+    when RestClient::SSLCertificateNotVerified
+      message = "Could not verify Eligible's SSL certificate."
+    when SocketError
+      message = 'Unexpected error communicating when trying to connect to Eligible.'
+    else
+      message = 'Unexpected error communicating with Eligible. If this problem persists, let us know at support@eligible.com.'
     end
-    message += "\n\n(Network error: #{e.message})"
-    raise APIConnectionError.new(message)
+    fail APIConnectionError, "#{message}\n\n(Network error: #{e.message})"
   end
-
 end
-
