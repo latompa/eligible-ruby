@@ -13,7 +13,7 @@ describe Eligible do
     end
 
     it 'warns when the fingerprint is overridden' do
-      expect { Eligible.fingerprint='foo' }.to output("The embedded certificate fingerprint was modified. This should only be done if instructed to by eligible support staff\n").to_stderr
+      expect { Eligible.add_fingerprint('foo') }.to output("The embedded certificate fingerprint was modified. This should only be done if instructed to by eligible support staff\n").to_stderr
     end
 
     it 'raises an error when api credentials are not provided' do
