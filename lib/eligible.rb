@@ -32,8 +32,8 @@ require 'eligible/errors/invalid_request_error'
 module Eligible
   @@api_key = nil
   @@test = false
-  @@api_base = 'https://gds.eligibleapi.com/v1.1'
   @@api_version = 1.1
+  @@api_base = "https://gds.eligibleapi.com/v#{@@api_version}"
   @@fingerprint = '79d62e8a9d59ae687372f8e71345c76d92527fac'
 
   def self.api_url(url = '')

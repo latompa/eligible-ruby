@@ -1,7 +1,7 @@
 module Eligible
   class APIResource < EligibleObject
     def self.class_name
-      name.split('::')[-1]
+      name.split('::').last
     end
 
     def self.url
