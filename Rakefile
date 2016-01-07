@@ -11,6 +11,4 @@ RuboCop::RakeTask.new(:rubocop) do |task|
   task.fail_on_error = false
 end
 
-Rake::TestTask.new(:test)
-
-task default: [:rubocop, :test, :spec]
+task default: [:rubocop, :spec]

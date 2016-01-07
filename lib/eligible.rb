@@ -32,9 +32,9 @@ require 'eligible/errors/invalid_request_error'
 module Eligible
   @@api_key = nil
   @@test = false
-  @@api_base = 'https://gds.eligibleapi.com/v1.1'
   @@api_version = 1.1
-  @@fingerprint = '79d62e8a9d59ae687372f8e71345c76d92527fac'
+  @@api_base = "https://gds.eligibleapi.com/v#{@@api_version}"
+  @@fingerprints = %w(79d62e8a9d59ae687372f8e71345c76d92527fac 4b2c6888ede79d0ee47339dc6fab5a6d0dc3cb0e)
 
   def self.api_url(url = '')
     @@api_base + url.to_s
@@ -72,13 +72,13 @@ module Eligible
     @@api_version
   end
 
-  def self.fingerprint
-    @@fingerprint
+  def self.fingerprints
+    @@fingerprints
   end
 
-  def self.fingerprint=(digest)
+  def self.add_fingerprint(digest)
     $stderr.puts 'The embedded certificate fingerprint was modified. This should only be done if instructed to by eligible support staff'
-    @@fingerprint = digest
+    @@fingerprints << digest
   end
 
   # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
@@ -195,7 +195,7 @@ module Eligible
   end
 
   def self.valid_fingerprint?(received)
-    OpenSSL::Digest::SHA1.hexdigest(received.to_der) == fingerprint
+    fingerprints.include?(OpenSSL::Digest::SHA1.hexdigest(received.to_der))
   end
 
   private

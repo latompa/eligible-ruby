@@ -41,38 +41,41 @@ Eligible::Demographic.get({:api_key => 'NEW_KEY', :test => false})
 
 ### Response Format
 
-By default, all the responses came in JSON, but you can request raw
+By default, all responses are in JSON, but you can request raw
 access to X12 by adding is as a parameter on the api call:
 
 ```ruby
-   Eligible::Demographic.get({:format => "x12"})
+Eligible::Demographic.get({:format => "x12"})
 ```
 
 # Important notes
 
 ## Payer List for Eligibility
 
-the parameter *payer_id*, required for most of the api calls, is
+the parameter `payer_id`, required for most of the api calls, is
 provided by Eligible from its website, in xml and json format, which
 you can embed into your applications.
 
-[https://eligible.com/resources/information-sources.xml](https://eligible.com/resources/information-sources.xml)
+[https://eligible.com/resources/information-sources.xml](https://eligible.com/resources/information-sources.xml)  
 [https://eligible.com/resources/information-sources.json](https://eligible.com/resources/information-sources.json)
 
 ## Payer List for Claims
 
-the parameter *payer_id*, required for claims, is provided by Eligible from its website,
-in xml and json format, which you can embed into your applications.
+the parameter `payer_id`, required for claims, is provided by Eligible
+from its website, in xml and json format, which you can embed into
+your applications.
 
-[https://eligible.com/resources/claims-payer.xml](https://eligible.com/resources/claims-payer.xml)
+[https://eligible.com/resources/claims-payer.xml](https://eligible.com/resources/claims-payer.xml)  
 [https://eligible.com/resources/claims-payer.json](https://eligible.com/resources/claims-payer.json)
 
 ## Service Type Codes
 
-the parameter *service_type*, required on the api calls, is provided by Eligible from its website,
-in xml and json format, which you can embed into your applications.
-[https://eligible.com/resources/service-codes.xml](https://eligible.com/resources/service-codes.xml)
-https://eligible.com/resources/service-codes.json](ttps://eligible.com/resources/service-codes.json)
+the parameter `service_type`, required on the api calls, is provided
+by Eligible from its website, in xml and json format, which you can
+embed into your applications.
+
+[https://eligible.com/resources/service-codes.xml](https://eligible.com/resources/service-codes.xml)  
+[https://eligible.com/resources/service-codes.json](ttps://eligible.com/resources/service-codes.json)
 
 ## Place of Service
 
@@ -84,7 +87,8 @@ https://eligible.com/resources/service-codes.json](ttps://eligible.com/resources
 
 ### Api Call Results
 
-On all the results, you can check for errors in *result.error*, you can get get the raw json format in a has by using *result.to_hash*.
+On all results you can check for errors in `result.error`. The raw
+json format is available by using `result.to_hash`.
 
 ```ruby
 demographic = Eligible::Demographic.get(params)
@@ -96,9 +100,9 @@ demographic.to_hash
 
 ### Reference
 
-[https://eligible.com/rest-api-v1-1/coverage-all#apiCoverageInfo](https://eligible.com/rest-api-v1-1/coverage-all#apiCoverageInfo)
+[https://eligible.com/rest#coverage](https://eligible.com/rest#coverage)
 
-### Retrieve eligibility & benefit information
+### Retrieve eligibility and benefit information
 
 ```ruby
 params = {
@@ -123,7 +127,7 @@ coverage.error   # return error, if any
 
 ### Reference
 
-[https://eligible.com/rest-api-v1-1/demographic-all#apiDemographics](https://eligible.com/rest-api-v1-1/demographic-all#apiDemographics)
+[https://eligible.com/rest#demographics](https://eligible.com/rest#demographics)
 
 ### Fetch demographics for a patient
 
@@ -147,11 +151,7 @@ demographic.error   # return error, if any
 
 ## Medicare
 
-### Reference
-
-[https://github.com/Eligible/tools/wiki/Medicare](https://github.com/eligible/tools/wiki/Medicare)
-
-### Retrieve eligibility & benefit information from CMS Medicare for a patient.
+### Retrieve eligibility and benefit information from CMS Medicare for a patient.
 
 ```ruby
 params = {
@@ -167,20 +167,15 @@ params = {
 medicare = Eligible::Medicare.get(params)
 medicare.to_hash # returns all coverage info for the request
 medicare.error   # return error, if any
-
 ```
 
 ## Batch API
 
-### Reference
-
-[https://github.com/Eligible/tools/wiki/Batch-Api](https://github.com/ligible/tools/wiki/Batch-Api)
-
-Its important to notice that all the batch api calls, will notify the results by a webhook.
-
-You can setup a webhook in your [Dashboard](https://ligible.com/dashboard/webhooks).
-
-All the batch api calls, returns a *reference_id* value and the *number_of_items* submitted.
+All the batch api calls will notify the results via webhook. You can
+setup a webhook in your
+[Dashboard](https://ligible.com/dashboard/webhooks). All batch api
+calls return a *reference_id* value and the *number_of_items*
+submitted.
 
 ### Coverage Batch API
 
@@ -291,12 +286,9 @@ result.error   # return error, if any
 
 ## Enrollment
 
-### Reference
-
-[https://github.com/eligible/tools/wiki/Enrollments](https://github.com/eligible/tools/wiki/Enrollments)
-
-Its important to notice than an Enrollment Request can have multiple Enrollment NPIs, and that the API has been designed
-in a way that you can repeat the enrollment for a NPI multiple times across different Enrollment request.
+Enrollment requests can have multiple enrollment NPIs. You can repeat
+the enrollment for a NPI multiple times across different enrollment
+requests.
 
 ### Create an Enrollment Request
 
@@ -334,7 +326,6 @@ params = {
 result = Eligible::Enrollment.post(params)
 result.to_hash # returns the api call results
 result.error   # return error, if any
-
 ```
 
 ### Retrieve an Enrollment Request
@@ -348,15 +339,9 @@ enrollment.enrollment_npis # quick access to the enrollment npis within the enro
 
 params = { :npis => %w(123 456 789).join(',') }
 enrollment = Eligible::Enrollment.get(params)
-
 ```
 
-
 ## Claims
-
-### Reference
-
-[https://github.com/eligible/tools/wiki/Claims](https://github.com/eligible/tools/wiki/Claims)
 
 ### Create Claim object
 
@@ -436,24 +421,24 @@ enrollment.error  # return error, if any
 ### Retrieve all Claim objects/acknowledgments
 
 ```ruby
-claims = Eligible::Claim.all # returns acknowlegdement information for all claims that have been submitted with the API key
+claims = Eligible::Claim.all # returns acknowledgment information for all claims that have been submitted with the API key
 ```
 
 ### Retrieve individual Claim object/acknowledgment
 
 ```ruby
-params = { 
+params = {
   :reference_id => "12345"
 }
 
-claim = Eligible::Claim.get(params) # returns acknoweldement information on an individual claim identified by its reference_id
+claim = Eligible::Claim.get(params) # returns acknowledgment information on an individual claim identified by its reference_id
 ```
 
 ## Payment Status
 
 ### Reference
 
-[https://eligible.com/rest-api-v1-1/beta/payment-status#apiPaymentStatus](https://eligible.com/rest-api-v1-1/beta/payment-status#apiPaymentStatus)
+[https://eligible.com/rest#payment-status](https://eligible.com/rest#payment-status)
 
 ### Retrieve  Payment status
 
@@ -478,10 +463,6 @@ result.error     # return error, if any
 
 ## X12
 
-### Reference
-
-[https://github.com/EligibleAPI/tools/wiki/X12](https://github.com/EligibleAPI/tools/wiki/X12)
-
 ### X12 post
 
 ```ruby
@@ -491,10 +472,6 @@ result = Eligible::X12.post(params)
 ```
 
 ## Tickets
-
-### Reference
-
-[https://github.com/EligibleAPI/tools/wiki/Tickets](https://github.com/EligibleAPI/tools/wiki/Tickets)
 
 ### Create a ticket
 
@@ -545,7 +522,6 @@ comments.to_hash # return the api call result
 comments.error   # return error, if any
 ```
 
-
 ### Get all tickets
 
 ```ruby
@@ -565,43 +541,3 @@ additional tests for any features or fixes provided.
 4. Run tests (see above)
 5. Push to the branch (`git push origin my-new-feature`)
 6. Create new Pull Request
-
-## Changelog
-
-#### 2.5.0
-- Added certificate pinning
-- Added rubocop and fixed style/linting/metrics issues
-- Migrated from outdated test-unit/mocha to current rspec for test suite
-
-#### 2.4
-- Refactoring Code
-- More test cases
-- Removed legacy endpoint for *plans*, *coverage* should be used instead.
-- Removed legacy endpoint for *services*, *coverage* should be used instead.
-- List of contributors and documentation updated.
-- Gemfile updated, dependencies updated as well.
-- Removed json gem in favor of multi_json
-- Fixed the code to let the users make x12 requests at anytime.
-- New endpoint for Tickets
-
-#### 2.3
-- New endpoint for Batch
-
-#### 2.2
-- New endpoint for x12 POST
-
-#### 2.1
-- New endpoint for payment status
-
-#### 2.0
-
-- Additional endpoints for claims, enrollments, and coverage
-
-#### 1.1
-
-- Additional endpoints for service/general and service/list
-- Support x12 format in params
-
-#### 1.0
-
-- Initial release
