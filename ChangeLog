@@ -1,0 +1,51 @@
+2016-01-07  Eligible  <support@eligible.com>
+
+	* 2.5.0
+	- Added certificate pinning
+	- Added rubocop and fixed style/linting/metrics issues
+	- Migrated from outdated test-unit/mocha to current rspec for test suite
+
+0000-00-00  Eligible  <support@eligible.com>
+
+	* 2.4
+	- Refactoring Code
+	- More test cases
+	- Removed legacy endpoint for *plans*, *coverage* should be used instead.
+	- Removed legacy endpoint for *services*, *coverage* should be used instead.
+	- List of contributors and documentation updated.
+	- Gemfile updated, dependencies updated as well.
+	- Removed json gem in favor of multi_json
+	- Fixed the code to let the users make x12 requests at anytime.
+	- New endpoint for Tickets
+
+0000-00-00  Eligible  <support@eligible.com>
+
+	* 2.3
+	- New endpoint for Batch
+
+0000-00-00  Eligible  <support@eligible.com>
+
+	* 2.2
+	- New endpoint for x12 POST
+
+0000-00-00  Eligible  <support@eligible.com>
+
+	* 2.1
+	- New endpoint for payment status
+
+0000-00-00  Eligible  <support@eligible.com>
+
+	* 2.0
+	- Additional endpoints for claims, enrollments, and coverage
+
+0000-00-00  Eligible  <support@eligible.com>
+
+	* 1.1
+	- Additional endpoints for service/general and service/list
+	- Support x12 format in params
+
+0000-00-00  Eligible  <support@eligible.com>
+
+	* 1.0
+	- Initial release
+

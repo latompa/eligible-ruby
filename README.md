@@ -52,30 +52,30 @@ Eligible::Demographic.get({:format => "x12"})
 
 ## Payer List for Eligibility
 
-the parameter *payer_id*, required for most of the api calls, is
+the parameter `payer_id`, required for most of the api calls, is
 provided by Eligible from its website, in xml and json format, which
 you can embed into your applications.
 
-[https://eligible.com/resources/information-sources.xml](https://eligible.com/resources/information-sources.xml)
+[https://eligible.com/resources/information-sources.xml](https://eligible.com/resources/information-sources.xml)  
 [https://eligible.com/resources/information-sources.json](https://eligible.com/resources/information-sources.json)
 
 ## Payer List for Claims
 
-the parameter *payer_id*, required for claims, is provided by Eligible
+the parameter `payer_id`, required for claims, is provided by Eligible
 from its website, in xml and json format, which you can embed into
 your applications.
 
-[https://eligible.com/resources/claims-payer.xml](https://eligible.com/resources/claims-payer.xml)
+[https://eligible.com/resources/claims-payer.xml](https://eligible.com/resources/claims-payer.xml)  
 [https://eligible.com/resources/claims-payer.json](https://eligible.com/resources/claims-payer.json)
 
 ## Service Type Codes
 
-the parameter *service_type*, required on the api calls, is provided
+the parameter `service_type`, required on the api calls, is provided
 by Eligible from its website, in xml and json format, which you can
 embed into your applications.
 
-[https://eligible.com/resources/service-codes.xml](https://eligible.com/resources/service-codes.xml)
-https://eligible.com/resources/service-codes.json](ttps://eligible.com/resources/service-codes.json)
+[https://eligible.com/resources/service-codes.xml](https://eligible.com/resources/service-codes.xml)  
+[https://eligible.com/resources/service-codes.json](ttps://eligible.com/resources/service-codes.json)
 
 ## Place of Service
 
@@ -87,8 +87,8 @@ https://eligible.com/resources/service-codes.json](ttps://eligible.com/resources
 
 ### Api Call Results
 
-On all results you can check for errors in *result.error*. The raw
-json format is available by using *result.to_hash*.
+On all results you can check for errors in `result.error`. The raw
+json format is available by using `result.to_hash`.
 
 ```ruby
 demographic = Eligible::Demographic.get(params)
@@ -565,43 +565,3 @@ additional tests for any features or fixes provided.
 4. Run tests (see above)
 5. Push to the branch (`git push origin my-new-feature`)
 6. Create new Pull Request
-
-## Changelog
-
-#### 2.5.0
-- Added certificate pinning
-- Added rubocop and fixed style/linting/metrics issues
-- Migrated from outdated test-unit/mocha to current rspec for test suite
-
-#### 2.4
-- Refactoring Code
-- More test cases
-- Removed legacy endpoint for *plans*, *coverage* should be used instead.
-- Removed legacy endpoint for *services*, *coverage* should be used instead.
-- List of contributors and documentation updated.
-- Gemfile updated, dependencies updated as well.
-- Removed json gem in favor of multi_json
-- Fixed the code to let the users make x12 requests at anytime.
-- New endpoint for Tickets
-
-#### 2.3
-- New endpoint for Batch
-
-#### 2.2
-- New endpoint for x12 POST
-
-#### 2.1
-- New endpoint for payment status
-
-#### 2.0
-
-- Additional endpoints for claims, enrollments, and coverage
-
-#### 1.1
-
-- Additional endpoints for service/general and service/list
-- Support x12 format in params
-
-#### 1.0
-
-- Initial release
