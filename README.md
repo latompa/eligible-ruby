@@ -41,11 +41,11 @@ Eligible::Demographic.get({:api_key => 'NEW_KEY', :test => false})
 
 ### Response Format
 
-By default, all the responses came in JSON, but you can request raw
+By default, all responses are in JSON, but you can request raw
 access to X12 by adding is as a parameter on the api call:
 
 ```ruby
-   Eligible::Demographic.get({:format => "x12"})
+Eligible::Demographic.get({:format => "x12"})
 ```
 
 # Important notes
@@ -61,16 +61,19 @@ you can embed into your applications.
 
 ## Payer List for Claims
 
-the parameter *payer_id*, required for claims, is provided by Eligible from its website,
-in xml and json format, which you can embed into your applications.
+the parameter *payer_id*, required for claims, is provided by Eligible
+from its website, in xml and json format, which you can embed into
+your applications.
 
 [https://eligible.com/resources/claims-payer.xml](https://eligible.com/resources/claims-payer.xml)
 [https://eligible.com/resources/claims-payer.json](https://eligible.com/resources/claims-payer.json)
 
 ## Service Type Codes
 
-the parameter *service_type*, required on the api calls, is provided by Eligible from its website,
-in xml and json format, which you can embed into your applications.
+the parameter *service_type*, required on the api calls, is provided
+by Eligible from its website, in xml and json format, which you can
+embed into your applications.
+
 [https://eligible.com/resources/service-codes.xml](https://eligible.com/resources/service-codes.xml)
 https://eligible.com/resources/service-codes.json](ttps://eligible.com/resources/service-codes.json)
 
@@ -84,7 +87,8 @@ https://eligible.com/resources/service-codes.json](ttps://eligible.com/resources
 
 ### Api Call Results
 
-On all the results, you can check for errors in *result.error*, you can get get the raw json format in a has by using *result.to_hash*.
+On all results you can check for errors in *result.error*. The raw
+json format is available by using *result.to_hash*.
 
 ```ruby
 demographic = Eligible::Demographic.get(params)
@@ -98,7 +102,7 @@ demographic.to_hash
 
 [https://eligible.com/rest-api-v1-1/coverage-all#apiCoverageInfo](https://eligible.com/rest-api-v1-1/coverage-all#apiCoverageInfo)
 
-### Retrieve eligibility & benefit information
+### Retrieve eligibility and benefit information
 
 ```ruby
 params = {
@@ -151,7 +155,7 @@ demographic.error   # return error, if any
 
 [https://github.com/Eligible/tools/wiki/Medicare](https://github.com/eligible/tools/wiki/Medicare)
 
-### Retrieve eligibility & benefit information from CMS Medicare for a patient.
+### Retrieve eligibility and benefit information from CMS Medicare for a patient.
 
 ```ruby
 params = {
@@ -167,7 +171,6 @@ params = {
 medicare = Eligible::Medicare.get(params)
 medicare.to_hash # returns all coverage info for the request
 medicare.error   # return error, if any
-
 ```
 
 ## Batch API
@@ -176,11 +179,11 @@ medicare.error   # return error, if any
 
 [https://github.com/Eligible/tools/wiki/Batch-Api](https://github.com/ligible/tools/wiki/Batch-Api)
 
-Its important to notice that all the batch api calls, will notify the results by a webhook.
-
-You can setup a webhook in your [Dashboard](https://ligible.com/dashboard/webhooks).
-
-All the batch api calls, returns a *reference_id* value and the *number_of_items* submitted.
+All the batch api calls will notify the results via webhook. You can
+setup a webhook in your
+[Dashboard](https://ligible.com/dashboard/webhooks). All batch api
+calls return a *reference_id* value and the *number_of_items*
+submitted.
 
 ### Coverage Batch API
 
@@ -295,8 +298,9 @@ result.error   # return error, if any
 
 [https://github.com/eligible/tools/wiki/Enrollments](https://github.com/eligible/tools/wiki/Enrollments)
 
-Its important to notice than an Enrollment Request can have multiple Enrollment NPIs, and that the API has been designed
-in a way that you can repeat the enrollment for a NPI multiple times across different Enrollment request.
+Enrollment requests can have multiple enrollment NPIs. You can repeat
+the enrollment for a NPI multiple times across different enrollment
+requests.
 
 ### Create an Enrollment Request
 
@@ -334,7 +338,6 @@ params = {
 result = Eligible::Enrollment.post(params)
 result.to_hash # returns the api call results
 result.error   # return error, if any
-
 ```
 
 ### Retrieve an Enrollment Request
@@ -348,9 +351,7 @@ enrollment.enrollment_npis # quick access to the enrollment npis within the enro
 
 params = { :npis => %w(123 456 789).join(',') }
 enrollment = Eligible::Enrollment.get(params)
-
 ```
-
 
 ## Claims
 
@@ -436,17 +437,17 @@ enrollment.error  # return error, if any
 ### Retrieve all Claim objects/acknowledgments
 
 ```ruby
-claims = Eligible::Claim.all # returns acknowlegdement information for all claims that have been submitted with the API key
+claims = Eligible::Claim.all # returns acknowledgment information for all claims that have been submitted with the API key
 ```
 
 ### Retrieve individual Claim object/acknowledgment
 
 ```ruby
-params = { 
+params = {
   :reference_id => "12345"
 }
 
-claim = Eligible::Claim.get(params) # returns acknoweldement information on an individual claim identified by its reference_id
+claim = Eligible::Claim.get(params) # returns acknowledgment information on an individual claim identified by its reference_id
 ```
 
 ## Payment Status
@@ -544,7 +545,6 @@ result = Eligible::Ticket.delete(:id => 1)
 comments.to_hash # return the api call result
 comments.error   # return error, if any
 ```
-
 
 ### Get all tickets
 
