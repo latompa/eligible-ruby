@@ -100,7 +100,7 @@ demographic.to_hash
 
 ### Reference
 
-[https://eligible.com/rest-api-v1-1/coverage-all#apiCoverageInfo](https://eligible.com/rest-api-v1-1/coverage-all#apiCoverageInfo)
+[https://eligible.com/rest#coverage](https://eligible.com/rest#coverage)
 
 ### Retrieve eligibility and benefit information
 
@@ -127,7 +127,7 @@ coverage.error   # return error, if any
 
 ### Reference
 
-[https://eligible.com/rest-api-v1-1/demographic-all#apiDemographics](https://eligible.com/rest-api-v1-1/demographic-all#apiDemographics)
+[https://eligible.com/rest#demographics](https://eligible.com/rest#demographics)
 
 ### Fetch demographics for a patient
 
@@ -151,10 +151,6 @@ demographic.error   # return error, if any
 
 ## Medicare
 
-### Reference
-
-[https://github.com/Eligible/tools/wiki/Medicare](https://github.com/eligible/tools/wiki/Medicare)
-
 ### Retrieve eligibility and benefit information from CMS Medicare for a patient.
 
 ```ruby
@@ -174,10 +170,6 @@ medicare.error   # return error, if any
 ```
 
 ## Batch API
-
-### Reference
-
-[https://github.com/Eligible/tools/wiki/Batch-Api](https://github.com/ligible/tools/wiki/Batch-Api)
 
 All the batch api calls will notify the results via webhook. You can
 setup a webhook in your
@@ -294,10 +286,6 @@ result.error   # return error, if any
 
 ## Enrollment
 
-### Reference
-
-[https://github.com/eligible/tools/wiki/Enrollments](https://github.com/eligible/tools/wiki/Enrollments)
-
 Enrollment requests can have multiple enrollment NPIs. You can repeat
 the enrollment for a NPI multiple times across different enrollment
 requests.
@@ -354,10 +342,6 @@ enrollment = Eligible::Enrollment.get(params)
 ```
 
 ## Claims
-
-### Reference
-
-[https://github.com/eligible/tools/wiki/Claims](https://github.com/eligible/tools/wiki/Claims)
 
 ### Create Claim object
 
@@ -454,7 +438,7 @@ claim = Eligible::Claim.get(params) # returns acknowledgment information on an i
 
 ### Reference
 
-[https://eligible.com/rest-api-v1-1/beta/payment-status#apiPaymentStatus](https://eligible.com/rest-api-v1-1/beta/payment-status#apiPaymentStatus)
+[https://eligible.com/rest#payment-status](https://eligible.com/rest#payment-status)
 
 ### Retrieve  Payment status
 
@@ -479,10 +463,6 @@ result.error     # return error, if any
 
 ## X12
 
-### Reference
-
-[https://github.com/EligibleAPI/tools/wiki/X12](https://github.com/EligibleAPI/tools/wiki/X12)
-
 ### X12 post
 
 ```ruby
@@ -492,10 +472,6 @@ result = Eligible::X12.post(params)
 ```
 
 ## Tickets
-
-### Reference
-
-[https://github.com/EligibleAPI/tools/wiki/Tickets](https://github.com/EligibleAPI/tools/wiki/Tickets)
 
 ### Create a ticket
 
