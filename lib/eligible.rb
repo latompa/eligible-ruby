@@ -20,6 +20,9 @@ require 'eligible/payment'
 require 'eligible/x12'
 require 'eligible/medicare'
 require 'eligible/ticket'
+require 'eligible/customer'
+require 'eligible/original_signature_pdf'
+require 'eligible/payer'
 
 # Errors
 require 'eligible/errors/eligible_error'
@@ -32,7 +35,7 @@ require 'eligible/errors/invalid_request_error'
 module Eligible
   @@api_key = nil
   @@test = false
-  @@api_version = 1.1
+  @@api_version = 1.5
   @@api_base = "https://gds.eligibleapi.com/v#{@@api_version}"
   @@fingerprints = %w(79d62e8a9d59ae687372f8e71345c76d92527fac 4b2c6888ede79d0ee47339dc6fab5a6d0dc3cb0e)
 
@@ -113,7 +116,9 @@ module Eligible
       url += "&test=#{test}"
       payload = nil
     else
-      payload = Eligible::JSON.dump(params.merge!('api_key' => api_key, 'test' => test))
+      params.merge!('api_key' => api_key, 'test' => test)
+      payload = params.has_key?(:file) ? params : Eligible::JSON.dump(params)
+      puts payload
     end
 
     begin
@@ -171,7 +176,7 @@ module Eligible
     begin
       # Would use :symbolize_names => true, but apparently there is
       # some library out there that makes symbolize_names not work.
-      resp = if params[:format] && params[:format].downcase == 'x12' || url[-4..-1].downcase == '/x12'
+      resp = if (params[:format] && params[:format].downcase == 'x12') || url[-4..-1].downcase == '/x12' || url.include?('/original_signature_pdf/download')
                rbody
              else
                Eligible::JSON.load(rbody)
@@ -219,7 +224,7 @@ module Eligible
       raise APIError.new("Invalid response object from API: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
     end
 
-    error_msg = error[:details] || error[:reject_reason_description]
+    error_msg = error[:details] || error[:reject_reason_description] rescue error
 
     case rcode
     when 400, 404 then
