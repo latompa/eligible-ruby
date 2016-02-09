@@ -12,3 +12,9 @@ RuboCop::RakeTask.new(:rubocop) do |task|
 end
 
 task default: [:rubocop, :spec]
+
+desc "Runs code coverage"
+task :rcov do
+  ENV["COVERAGE"] = "true"
+  Rake::Task[:spec].invoke
+end

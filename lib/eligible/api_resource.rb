@@ -10,5 +10,10 @@ module Eligible
       end
       "/#{CGI.escape(class_name.downcase)}/"
     end
+
+    def self.check_param(param, name)
+      param = param.to_s if param.is_a?(Numeric)
+      fail ArgumentError, "#{name} of the claim is required" if param.nil? || param.empty?
+    end
   end
 end
