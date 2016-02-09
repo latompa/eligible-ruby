@@ -6,7 +6,6 @@ end if ENV["COVERAGE"]
 
 require 'rspec'
 require 'eligible'
-require 'pry-rails'
 
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
