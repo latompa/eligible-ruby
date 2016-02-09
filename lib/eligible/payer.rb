@@ -6,6 +6,7 @@ module Eligible
     end
 
     def self.get(params, api_key = nil)
+      self.check_param(params[:payer_id], 'Payer id')
       response, api_key = Eligible.request(:get, "/payers/#{params[:payer_id]}.json", api_key, params)
       Util.convert_to_eligible_object(response, api_key)
     end
