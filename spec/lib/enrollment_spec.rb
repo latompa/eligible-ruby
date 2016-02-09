@@ -27,6 +27,13 @@ describe 'Eligible::Enrollment' do
     end
   end
 
+  describe '.list' do
+    it 'should call Eligible.request with proper url' do
+      allow(Eligible).to receive(:request).with(:get, '/enrollment_npis.json', api_key, params).and_return([response, api_key])
+      expect(Eligible::Enrollment.list(params, api_key)).to eq 'success'
+    end
+  end
+
   describe '.update' do
     it 'should call Eligible.request with proper url' do
       params[:enrollment_npi_id] = 123
@@ -38,4 +45,12 @@ describe 'Eligible::Enrollment' do
       expect{ Eligible::Enrollment.update(params, api_key) }.to raise_error(ArgumentError)
     end
   end
+end
+
+describe '#enrollment_npis' do
+  it 'should return enrollment npi' do
+    response = { enrollment_npis: [{ enrollment_npi: { npi: 1234567893} }] }
+    enrollment_object = Eligible::Util.convert_to_eligible_object(response, nil)
+    expect(enrollment_object.enrollment_npis).to eq ([{ enrollment_npi: { npi: 1234567893} }])
+  end    
 end
