@@ -118,7 +118,6 @@ module Eligible
     else
       params.merge!('api_key' => api_key, 'test' => test)
       payload = params.has_key?(:file) ? params : Eligible::JSON.dump(params)
-      puts payload
     end
 
     begin
