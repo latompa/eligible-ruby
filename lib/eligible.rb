@@ -84,6 +84,10 @@ module Eligible
     @@fingerprints << digest
   end
 
+  def self.direct_response?(params)
+    params[:format].is_a?(String) && params[:format].downcase == 'x12'
+  end
+
   # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def self.request(method, url, api_key, params = {}, headers = {})
     api_key ||= @@api_key
@@ -175,7 +179,7 @@ module Eligible
     begin
       # Would use :symbolize_names => true, but apparently there is
       # some library out there that makes symbolize_names not work.
-      resp = if (params[:format] && params[:format].downcase == 'x12') || url[-4..-1].downcase == '/x12' || url.include?('/original_signature_pdf/download')
+      resp = if direct_response?(params)
                rbody
              else
                Eligible::JSON.load(rbody)
@@ -212,6 +216,14 @@ module Eligible
     RestClient::Request.execute(opts)
   end
 
+  def self.error_message(error)
+    if error.is_a? Hash
+      error[:details] || error[:reject_reason_description] || error
+    else
+      error
+    end
+  end
+
   # rubocop:disable Style/SignalException
   def self.handle_api_error(rcode, rbody)
     begin
@@ -223,7 +235,7 @@ module Eligible
       raise APIError.new("Invalid response object from API: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
     end
 
-    error_msg = error[:details] || error[:reject_reason_description] rescue error
+    error_msg = error_message(error)
 
     case rcode
     when 400, 404 then

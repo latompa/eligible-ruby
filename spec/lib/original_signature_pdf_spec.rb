@@ -61,8 +61,8 @@ describe 'Eligible::OriginalSignaturePdf' do
       params[:enrollment_npi_id] = 123
       allow(Eligible).to receive(:request).with(:get, '/enrollment_npis/123/original_signature_pdf/download', api_key, params).and_return([response, api_key])
       Eligible::OriginalSignaturePdf.download(params, api_key)
-      expect(File.read('./original_signature_pdf.pdf')).to eq response.to_s
-      File.delete('./original_signature_pdf.pdf')
+      expect(File.read('/tmp/original_signature_pdf.pdf')).to eq response.to_s
+      File.delete('/tmp/original_signature_pdf.pdf')
     end
 
     it 'should raise error if enrollment npi id is not present' do

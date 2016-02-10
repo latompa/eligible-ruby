@@ -17,29 +17,29 @@ describe 'API Resource' do
     end
   end
 
-  describe 'check_param' do
+  describe 'require_param' do
     it 'should raise error if param is empty string' do
-      expect{ Eligible::APIResource.check_param('', 'test') }.to raise_error(ArgumentError)
+      expect{ Eligible::APIResource.require_param('', 'test') }.to raise_error(ArgumentError)
     end
 
     it 'should raise error if param is empty hash' do
-      expect{ Eligible::APIResource.check_param({}, 'test') }.to raise_error(ArgumentError)
+      expect{ Eligible::APIResource.require_param({}, 'test') }.to raise_error(ArgumentError)
     end
 
     it 'should raise error if param is empty array' do
-      expect{ Eligible::APIResource.check_param([], 'test') }.to raise_error(ArgumentError)
+      expect{ Eligible::APIResource.require_param([], 'test') }.to raise_error(ArgumentError)
     end
 
     it 'should raise error if param is nil' do
-      expect{ Eligible::APIResource.check_param(nil, 'test') }.to raise_error(ArgumentError)
+      expect{ Eligible::APIResource.require_param(nil, 'test') }.to raise_error(ArgumentError)
     end
 
     it 'should not raise error if param is number' do
-      expect{ Eligible::APIResource.check_param(123, 'test') }.not_to raise_error
+      expect{ Eligible::APIResource.require_param(123, 'test') }.not_to raise_error
     end
 
     it 'should not raise error if param is present' do
-      expect{ Eligible::APIResource.check_param("123", 'test') }.not_to raise_error
+      expect{ Eligible::APIResource.require_param("123", 'test') }.not_to raise_error
     end
   end
 end
