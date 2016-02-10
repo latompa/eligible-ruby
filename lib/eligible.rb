@@ -217,11 +217,12 @@ module Eligible
   end
 
   def self.error_message(error)
-    if error.is_a? Hash
-      error[:details] || error[:reject_reason_description] || error
-    else
-      error
-    end
+    result = if error.is_a? Hash
+               error[:details] || error[:reject_reason_description] || error
+             else
+               error
+             end
+    result.to_s
   end
 
   # rubocop:disable Style/SignalException

@@ -5,7 +5,7 @@ module Eligible
     end
 
     def self.comments(params, api_key = nil)
-      send_request(:post, "/tickets/#{params[:id]}/comments", api_key, params, params[:id], 'Id')
+      send_request(:post, "/tickets/#{params[:id]}/comments", api_key, params, :id)
     end
 
     def self.all(params, api_key = nil)
@@ -13,15 +13,15 @@ module Eligible
     end
 
     def self.get(params, api_key = nil)
-      send_request(:get, "/tickets/#{params[:id]}", api_key, params, params[:id], 'Id')
+      send_request(:get, "/tickets/#{params[:id]}", api_key, params, :id)
     end
 
     def self.delete(params, api_key = nil)
-      send_request(:delete, "/tickets/#{params[:id]}", api_key, params, params[:id], 'Id')
+      send_request(:delete, "/tickets/#{params[:id]}", api_key, params, :id)
     end
 
     def self.update(params, api_key = nil)
-      send_request(:put, "/tickets/#{params[:id]}", api_key, params, params[:id], 'Id')
+      send_request(:put, "/tickets/#{params[:id]}", api_key, params, :id)
     end
   end
 end

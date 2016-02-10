@@ -5,7 +5,7 @@ module Eligible
     end
 
     def self.get(params, api_key = nil)
-      send_request(:get, "/payers/#{params[:payer_id]}.json", api_key, params, params[:payer_id], 'Payer id')
+      send_request(:get, "/payers/#{params[:payer_id]}.json", api_key, params, :payer_id)
     end
 
     def self.search_options(params, api_key = nil)

@@ -12,12 +12,11 @@ module Eligible
     end
 
     def self.require_param(value, name)
-      value = value.to_s if value.is_a?(Numeric)
-      fail ArgumentError, "#{name} of the claim is required" if value.nil? || value.empty?
+      fail ArgumentError, "#{name} of the claim is required" if value.nil? || ( value.is_a?(String) && value.empty? )
     end
 
-    def self.send_request(method, url, api_key, params, required_value = nil, required_param = nil)
-      require_param(required_value, required_param) unless required_param.nil?
+    def self.send_request(method, url, api_key, params, required_param_name = nil)
+      require_param(params[required_param_name], required_param_name) unless required_param_name.nil?
       response, api_key = Eligible.request(method, url, api_key, params)
       Util.convert_to_eligible_object(response, api_key)
     end
