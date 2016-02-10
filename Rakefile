@@ -18,3 +18,4 @@ task :rcov do
   ENV["COVERAGE"] = "true"
   Rake::Task[:spec].invoke
 end
+
