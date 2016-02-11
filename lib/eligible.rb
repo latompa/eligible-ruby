@@ -12,6 +12,7 @@ require 'eligible/util'
 require 'eligible/json'
 require 'eligible/eligible_object'
 require 'eligible/api_resource'
+require 'eligible/coverage_resource'
 require 'eligible/demographic'
 require 'eligible/claim'
 require 'eligible/enrollment'
@@ -121,7 +122,7 @@ module Eligible
       payload = nil
     else
       params.merge!('api_key' => api_key, 'test' => test)
-      payload = params.has_key?(:file) ? params : Eligible::JSON.dump(params)
+      payload = params.key?(:file) ? params : Eligible::JSON.dump(params)
     end
 
     begin

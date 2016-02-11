@@ -5,7 +5,7 @@ module Eligible
     end
 
     def self.list(params, api_key = nil)
-      send_request(:get, "/enrollment_npis.json", api_key, params)
+      send_request(:get, '/enrollment_npis.json', api_key, params)
     end
 
     def self.post(params, api_key = nil)

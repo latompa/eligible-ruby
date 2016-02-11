@@ -13,9 +13,8 @@ end
 
 task default: [:rubocop, :spec]
 
-desc "Runs code coverage"
+desc 'Runs code coverage'
 task :rcov do
-  ENV["COVERAGE"] = "true"
+  ENV["COVERAGE"] = 'true'
   Rake::Task[:spec].invoke
 end
-

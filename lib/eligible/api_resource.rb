@@ -12,7 +12,7 @@ module Eligible
     end
 
     def self.require_param(value, name)
-      fail ArgumentError, "#{name} of the claim is required" if value.nil? || ( value.is_a?(String) && value.empty? )
+      fail ArgumentError, "#{name} of the claim is required" if value.nil? || (value.is_a?(String) && value.empty?)
     end
 
     def self.send_request(method, url, api_key, params, required_param_name = nil)

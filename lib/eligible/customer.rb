@@ -13,7 +13,7 @@ module Eligible
     end
 
     def self.all(params, api_key = nil)
-      send_request(:get, "/customers.json", api_key, params)
+      send_request(:get, '/customers.json', api_key, params)
     end
   end
 end

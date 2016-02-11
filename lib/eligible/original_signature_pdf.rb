@@ -18,13 +18,12 @@ module Eligible
 
     def self.download(params, api_key = nil)
       require_param(params[:enrollment_npi_id], 'Enrollment Npi id')
-      params[:format] = "x12"
-      response, api_key = Eligible.request(:get, "/enrollment_npis/#{params[:enrollment_npi_id]}/original_signature_pdf/download", api_key, params)
-      filename = params[:filename] || "/tmp/original_signature_pdf.pdf"
-      file = File.new(filename, "w")
+      params[:format] = 'x12'
+      response = Eligible.request(:get, "/enrollment_npis/#{params[:enrollment_npi_id]}/original_signature_pdf/download", api_key, params)[0]
+      filename = params[:filename] || '/tmp/original_signature_pdf.pdf'
+      file = File.new(filename, 'w')
       file.write response
       file.close
     end
   end
 end
-

@@ -1,7 +1,8 @@
 module Eligible
-  class Coverage < APIResource
+  class Coverage < CoverageResource
     def self.get(params, api_key = nil)
-      send_request(:get, '/coverage/all.json', api_key, params)
+      @url = '/coverage/all.json'
+      super(params, api_key)
     end
 
     def self.cost_estimate(params, api_key = nil)
@@ -9,7 +10,8 @@ module Eligible
     end
 
     def self.batch_post(params, api_key = nil)
-      send_request(:post, '/coverage/all/batch.json', api_key, params)
+      @url = '/coverage/all/batch.json'
+      super(params, api_key)
     end
 
     def self.batch_medicare_post(params, api_key = nil)

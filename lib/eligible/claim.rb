@@ -14,7 +14,7 @@ module Eligible
 
     def self.payment_report(params, api_key = nil)
       require_param(params[:reference_id], 'Reference id')
-      url = params.has_key?(:id) ? "/claims/#{params[:reference_id]}/payment_reports/#{params[:id]}" : "/claims/#{params[:reference_id]}/payment_reports"
+      url = params.key?(:id) ? "/claims/#{params[:reference_id]}/payment_reports/#{params[:id]}" : "/claims/#{params[:reference_id]}/payment_reports"
       send_request(:get, url, api_key, params)
     end
 
