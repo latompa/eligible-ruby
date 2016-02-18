@@ -1,5 +1,11 @@
 2016-01-07  Eligible  <support@eligible.com>
 
+	* 2.6.0
+	- Added new endpoints customer, original signature pdf and payer.
+	- Added specs
+	- Bumped api version to v1.5
+	- Fixed few bugs
+
 	* 2.5.0
 	- Added certificate pinning
 	- Added rubocop and fixed style/linting/metrics issues
