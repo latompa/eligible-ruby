@@ -36,7 +36,7 @@ require 'eligible/errors/invalid_request_error'
 module Eligible
   @@api_key = nil
   @@test = false
-  @@api_version = 1.5
+  @@api_version = '1.5'
   @@api_base = "https://gds.eligibleapi.com/v#{@@api_version}"
   @@fingerprints = %w(79d62e8a9d59ae687372f8e71345c76d92527fac 4b2c6888ede79d0ee47339dc6fab5a6d0dc3cb0e)
 
