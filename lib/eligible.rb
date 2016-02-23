@@ -152,8 +152,10 @@ module Eligible
 
     begin
       response = execute_request(opts)
+
     rescue SocketError => e
       handle_restclient_error(e)
+
     rescue NoMethodError => e
       # Work around RestClient bug
       if e.message =~ /\WRequestFailed\W/
@@ -162,32 +164,34 @@ module Eligible
       else
         raise
       end
+
     rescue RestClient::ExceptionWithResponse => e
-      if rcode = e.http_code and rbody = e.http_body
-        handle_api_error(rcode, rbody)
+      err_rcode = e.http_code
+      err_rbody = e.http_body
+
+      if err_rcode && err_rbody
+        handle_api_error(err_rcode, err_rbody)
       else
         handle_restclient_error(e)
       end
+
     rescue RestClient::Exception, Errno::ECONNREFUSED => e
       handle_restclient_error(e)
     end
 
     rbody = response.body
     rcode = response.code
+
     begin
       # Would use :symbolize_names => true, but apparently there is
       # some library out there that makes symbolize_names not work.
-      resp = if direct_response?(params)
-               rbody
-             else
-               Eligible::JSON.load(rbody)
-             end
+      resp = direct_response?(params) ? rbody : Eligible::JSON.load(rbody)
     rescue MultiJson::DecodeError
       raise APIError.new("Invalid response object from API: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
     end
 
     resp = Util.symbolize_names(resp)
-    [resp, api_key]
+    return [ resp, api_key ]
   end
 
   def self.verify_certificate
