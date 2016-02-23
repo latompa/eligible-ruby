@@ -31,11 +31,10 @@ describe Eligible do
     it "should convert non-hash scalar values to strings" do
       expect(Eligible.error_message(42)).to eq("42")
       expect(Eligible.error_message(true)).to eq("true")
-      expect(Eligible.error_message([1,2,3])).to eq("[1, 2, 3]")
     end
 
     it "should convert array values to strings" do
-      arr = [1,2,3]
+      arr = [ 1, 2, 3 ]
       expect(Eligible.error_message(arr)).to eq(arr.to_s)
     end
 
