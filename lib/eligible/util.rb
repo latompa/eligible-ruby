@@ -1,6 +1,5 @@
 module Eligible
   module Util
-    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def self.convert_to_eligible_object(resp, api_key)
       case resp
       when Array
@@ -24,7 +23,6 @@ module Eligible
       end
     end
 
-    # rubocop:disable Style/RescueModifier
     def self.symbolize_names(object)
       case object
       when Hash

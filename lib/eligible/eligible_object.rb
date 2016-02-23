@@ -4,7 +4,7 @@ module Eligible
 
     attr_accessor :api_key
     attr_accessor :eligible_id
-    # rubocop:disable Style/ClassVars
+
     @@permanent_attributes = Set.new([:api_key, :error, :balance, :address, :dob])
 
     # The default :id method is deprecated and isn't useful to us
@@ -26,7 +26,6 @@ module Eligible
       obj
     end
 
-    # rubocop:disable Metrics/AbcSize
     def refresh_from(values, api_key, partial = false)
       @api_key = api_key
 

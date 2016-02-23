@@ -32,7 +32,6 @@ require 'eligible/errors/authentication_error'
 require 'eligible/errors/api_error'
 require 'eligible/errors/invalid_request_error'
 
-# rubocop:disable Metrics/ModuleLength, Style/ClassVars
 module Eligible
   @@api_key = nil
   @@test = false
@@ -89,7 +88,6 @@ module Eligible
     params[:format].is_a?(String) && params[:format].downcase == 'x12'
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def self.request(method, url, api_key, params = {}, headers = {})
     api_key ||= @@api_key
     test = self.test
@@ -164,7 +162,6 @@ module Eligible
       else
         raise
       end
-    # rubocop:disable Lint/AssignmentInCondition, Style/AndOr
     rescue RestClient::ExceptionWithResponse => e
       if rcode = e.http_code and rbody = e.http_body
         handle_api_error(rcode, rbody)
@@ -226,7 +223,6 @@ module Eligible
     result.to_s
   end
 
-  # rubocop:disable Style/SignalException
   def self.handle_api_error(rcode, rbody)
     begin
       error_obj = Eligible::JSON.load(rbody)
