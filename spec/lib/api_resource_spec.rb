@@ -38,7 +38,7 @@ describe 'API Resource' do
   describe '.send_request' do
     let(:params) { {test: true} }
     let(:api_key) { 'xyz' }
-    let(:response) { {success: true} }
+    let(:response) { { success: true } }
     let(:url) { '/test/url' }
     before(:each) do
       allow(Eligible::Util).to receive(:convert_to_eligible_object).with(response, api_key).and_return('success')
