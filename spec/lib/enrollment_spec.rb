@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Eligible::Enrollment' do
   let(:params) { {test: true} }
   let(:api_key) { 'xyz' }
-  let(:response) { {success: true} }
+  let(:response) { { success: true } }
   before(:each) do
     allow(Eligible::Util).to receive(:convert_to_eligible_object).with(response, api_key).and_return('success')
   end
@@ -52,5 +52,5 @@ describe '#enrollment_npis' do
     response = { enrollment_npis: [{ enrollment_npi: { npi: 1234567893} }] }
     enrollment_object = Eligible::Util.convert_to_eligible_object(response, nil)
     expect(enrollment_object.enrollment_npis).to eq ([{ enrollment_npi: { npi: 1234567893} }])
-  end    
+  end
 end
