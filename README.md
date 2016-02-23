@@ -1,6 +1,6 @@
 # Eligible
 
-[![Circle CI](https://circleci.com/gh/eligible/eligible-ruby.svg?style=svg)](https://circleci.com/gh/eligible/eligible-ruby)
+[![Circle CI](https://circleci.com/gh/eligible/eligible-ruby.svg?style=svg)](https://circleci.com/gh/eligible/eligible-ruby) [![Code Climate](https://codeclimate.com/github/eligible/eligible-ruby/badges/gpa.svg)](https://codeclimate.com/github/eligible/eligible-ruby)
 
 Ruby bindings for the [Eligible API](https://eligible.com/rest)
 
