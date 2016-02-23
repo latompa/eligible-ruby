@@ -25,4 +25,5 @@ ratings:
   - "**.rb"
 
 exclude_paths:
+- .rubocop.yml
 - spec/
