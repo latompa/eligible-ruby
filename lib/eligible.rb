@@ -158,12 +158,10 @@ module Eligible
 
     rescue NoMethodError => e
       # Work around RestClient bug
-      if e.message =~ /\WRequestFailed\W/
-        e = APIConnectionError.new('Unexpected HTTP response code')
-        handle_restclient_error(e)
-      else
-        raise
-      end
+      raise unless e.message =~ /\WRequestFailed\W/
+
+      e = APIConnectionError.new('Unexpected HTTP response code')
+      handle_restclient_error(e)
 
     rescue RestClient::ExceptionWithResponse => e
       err_rcode = e.http_code
