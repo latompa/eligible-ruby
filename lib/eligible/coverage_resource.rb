@@ -1,11 +1,19 @@
 module Eligible
   class CoverageResource < APIResource
     def self.get(params, api_key)
-      send_request(:get, @url, api_key, params)
+      send_request(:get, get_uri, api_key, params)
     end
 
     def self.batch_post(params, api_key)
-      send_request(:post, @url, api_key, params)
+      send_request(:post, post_uri, api_key, params)
+    end
+
+    def self.get_uri
+      fail NotImplementedError, "Please implement class method #{self}.get_uri"
+    end
+
+    def self.post_uri
+      fail NotImplementedError, "Please implement class method #{self}.post_uri"
     end
   end
 end

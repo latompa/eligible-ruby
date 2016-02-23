@@ -1,13 +1,11 @@
 module Eligible
   class Demographic < CoverageResource
-    def self.get(params, api_key = nil)
-      @url = '/demographic/all.json'
-      super(params, api_key)
+    def self.get_uri
+      return '/demographic/all.json'
     end
 
-    def self.batch_post(params, api_key = nil)
-      @url = '/demographic/all/batch.json'
-      super(params, api_key)
+    def self.post_uri
+      return '/demographic/all/batch.json'
     end
   end
 end
