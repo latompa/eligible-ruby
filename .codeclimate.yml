@@ -1,4 +1,3 @@
----
 engines:
   duplication:
     enabled: true
@@ -8,10 +7,13 @@ engines:
       - javascript
       - python
       - php
+
   fixme:
     enabled: true
+
   rubocop:
     enabled: true
+
 ratings:
   paths:
   - "**.inc"
@@ -21,5 +23,6 @@ ratings:
   - "**.php"
   - "**.py"
   - "**.rb"
+
 exclude_paths:
 - spec/
