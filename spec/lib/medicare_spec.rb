@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Eligible::Medicare' do
   let(:params) { { test: true } }
   let(:api_key) { 'xyz' }

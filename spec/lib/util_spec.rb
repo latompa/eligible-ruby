@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Eligible::Util' do
   describe '.convert_to_eligible_object' do
     context 'when response is Array' do

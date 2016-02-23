@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Eligible do
   it 'has a version number' do
     expect(Eligible::VERSION).to_not be_nil

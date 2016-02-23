@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Coverage' do
   let(:params) { { test: true } }
   let(:api_key) { 'xyz' }

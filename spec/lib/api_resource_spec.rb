@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'API Resource' do
   it 'has a class name' do
     expect(Eligible::APIResource.class_name).to eq 'APIResource'
