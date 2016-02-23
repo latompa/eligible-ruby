@@ -110,7 +110,7 @@ module Eligible
     # POST requests, parameters as json in the body
     url = api_url(url)
     case method.to_s.downcase.to_sym
-    when :get, :head
+    when :get, :head, :delete
       url += "?api_key=#{api_key}"
       if params && params.count > 0
         query_string = Util.flatten_params(params).collect { |key, value| "#{key}=#{Util.url_encode(value)}" }.join('&')
