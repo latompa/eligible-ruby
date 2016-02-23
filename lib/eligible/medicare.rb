@@ -1,13 +1,11 @@
 module Eligible
   class Medicare < CoverageResource
-    def self.get(params, api_key = nil)
-      @url = '/medicare/coverage.json'
-      super(params, api_key)
+    def self.get_uri
+      return '/medicare/coverage.json'
     end
 
-    def self.batch_post(params, api_key = nil)
-      @url = '/medicare/coverage/batch.json'
-      super(params, api_key)
+    def self.post_uri
+      return '/medicare/coverage/batch.json'
     end
   end
 end
