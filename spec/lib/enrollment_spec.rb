@@ -49,8 +49,8 @@ end
 
 describe '#enrollment_npis' do
   it 'should return enrollment npi' do
-    response = { enrollment_npis: [{ enrollment_npi: { npi: 1234567893} }] }
+    response = { enrollment_npis: [{ enrollment_npi: { npi: 1234567893 } }] }
     enrollment_object = Eligible::Util.convert_to_eligible_object(response, nil)
-    expect(enrollment_object.enrollment_npis).to eq([{ enrollment_npi: { npi: 1234567893} }])
+    expect(enrollment_object.enrollment_npis).to eq([{ enrollment_npi: { npi: 1234567893 } }])
   end
 end

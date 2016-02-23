@@ -60,7 +60,7 @@ describe 'Eligible::Util' do
 
     it 'should symbolize the array' do
       params = [ { 'test' => 'true' }, { 'a' => 'true' } ]
-      expect(Eligible::Util.symbolize_names(params)).to eq([ { test: 'true'}, { a: "true" } ])
+      expect(Eligible::Util.symbolize_names(params)).to eq([ { test: 'true' }, { a: "true" } ])
     end
 
     it 'should not fail if hash keys could not be converted to a symbol' do
@@ -83,7 +83,7 @@ describe 'Eligible::Util' do
 
   describe '.flatten_params' do
     it 'should flatten the params' do
-      params = {test: { x: 'a&b', y: ['c&d'] } }
+      params = { test: { x: 'a&b', y: [ 'c&d' ] } }
       expect(Eligible::Util.flatten_params(params)).to eq [["test[x]", "a&b"], ["test[y][0]", "c&d"]]
     end
   end
