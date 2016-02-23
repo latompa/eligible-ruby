@@ -23,15 +23,21 @@ module Eligible
       end
     end
 
+    # Converts a key into a symbol if it is possible, returns the key if it is not
+    def self.symbolize_name(key)
+      return key unless key.respond_to?(:to_sym)
+      return key.to_sym
+    end
+
     def self.symbolize_names(object)
       case object
       when Hash
-        new = {}
-        object.each do |key, value|
-          key = (key.to_sym rescue key) || key
-          new[key] = symbolize_names(value)
+        {}.tap do |new_hash|
+          object.each do |key, value|
+            key = symbolize_name(key)
+            new_hash[key] = symbolize_names(value)
+          end
         end
-        new
       when Array
         object.map { |value| symbolize_names(value) }
       else

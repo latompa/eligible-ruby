@@ -55,16 +55,23 @@ describe 'Eligible::Util' do
   describe '.symbolize_names' do
     it 'should symbolize the hash' do
       params = { 'test' => { 'a' => 'true' } }
-      expect(Eligible::Util.symbolize_names(params)).to eq ({:test=>{:a=>"true"}})
+      expect(Eligible::Util.symbolize_names(params)).to eq ({ test: { a: 'true' } })
     end
 
     it 'should symbolize the array' do
-      params = [{'test' => "true"} , {'a' => 'true'}]
-      expect(Eligible::Util.symbolize_names(params)).to eq ([{:test=>"true"}, {:a=>"true"}])
+      params = [ { 'test' => 'true' }, { 'a' => 'true' } ]
+      expect(Eligible::Util.symbolize_names(params)).to eq ([ { test: 'true'}, { a: "true" } ])
     end
 
-    it 'should return the string' do
-      expect(Eligible::Util.symbolize_names('test')).to eq 'test'
+    it 'should not fail if hash keys could not be converted to a symbol' do
+      params = { 1 => 'foo', false => 'bar' }
+      expect(Eligible::Util.symbolize_names(params)).to eq ({ 1 => 'foo', false => 'bar' })
+    end
+
+    it 'should return non-container values as-is' do
+      expect(Eligible::Util.symbolize_names('test')).to eq('test')
+      expect(Eligible::Util.symbolize_names(0)).to eq(0)
+      expect(Eligible::Util.symbolize_names(false)).to eq(false)
     end
   end
 
