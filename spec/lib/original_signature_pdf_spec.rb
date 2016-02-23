@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Eligible::OriginalSignaturePdf' do
-  let(:params) { {test: true} }
+  let(:params) { { test: true } }
   let(:api_key) { 'xyz' }
   let(:response) { { success: true } }
   before(:each) do

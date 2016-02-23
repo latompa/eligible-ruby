@@ -36,7 +36,7 @@ describe 'API Resource' do
   end
 
   describe '.send_request' do
-    let(:params) { {test: true} }
+    let(:params) { { test: true } }
     let(:api_key) { 'xyz' }
     let(:response) { { success: true } }
     let(:url) { '/test/url' }
