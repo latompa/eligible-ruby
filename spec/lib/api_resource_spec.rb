@@ -7,7 +7,7 @@ describe 'API Resource' do
 
   describe '.url' do
     it 'raises exception when it is called from APIResource class' do
-      expect{ Eligible::APIResource.url }.to raise_error(NotImplementedError)
+      expect { Eligible::APIResource.url }.to raise_error(NotImplementedError)
     end
 
     it 'should return valid url for subclasses' do
@@ -19,19 +19,19 @@ describe 'API Resource' do
 
   describe '.require_param' do
     it 'should raise error if param is empty string' do
-      expect{ Eligible::APIResource.require_param('', 'test') }.to raise_error(ArgumentError)
+      expect { Eligible::APIResource.require_param('', 'test') }.to raise_error(ArgumentError)
     end
 
     it 'should raise error if param is nil' do
-      expect{ Eligible::APIResource.require_param(nil, 'test') }.to raise_error(ArgumentError)
+      expect { Eligible::APIResource.require_param(nil, 'test') }.to raise_error(ArgumentError)
     end
 
     it 'should not raise error if param is number' do
-      expect{ Eligible::APIResource.require_param(123, 'test') }.not_to raise_error
+      expect { Eligible::APIResource.require_param(123, 'test') }.not_to raise_error
     end
 
     it 'should not raise error if param is present' do
-      expect{ Eligible::APIResource.require_param("123", 'test') }.not_to raise_error
+      expect { Eligible::APIResource.require_param("123", 'test') }.not_to raise_error
     end
   end
 
@@ -51,7 +51,7 @@ describe 'API Resource' do
     end
 
     it 'should raise error if required param is not present' do
-      expect{ Eligible::APIResource.send_request(:get, url, api_key, params, :reference_id) }.to raise_error(ArgumentError)
+      expect { Eligible::APIResource.send_request(:get, url, api_key, params, :reference_id) }.to raise_error(ArgumentError)
     end
   end
 end

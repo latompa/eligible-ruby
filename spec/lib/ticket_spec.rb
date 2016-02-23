@@ -16,7 +16,7 @@ describe 'Eligible::Ticket' do
     end
 
     it 'should raise error if ticket id is not present' do
-      expect{ Eligible::Ticket.get(params, api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::Ticket.get(params, api_key) }.to raise_error(ArgumentError)
     end
   end
 
@@ -28,7 +28,7 @@ describe 'Eligible::Ticket' do
     end
 
     it 'should raise error if ticket id is not present' do
-      expect{ Eligible::Ticket.delete(params, api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::Ticket.delete(params, api_key) }.to raise_error(ArgumentError)
     end
   end
 
@@ -40,7 +40,7 @@ describe 'Eligible::Ticket' do
     end
 
     it 'should raise error if ticket id is not present' do
-      expect{ Eligible::Ticket.comments(params, api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::Ticket.comments(params, api_key) }.to raise_error(ArgumentError)
     end
   end
 
@@ -59,7 +59,7 @@ describe 'Eligible::Ticket' do
     end
 
     it 'should raise error if ticket id is not present' do
-      expect{ Eligible::Ticket.update(params, api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::Ticket.update(params, api_key) }.to raise_error(ArgumentError)
     end
   end
 

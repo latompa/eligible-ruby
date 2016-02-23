@@ -16,7 +16,7 @@ describe 'Claim' do
     end
 
     it 'should raise error if reference id is not present' do
-      expect{ Eligible::Claim.ack(params, api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::Claim.ack(params, api_key) }.to raise_error(ArgumentError)
     end
   end
 
@@ -49,7 +49,7 @@ describe 'Claim' do
     end
 
     it 'should raise error if reference id is not present' do
-      expect{ Eligible::Claim.payment_report(params, api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::Claim.payment_report(params, api_key) }.to raise_error(ArgumentError)
     end
   end
 

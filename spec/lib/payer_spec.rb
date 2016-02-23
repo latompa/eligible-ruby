@@ -16,7 +16,7 @@ describe 'Eligible::Payer' do
     end
 
     it 'should raise error if customer id is not present' do
-      expect{ Eligible::Payer.get(params, api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::Payer.get(params, api_key) }.to raise_error(ArgumentError)
     end
   end
 

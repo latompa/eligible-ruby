@@ -16,7 +16,7 @@ describe 'Eligible::Enrollment' do
     end
 
     it 'should raise error if enrollment npi id is not present' do
-      expect{ Eligible::Enrollment.get(params, api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::Enrollment.get(params, api_key) }.to raise_error(ArgumentError)
     end
   end
 
@@ -42,7 +42,7 @@ describe 'Eligible::Enrollment' do
     end
 
     it 'should raise error if enrollment npi id is not present' do
-      expect{ Eligible::Enrollment.update(params, api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::Enrollment.update(params, api_key) }.to raise_error(ArgumentError)
     end
   end
 end
@@ -51,6 +51,6 @@ describe '#enrollment_npis' do
   it 'should return enrollment npi' do
     response = { enrollment_npis: [{ enrollment_npi: { npi: 1234567893} }] }
     enrollment_object = Eligible::Util.convert_to_eligible_object(response, nil)
-    expect(enrollment_object.enrollment_npis).to eq ([{ enrollment_npi: { npi: 1234567893} }])
+    expect(enrollment_object.enrollment_npis).to eq([{ enrollment_npi: { npi: 1234567893} }])
   end
 end

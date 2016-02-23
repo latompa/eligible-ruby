@@ -16,7 +16,7 @@ describe 'Eligible::Customer' do
     end
 
     it 'should raise error if customer id is not present' do
-      expect{ Eligible::Customer.get(params, api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::Customer.get(params, api_key) }.to raise_error(ArgumentError)
     end
   end
 
@@ -35,7 +35,7 @@ describe 'Eligible::Customer' do
     end
 
     it 'should raise error if customer id is not present' do
-      expect{ Eligible::Customer.update(params, api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::Customer.update(params, api_key) }.to raise_error(ArgumentError)
     end
   end
 
