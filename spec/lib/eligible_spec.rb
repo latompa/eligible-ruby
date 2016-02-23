@@ -21,4 +21,44 @@ describe Eligible do
       expect { Eligible::Coverage.get({}) }.to raise_error(Eligible::AuthenticationError)
     end
   end
+
+  context '.error_message' do
+    it "should return a string when passed a string value" do
+      error = "foo"
+      expect(Eligible.error_message(error)).to be(error)
+    end
+
+    it "should convert non-hash scalar values to strings" do
+      expect(Eligible.error_message(42)).to eq("42")
+      expect(Eligible.error_message(true)).to eq("true")
+      expect(Eligible.error_message([1,2,3])).to eq("[1, 2, 3]")
+    end
+
+    it "should convert array values to strings" do
+      arr = [1,2,3]
+      expect(Eligible.error_message(arr)).to eq(arr.to_s)
+    end
+
+    context "when called with a Hash argument" do
+      it "should return :details value if available" do
+        err = { details: 'foo', bar: 'bar' }
+        expect(Eligible.error_message(err)).to eq('foo')
+      end
+
+      it "should return :reject_reason_description value if available" do
+        err = { reject_reason_description: 'bar', foo: 'foo' }
+        expect(Eligible.error_message(err)).to eq('bar')
+      end
+
+      it "should prefer :details over :reject_reason_description" do
+        err = { details: 'foo', reject_reason_description: 'bar' }
+        expect(Eligible.error_message(err)).to eq('foo')
+      end
+
+      it "should convert the hash to string if no special keys found" do
+        err = { foo: 'foo', bar: 'bar' }
+        expect(Eligible.error_message(err)).to eq(err.to_s)
+      end
+    end
+  end
 end

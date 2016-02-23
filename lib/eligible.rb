@@ -217,12 +217,9 @@ module Eligible
   end
 
   def self.error_message(error)
-    result = if error.is_a? Hash
-               error[:details] || error[:reject_reason_description] || error
-             else
-               error
-             end
-    result.to_s
+    return error.to_s unless error.is_a?(Hash)
+    result = error[:details] || error[:reject_reason_description] || error
+    return result.to_s
   end
 
   def self.handle_api_error(rcode, rbody)
