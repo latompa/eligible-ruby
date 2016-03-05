@@ -36,7 +36,7 @@ Eligible.test = true
 On each api call, you can overwrite the api key or the test parameter:
 
 ```ruby
-Eligible::Demographic.get({:api_key => 'NEW_KEY', :test => false})
+Eligible::Coverage.get({:api_key => 'NEW_KEY', :test => false})
 ```
 
 ### Response Format
@@ -45,7 +45,7 @@ By default, all responses are in JSON, but you can request raw
 access to X12 by adding is as a parameter on the api call:
 
 ```ruby
-Eligible::Demographic.get({:format => "x12"})
+Eligible::Coverage.get({:format => "x12"})
 ```
 
 # Important notes
@@ -56,8 +56,9 @@ the parameter `payer_id`, required for most of the api calls, is
 provided by Eligible from its website, in xml and json format, which
 you can embed into your applications.
 
-[https://eligible.com/resources/information-sources.xml](https://eligible.com/resources/information-sources.xml)  
-[https://eligible.com/resources/information-sources.json](https://eligible.com/resources/information-sources.json)
+[https://eligible.com/resources/payers/eligibility.xml](https://eligible.com/resources/payers/eligibility.xml)
+
+[https://eligible.com/resources/payers/eligibility.json](https://eligible.com/resources/payers/eligibility.json)
 
 ## Payer List for Claims
 
@@ -65,8 +66,23 @@ the parameter `payer_id`, required for claims, is provided by Eligible
 from its website, in xml and json format, which you can embed into
 your applications.
 
-[https://eligible.com/resources/claims-payer.xml](https://eligible.com/resources/claims-payer.xml)  
-[https://eligible.com/resources/claims-payer.json](https://eligible.com/resources/claims-payer.json)
+## Medical
+
+[https://eligible.com/resources/payers/claims/medical.xml](https://eligible.com/resources/payers/claims/medical.xml)
+
+[https://eligible.com/resources/payers/claims/medical.json](https://eligible.com/resources/payers/claims/medical.json)
+
+## Institutional
+
+[https://eligible.com/resources/payers/claims/institutional.xml](https://eligible.com/resources/payers/claims/institutional.xml)
+
+[https://eligible.com/resources/payers/claims/institutional.json](https://eligible.com/resources/payers/claims/institutional.json)
+
+## Dental
+
+[https://eligible.com/resources/payers/claims/dental.xml](https://eligible.com/resources/payers/claims/dental.xml)
+
+[https://eligible.com/resources/payers/claims/dental.json](https://eligible.com/resources/payers/claims/dental.json)
 
 ## Service Type Codes
 
@@ -91,16 +107,16 @@ On all results you can check for errors in `result.error`. The raw
 json format is available by using `result.to_hash`.
 
 ```ruby
-demographic = Eligible::Demographic.get(params)
-demographic.error
-demographic.to_hash
+coverage = Eligible::Coverage.get(params)
+coverage.error
+coverage.to_hash
 ```
 
 ## Coverage
 
 ### Reference
 
-[https://eligible.com/rest#coverage](https://eligible.com/rest#coverage)
+[https://reference.eligible.com/#coverage](https://reference.eligible.com/#coverage)
 
 ### Retrieve eligibility and benefit information
 
@@ -123,33 +139,11 @@ coverage.to_hash # returns all coverage info for the request
 coverage.error   # return error, if any
 ```
 
-## Demographic
+## Medicare
 
 ### Reference
 
-[https://eligible.com/rest#demographics](https://eligible.com/rest#demographics)
-
-### Fetch demographics for a patient
-
-```ruby
-params = {
-  :payer_name => "Aetna",
-  :payer_id   => "000001",
-  :provider_last_name => "Last",
-  :provider_first_name => "First",
-  :provider_npi => "12345678",
-  :member_id => "12345678",
-  :member_last_name => "Austen",
-  :member_first_name => "Jane",
-  :member_dob => "1955-12-14"
-}
-
-demographic = Eligible::Demographic.get(params)
-demographic.to_hash # returns all coverage info for the request
-demographic.error   # return error, if any
-```
-
-## Medicare
+[https://reference.eligible.com/#medicare](https://reference.eligible.com/#medicare)
 
 ### Retrieve eligibility and benefit information from CMS Medicare for a patient.
 
@@ -173,7 +167,7 @@ medicare.error   # return error, if any
 
 All the batch api calls will notify the results via webhook. You can
 setup a webhook in your
-[Dashboard](https://ligible.com/dashboard/webhooks). All batch api
+[Dashboard](https://eligible.com/dashboard/webhooks). All batch api
 calls return a *reference_id* value and the *number_of_items*
 submitted.
 
@@ -211,42 +205,6 @@ params = {
 }
 
 result = Eligible::Coverage.batch_post(params)
-result.to_hash # returns the api call results
-result.error   # return error, if any
-```
-
-### Demographic Batch API
-
-```ruby
-params = {
-    "parameters"=>[
-        {
-            "id"=>1,
-            "payer_name"=>"UnitedHealthCare",
-            "payer_id"=>"00112",
-            "service_provider_npi"=>"12341234",
-            "subscriber_id"=>"98769876",
-            "subscriber_first_name"=>"Jane",
-            "subscriber_last_name"=>"Austen",
-            "service_provider_last_name"=>"Gaurav",
-            "service_provider_first_name"=>"Gupta",
-            "subscriber_dob"=>"1947-10-07"
-        },
-        {
-            "id"=>2,
-            "payer_name"=>"UnitedHealthCare",
-            "payer_id"=>"00112",
-            "service_provider_npi"=>"67676767",
-            "subscriber_id"=>"98989898",
-            "subscriber_first_name"=>"Gaurav",
-            "subscriber_last_name"=>"Gupta",
-            "service_provider_last_name"=>"Jane",
-            "service_provider_first_name"=>"Austen",
-            "subscriber_dob"=>"1947-08-15"
-        }
-    ]
-}
-result = Eligible::Demographic.batch_post(params)
 result.to_hash # returns the api call results
 result.error   # return error, if any
 ```
@@ -289,6 +247,9 @@ result.error   # return error, if any
 Enrollment requests can have multiple enrollment NPIs. You can repeat
 the enrollment for a NPI multiple times across different enrollment
 requests.
+
+### Reference
+[https://reference.eligible.com/#enrollment-introduction](https://reference.eligible.com/#enrollment-introduction)
 
 ### Create an Enrollment Request
 
@@ -342,6 +303,10 @@ enrollment = Eligible::Enrollment.get(params)
 ```
 
 ## Claims
+
+### Reference
+
+[https://reference.eligible.com/#create-a-claim](https://reference.eligible.com/#create-a-claim)
 
 ### Create Claim object
 
@@ -438,7 +403,7 @@ claim = Eligible::Claim.get(params) # returns acknowledgment information on an i
 
 ### Reference
 
-[https://eligible.com/rest#payment-status](https://eligible.com/rest#payment-status)
+[https://reference.eligible.com/#payment-status](https://reference.eligible.com/#payment-status)
 
 ### Retrieve  Payment status
 
