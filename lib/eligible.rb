@@ -24,6 +24,9 @@ require 'eligible/ticket'
 require 'eligible/customer'
 require 'eligible/original_signature_pdf'
 require 'eligible/payer'
+require 'eligible/preauth_resource'
+require 'eligible/precert'
+require 'eligible/referral'
 
 # Errors
 require 'eligible/errors/eligible_error'
