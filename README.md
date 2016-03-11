@@ -438,6 +438,10 @@ result = Eligible::X12.post(params)
 
 ## Tickets
 
+### Reference
+
+[https://reference.eligible.com/#create-a-ticket](https://reference.eligible.com/#create-a-ticket)
+
 ### Create a ticket
 
 ```ruby
@@ -495,6 +499,10 @@ Eligible::Ticket.all
 
 ## Customer
 
+### Reference
+
+[https://reference.eligible.com/#customers-introduction](https://reference.eligible.com/#customers-introduction)
+
 ### Create a customer
 
 ```ruby
@@ -533,6 +541,10 @@ customer_response.to_json
 ```
 
 ## Original Signature Pdf
+
+### Reference
+
+[https://reference.eligible.com/#create-original-signature-pdf](https://reference.eligible.com/#create-original-signature-pdf)
 
 ### Get original signature pdf
 
@@ -577,6 +589,10 @@ response.to_hash
 
 ## Payer
 
+### Reference
+
+[https://reference.eligible.com/#introduction](https://reference.eligible.com/#introduction)
+
 ### List all the payers
 
 ```ruby
@@ -608,6 +624,10 @@ response.collect { |payer| payer.to_hash }
 ```
 
 ## Precertification
+
+### Reference
+
+[https://reference.eligible.com/#precertification](https://reference.eligible.com/#precertification)
 
 ### Inquiry
 
