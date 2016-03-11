@@ -1,7 +1,8 @@
 module Eligible
   class Claim < APIResource
     def self.ack(params, api_key = nil)
-      send_request(:get, "/claims/#{params[:reference_id]}/acknowledgements.json", api_key, params, :reference_id)
+      reference_id = value(params, :reference_id)
+      send_request(:get, "/claims/#{reference_id}/acknowledgements.json", api_key, params, :reference_id)
     end
 
     def self.post(params, api_key = nil)
@@ -13,8 +14,10 @@ module Eligible
     end
 
     def self.payment_report(params, api_key = nil)
-      require_param(params[:reference_id], 'Reference id')
-      url = params.key?(:id) ? "/claims/#{params[:reference_id]}/payment_reports/#{params[:id]}" : "/claims/#{params[:reference_id]}/payment_reports"
+      reference_id = value(params, :reference_id)
+      require_param(reference_id, 'Reference id')
+      id = value(params, :id)
+      url = id.nil? ? "/claims/#{reference_id}/payment_reports" : "/claims/#{reference_id}/payment_reports/#{id}"
       send_request(:get, url, api_key, params)
     end
 

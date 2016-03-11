@@ -1,7 +1,8 @@
 module Eligible
   class Enrollment < APIResource
     def self.get(params, api_key = nil)
-      send_request(:get, "/enrollment_npis/#{params[:enrollment_npi_id]}.json", api_key, params, :enrollment_npi_id)
+      enrollment_npi_id = value(params, :enrollment_npi_id)
+      send_request(:get, "/enrollment_npis/#{enrollment_npi_id}.json", api_key, params, :enrollment_npi_id)
     end
 
     def self.list(params, api_key = nil)
@@ -13,7 +14,8 @@ module Eligible
     end
 
     def self.update(params, api_key = nil)
-      send_request(:put, "/enrollment_npis/#{params[:enrollment_npi_id]}.json", api_key, params, :enrollment_npi_id)
+      enrollment_npi_id = value(params, :enrollment_npi_id)
+      send_request(:put, "/enrollment_npis/#{enrollment_npi_id}.json", api_key, params, :enrollment_npi_id)
     end
 
     def enrollment_npis

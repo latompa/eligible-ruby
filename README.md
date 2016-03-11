@@ -493,6 +493,176 @@ comments.error   # return error, if any
 Eligible::Ticket.all
 ```
 
+## Customer
+
+### Create a customer
+
+```ruby
+customer_params = { customer: { name: "ABC company", 
+                                site_name: "ABC site name"
+                              }
+                  }
+customer_response = Eligible::Customer.post(customer_params)
+customer_response.to_json
+```
+
+### Get a customer
+
+```ruby
+customer_params = { customer_id: "123" }
+customer_response = Eligible::Customer.get(customer_params)
+customer_response.to_json
+```
+
+### Update a customer
+
+```ruby
+customer_params = { customer_id: "123",
+                    customer: { site_name: "XYZ site name" }
+                  }
+customer_response = Eligible::Customer.update(customer_params)
+customer_response.to_json
+```
+
+### Get all customers
+
+```ruby
+customer_params = {}
+customer_response = Eligible::Customer.all(customer_params)
+customer_response.to_json
+```
+
+## Original Signature Pdf
+
+### Get original signature pdf
+
+```ruby
+params = { enrollment_npi_id: '123' }
+response = Eligible::OriginalSignaturePdf.get(params)
+response.to_hash
+```
+
+### Create original signature pdf
+
+```ruby
+params = { enrollment_npi_id: '123' }
+params[:file] = File.new('path_to_file')
+response = Eligible::OriginalSignaturePdf.post(params)
+response.to_hash
+```
+
+### Update original signature pdf
+
+```ruby
+params = { enrollment_npi_id: '123' }
+params[:file] = File.new('path_to_new_file')
+response = Eligible::OriginalSignaturePdf.update(params)
+response.to_hash
+```
+
+### Download original signature pdf
+By default, it downloads to /tmp/original_signature_pdf.pdf
+```ruby
+params = { enrollment_npi_id: '123', filename: 'file_path_where_to_download' }
+Eligible::OriginalSignaturePdf.download(params)
+```
+
+### Delete original signature pdf
+
+```ruby
+params = { enrollment_npi_id: '123' }
+response = Eligible::OriginalSignaturePdf.delete(params)
+response.to_hash
+```
+
+## Payer
+
+### List all the payers
+
+```ruby
+response = Eligible::Payer.list({})
+response.collect { |payer| payer.to_hash }
+```
+
+### View a single payer
+
+```ruby
+params = { payer_id: '12345' }
+response = Eligible::Payer.get(params)
+response.to_hash
+```
+
+### Search options for a payer
+
+```ruby
+params = { payer_id: '12345' }
+response = Eligible::Payer.search_options(params)
+response.to_hash
+``` 
+
+### Search options for all payers
+
+```ruby
+response = Eligible::Payer.search_options({})
+response.collect { |payer| payer.to_hash }
+```
+
+## Precertification
+
+### Inquiry
+
+```ruby
+params = { provider_npi: '1234567893',
+           member_id: 'ABCDEF',
+           member_dob: '2016-03-04'
+         }
+response = Eligible::Precert.inquiry(params)
+response.to_hash
+```
+
+### Create
+
+```ruby
+params = { 'requester' => { 'information' => 'test' },
+           'subscriber' => { 'last_name' => 'XYZ',
+                             'first_name' => 'AVC',
+                             'id' => '231213'
+                           },
+           'event' => { 'provider' => 'information' },
+           'services' => [{ 'service' => 'test' }]
+         }
+response = Eligible::Precert.create(params)
+response.to_hash
+```
+
+## Referral
+
+### Inquiry
+
+```ruby
+params = { provider_npi: '1234567893',
+           member_id: 'ABCDEF',
+           member_dob: '2016-03-04'
+         }
+response = Eligible::Referral.inquiry(params)
+response.to_hash
+```
+
+### Create
+
+```ruby
+params = { 'requester' => { 'information' => 'test' },
+           'subscriber' => { 'last_name' => 'XYZ',
+                             'first_name' => 'AVC',
+                             'id' => '231213'
+                           },
+           'event' => { 'provider' => 'information' },
+           'services' => [{ 'service' => 'test' }]
+         }
+response = Eligible::Referral.create(params)
+response.to_hash
+```
+
 ## Contributing
 
 Running `rake` will run the test suite along with rubocop as a basic
