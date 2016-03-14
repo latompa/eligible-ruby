@@ -4,6 +4,15 @@ module Eligible
       name.split('::').last
     end
 
+    def self.api_url(base, params = nil, param_id = nil)
+      if params.nil?
+        "/#{base}.json"
+      else
+        id = value(params, param_id)
+        "/#{base}/#{id}.json"
+      end
+    end
+
     def self.url
       if self == APIResource
         fail NotImplementedError, 'APIResource is an abstract class.  You should perform actions on its subclasses (Plan, Service, etc.)'

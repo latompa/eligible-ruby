@@ -10,19 +10,19 @@ module Eligible
     end
 
     def self.get(params, api_key = nil)
-      send_request(:get, enrollment_url(params), api_key, params, :enrollment_npi_id)
+      send_request(:get, api_url('enrollment_npis', params, :enrollment_npi_id), api_key, params, :enrollment_npi_id)
     end
 
     def self.list(params, api_key = nil)
-      send_request(:get, enrollment_url, api_key, params)
+      send_request(:get, api_url('enrollment_npis'), api_key, params)
     end
 
     def self.post(params, api_key = nil)
-      send_request(:post, enrollment_url, api_key, params)
+      send_request(:post, api_url('enrollment_npis'), api_key, params)
     end
 
     def self.update(params, api_key = nil)
-      send_request(:put, enrollment_url(params), api_key, params, :enrollment_npi_id)
+      send_request(:put, api_url('enrollment_npis', params, :enrollment_npi_id), api_key, params, :enrollment_npi_id)
     end
 
     def enrollment_npis
