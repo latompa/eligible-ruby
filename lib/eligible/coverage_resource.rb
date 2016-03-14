@@ -4,8 +4,12 @@ module Eligible
       send_request(:get, get_uri, api_key, params)
     end
 
-    def self.batch_post(params, api_key = nil)
+    def self.post(params, api_key = nil)
       send_request(:post, post_uri, api_key, params)
+    end
+
+    def self.batch_post(params, api_key = nil)
+      post(params, api_key)
     end
 
     def self.get_uri

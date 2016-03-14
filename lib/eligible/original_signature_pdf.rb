@@ -1,23 +1,24 @@
 module Eligible
   class OriginalSignaturePdf < APIResource
-    def self.get(params, api_key = nil)
+    def self.original_url(params)
       enrollment_npi_id = value(params, :enrollment_npi_id)
-      send_request(:get, "/enrollment_npis/#{enrollment_npi_id}/original_signature_pdf", api_key, params, :enrollment_npi_id)
+      "/enrollment_npis/#{enrollment_npi_id}/original_signature_pdf"
+    end
+
+    def self.get(params, api_key = nil)
+      send_request(:get, original_url(params), api_key, params, :enrollment_npi_id)
     end
 
     def self.post(params, api_key = nil)
-      enrollment_npi_id = value(params, :enrollment_npi_id)
-      send_request(:post, "/enrollment_npis/#{enrollment_npi_id}/original_signature_pdf", api_key, params, :enrollment_npi_id)
+      send_request(:post, original_url(params), api_key, params, :enrollment_npi_id)
     end
 
     def self.update(params, api_key = nil)
-      enrollment_npi_id = value(params, :enrollment_npi_id)
-      send_request(:put, "/enrollment_npis/#{enrollment_npi_id}/original_signature_pdf", api_key, params, :enrollment_npi_id)
+      send_request(:put, original_url(params), api_key, params, :enrollment_npi_id)
     end
 
     def self.delete(params, api_key = nil)
-      enrollment_npi_id = value(params, :enrollment_npi_id)
-      send_request(:delete, "/enrollment_npis/#{enrollment_npi_id}/original_signature_pdf", api_key, params, :enrollment_npi_id)
+      send_request(:delete, original_url(params), api_key, params, :enrollment_npi_id)
     end
 
     def self.download(params, api_key = nil)
