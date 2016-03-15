@@ -1,24 +1,24 @@
 module Eligible
   class OriginalSignaturePdf < APIResource
-    def self.original_url(params)
+    def self.original_signature_pdf_url(params)
       enrollment_npi_id = value(params, :enrollment_npi_id)
       "/enrollment_npis/#{enrollment_npi_id}/original_signature_pdf"
     end
 
     def self.get(params, api_key = nil)
-      send_request(:get, original_url(params), api_key, params, :enrollment_npi_id)
+      send_request(:get, original_signature_pdf_url(params), api_key, params, :enrollment_npi_id)
     end
 
     def self.post(params, api_key = nil)
-      send_request(:post, original_url(params), api_key, params, :enrollment_npi_id)
+      send_request(:post, original_signature_pdf_url(params), api_key, params, :enrollment_npi_id)
     end
 
     def self.update(params, api_key = nil)
-      send_request(:put, original_url(params), api_key, params, :enrollment_npi_id)
+      send_request(:put, original_signature_pdf_url(params), api_key, params, :enrollment_npi_id)
     end
 
     def self.delete(params, api_key = nil)
-      send_request(:delete, original_url(params), api_key, params, :enrollment_npi_id)
+      send_request(:delete, original_signature_pdf_url(params), api_key, params, :enrollment_npi_id)
     end
 
     def self.download(params, api_key = nil)
