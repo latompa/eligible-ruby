@@ -11,7 +11,7 @@ module Eligible
 
     def self.setup_file(params)
       file = Util.value(params, :file)
-      params[:file] = File.new(file, 'rb')  if file.is_a?(String)
+      params[:file] = File.new(file, 'rb') if file.is_a?(String)
     end
 
     def self.post(params, api_key = nil)
