@@ -64,7 +64,7 @@ describe 'Eligible::OriginalSignaturePdf' do
     end
 
     it 'should raise error if enrollment npi id is not present' do
-      expect { Eligible::OriginalSignaturePdf.delete(params, api_key) }.to raise_error(ArgumentError)
+      expect { Eligible::OriginalSignaturePdf.download(params, api_key) }.to raise_error(ArgumentError)
     end
   end
 end

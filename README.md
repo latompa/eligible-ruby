@@ -540,6 +540,27 @@ customer_response = Eligible::Customer.all(customer_params)
 customer_response.to_json
 ```
 
+## Received Pdf
+
+### Reference
+
+[https://reference.eligible.com/#view-received-pdf](https://reference.eligible.com/#view-received-pdf)
+
+### Get received pdf
+
+```ruby
+params = { enrollment_npi_id: '123' }
+response = Eligible::ReceivedPdf.get(params)
+response.to_hash
+```
+
+### Download received pdf
+By default, it downloads to /tmp/received_pdf.pdf
+```ruby
+params = { enrollment_npi_id: '123', filename: 'file_path_where_to_download' }
+Eligible::ReceivedPdf.download(params)
+```
+
 ## Original Signature Pdf
 
 ### Reference
