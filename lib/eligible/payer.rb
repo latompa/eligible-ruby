@@ -9,7 +9,7 @@ module Eligible
     end
 
     def self.search_options(params, api_key = nil)
-      payer_id = value(params, :payer_id)
+      payer_id = Util.value(params, :payer_id)
       url = payer_id.nil? ? '/payers/search_options' : "/payers/#{payer_id}/search_options"
       send_request(:get, url, api_key, params)
     end

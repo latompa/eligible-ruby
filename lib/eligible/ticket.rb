@@ -4,7 +4,7 @@ module Eligible
       if params.nil?
         '/tickets'
       else
-        id = value(params, :id)
+        id = Util.value(params, :id)
         if comments
           "/tickets/#{id}/comments"
         else

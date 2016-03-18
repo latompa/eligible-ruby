@@ -1,5 +1,14 @@
 module Eligible
   module Util
+
+    def self.key?(params, key)
+      [key.to_sym, key.to_s].any? { |k| params.key?(k) }
+    end
+
+    def self.value(params, key)
+      params[key.to_sym] || params[key.to_s]
+    end
+
     def self.convert_to_eligible_object(resp, api_key)
       case resp
       when Array

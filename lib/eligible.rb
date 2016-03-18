@@ -93,18 +93,18 @@ module Eligible
   end
 
   def self.test_key?(params)
-    [:test, 'test'].any? { |k| params.key?(k) }
+    Util.key?(params, :test)
   end
 
   def self.api_key?(params)
-    [:api_key, 'api_key'].any? { |k| params.key?(k) }
+    Util.key?(params, :api_key)
   end
 
   def self.request(method, url, api_key, params = {}, headers = {})
     api_key ||= @@api_key
     test = self.test
-    api_key = params[:api_key] || params['api_key'] if api_key?(params)
-    test = params[:test] || params['test'] if test_key?(params)
+    api_key = Util.value(params, :api_key) if api_key?(params)
+    test = Util.value(params, :test) if test_key?(params)
 
     fail AuthenticationError, 'No API key provided. (HINT: set your API key using "Eligible.api_key = <API-KEY>".' unless api_key
 
@@ -132,7 +132,7 @@ module Eligible
       payload = nil
     else
       params.merge!('api_key' => api_key, 'test' => test)
-      payload = params.key?(:file) ? params : Eligible::JSON.dump(params)
+      payload = Util.key?(params, :file) ? params : Eligible::JSON.dump(params)
     end
 
     begin

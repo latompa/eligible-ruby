@@ -1,7 +1,7 @@
 module Eligible
   class ReceivedPdf < APIResource
     def self.received_pdf_url(params)
-      enrollment_npi_id = value(params, :enrollment_npi_id)
+      enrollment_npi_id = Util.value(params, :enrollment_npi_id)
       "/enrollment_npis/#{enrollment_npi_id}/received_pdf"
     end
 
@@ -10,7 +10,7 @@ module Eligible
     end
 
     def self.download(params, api_key = nil)
-      enrollment_npi_id = value(params, :enrollment_npi_id)
+      enrollment_npi_id = Util.value(params, :enrollment_npi_id)
       require_param(enrollment_npi_id, 'Enrollment Npi id')
       params[:format] = 'x12'
       response = Eligible.request(:get, "/enrollment_npis/#{params[:enrollment_npi_id]}/received_pdf/download", api_key, params)[0]

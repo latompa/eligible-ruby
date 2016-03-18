@@ -8,7 +8,7 @@ module Eligible
       if params.nil?
         "/#{base}.json"
       else
-        id = value(params, param_id)
+        id = Util.value(params, param_id)
         "/#{base}/#{id}.json"
       end
     end
@@ -26,15 +26,12 @@ module Eligible
 
     def self.send_request(method, url, api_key, params, required_param_name = nil)
       unless required_param_name.nil?
-        required_param = value(params, required_param_name)
+        required_param = Util.value(params, required_param_name)
         require_param(required_param, required_param_name)
       end
       response, api_key = Eligible.request(method, url, api_key, params)
       Util.convert_to_eligible_object(response, api_key)
     end
 
-    def self.value(params, param_name)
-      params[param_name.to_sym] || params[param_name.to_s]
-    end
   end
 end

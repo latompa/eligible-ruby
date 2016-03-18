@@ -1,7 +1,7 @@
 module Eligible
   class OriginalSignaturePdf < APIResource
     def self.original_signature_pdf_url(params)
-      enrollment_npi_id = value(params, :enrollment_npi_id)
+      enrollment_npi_id = Util.value(params, :enrollment_npi_id)
       "/enrollment_npis/#{enrollment_npi_id}/original_signature_pdf"
     end
 
@@ -10,7 +10,7 @@ module Eligible
     end
 
     def self.setup_file(params)
-      file = value(params, :file)
+      file = Util.value(params, :file)
       params[:file] = File.new(file, 'rb')  if file.is_a?(String)
     end
 
@@ -29,7 +29,7 @@ module Eligible
     end
 
     def self.download(params, api_key = nil)
-      enrollment_npi_id = value(params, :enrollment_npi_id)
+      enrollment_npi_id = Util.value(params, :enrollment_npi_id)
       require_param(enrollment_npi_id, 'Enrollment Npi id')
       params[:format] = 'x12'
       response = Eligible.request(:get, "/enrollment_npis/#{enrollment_npi_id}/original_signature_pdf/download", api_key, params)[0]
