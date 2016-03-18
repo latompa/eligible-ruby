@@ -4,6 +4,15 @@ module Eligible
       name.split('::').last
     end
 
+    def self.api_url(base, params = nil, param_id = nil)
+      if params.nil?
+        "/#{base}.json"
+      else
+        id = value(params, param_id)
+        "/#{base}/#{id}.json"
+      end
+    end
+
     def self.url
       if self == APIResource
         fail NotImplementedError, 'APIResource is an abstract class.  You should perform actions on its subclasses (Plan, Service, etc.)'
@@ -16,9 +25,16 @@ module Eligible
     end
 
     def self.send_request(method, url, api_key, params, required_param_name = nil)
-      require_param(params[required_param_name], required_param_name) unless required_param_name.nil?
+      unless required_param_name.nil?
+        required_param = value(params, required_param_name)
+        require_param(required_param, required_param_name)
+      end
       response, api_key = Eligible.request(method, url, api_key, params)
       Util.convert_to_eligible_object(response, api_key)
+    end
+
+    def self.value(params, param_name)
+      params[param_name.to_sym] || params[param_name.to_s]
     end
   end
 end

@@ -24,6 +24,9 @@ require 'eligible/ticket'
 require 'eligible/customer'
 require 'eligible/original_signature_pdf'
 require 'eligible/payer'
+require 'eligible/preauth_resource'
+require 'eligible/precert'
+require 'eligible/referral'
 
 # Errors
 require 'eligible/errors/eligible_error'
@@ -88,11 +91,19 @@ module Eligible
     params[:format].is_a?(String) && params[:format].downcase == 'x12'
   end
 
+  def self.test_key?(params)
+    [:test, 'test'].any? { |k| params.key?(k) }
+  end
+
+  def self.api_key?(params)
+    [:api_key, 'api_key'].any? { |k| params.key?(k) }
+  end
+
   def self.request(method, url, api_key, params = {}, headers = {})
     api_key ||= @@api_key
     test = self.test
-    api_key = params[:api_key] if params.key?(:api_key)
-    test = params[:test] if params.key?(:test)
+    api_key = params[:api_key] || params['api_key'] if api_key?(params)
+    test = params[:test] || params['test'] if test_key?(params)
 
     fail AuthenticationError, 'No API key provided. (HINT: set your API key using "Eligible.api_key = <API-KEY>".' unless api_key
 
