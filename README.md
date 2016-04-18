@@ -727,6 +727,19 @@ response = Eligible::Referral.create(params)
 response.to_hash
 ```
 
+## Errors
+
+This is the list of errors thrown from the eligible ruby gem.
+
+1. EligibleError
+2. APIError
+3. APIConnectionError
+4. InvalidRequestError
+5. AuthenticationError
+6. NotImplementedError
+7. ArgumentError
+
+
 ## Contributing
 
 Running `rake` will run the test suite along with rubocop as a basic
