@@ -139,6 +139,29 @@ coverage.to_hash # returns all coverage info for the request
 coverage.error   # return error, if any
 ```
 
+## Cost Estimate
+
+### Reference
+[https://eligible.com/reference/cost-estimates](https://eligible.com/reference/cost-estimates)
+
+### Retrieve cost estimate information
+
+```ruby
+params = {
+  service_type: '98',
+  network: 'IN',
+  payer_id: '00001',
+  provider_npi: '1234567893',
+  member_id: 'COST_ESTIMATE_001',
+  member_dob: '1886-01-01',
+  provider_price: '200',
+  level: 'individual'
+}
+
+cost_estimate = Eligible::Coverage.cost_estimate(params)
+cost_estimate.to_hash # returns all coverage info along with cost estimate
+```
+
 ## Medicare
 
 ### Reference
