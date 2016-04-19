@@ -731,13 +731,13 @@ response.to_hash
 
 This is the list of errors thrown from the eligible ruby gem.
 
-1. EligibleError
-2. APIError
-3. APIConnectionError
-4. InvalidRequestError
-5. AuthenticationError
-6. NotImplementedError
-7. ArgumentError
+1. Eligible::EligibleError - Base class for the customized errors raised from Eligible gem.
+2. Eligible::APIError - Raised when there is some invalid response from the api call. Raised for error codes other than 400, 401 and 404.
+3. Eligible::APIConnectionError - Raised when there is some network issue like socket error, not able to connect to Eligible etc.
+4. Eligible::InvalidRequestError - Raised when error code is 400 or 404.
+5. Eligible::AuthenticationError - Raised when authentication fails. Mostly due to wrong api key.
+6. NotImplementedError - Raised when the functionality you are trying to use doesn't exist.
+7. ArgumentError - Raised when all the required params are not provided.
 
 
 ## Contributing
