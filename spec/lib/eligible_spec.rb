@@ -1,4 +1,6 @@
 describe Eligible do
+  let(:response) {  double("response", body: "{\"success\": \"true\"}", code: 200) }
+
   it 'has a version number' do
     expect(Eligible::VERSION).to_not be_nil
   end
@@ -8,6 +10,12 @@ describe Eligible do
       Eligible.api_key = "foo"
       allow(Eligible).to receive(:valid_fingerprint?).and_return(false)
       expect { Eligible::Coverage.get({}) }.to raise_error(Eligible::APIConnectionError)
+    end
+
+    it 'should not warn about ignoring ssl_verify_callback return code' do
+      allow(Eligible).to receive(:valid_fingerprint?).and_return(true)
+      allow_any_instance_of(RestClient::Request).to receive(:process_result).and_return(response)
+      expect { Eligible::Coverage.get({}) }.not_to output("warning: ssl_verify_callback return code is ignored on OS X\npass :ssl_verify_callback_warnings => false to silence this\n").to_stderr
     end
 
     it 'warns when the fingerprint is overridden' do
