@@ -1,3 +1,11 @@
+2016-05-10  Eligible  <support@eligible.com>
+
+	* 2.6.1
+	- Suppressing ssl_verify_callback return code warning
+	- Added new endpoints received pdf, precert and referral
+	- Refactoring and fixing couple of bugs
+	- Readme updates for the endpoints
+
 2016-02-23  Eligible  <support@eligible.com>
 	
 	* 2.6.0
