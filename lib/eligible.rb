@@ -159,7 +159,8 @@ module Eligible
       open_timeout: 30,
       payload: payload,
       timeout: 80,
-      ssl_verify_callback: verify_certificate
+      ssl_verify_callback: verify_certificate,
+      ssl_verify_callback_warnings: false
     }
 
     begin
