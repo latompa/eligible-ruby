@@ -243,10 +243,11 @@ module Eligible
 
   def self.handle_api_error(rcode, rbody)
     begin
-      error_obj = Eligible::JSON.load(rbody)
-      error_obj = Util.symbolize_names(error_obj)
-      fail EligibleError unless error_obj.key?(:error)
+      error_obj = Util.symbolize_names(Eligible::JSON.load(rbody))
+      fail EligibleError unless error_obj.keys.any?{|k| %i(error errors).include? k}
       error = error_obj[:error]
+      errors = error_obj[:errors]
+
     rescue MultiJson::DecodeError, EligibleError
       raise APIError.new("Invalid response object from API: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
     end
@@ -255,24 +256,24 @@ module Eligible
 
     case rcode
     when 400, 404 then
-      raise invalid_request_error(error_msg, rcode, rbody, error_obj)
+      raise invalid_request_error(error_msg, rcode, rbody, error_obj, errors)
     when 401
-      raise authentication_error(error_msg, rcode, rbody, error_obj)
+      raise authentication_error(error_msg, rcode, rbody, error_obj, errors)
     else
-      raise api_error(error_msg, rcode, rbody, error_obj)
+      raise api_error(error_msg, rcode, rbody, error_obj, errors)
     end
   end
 
-  def self.invalid_request_error(error_msg, rcode, rbody, error_obj)
-    InvalidRequestError.new(error_msg, rcode, rbody, error_obj)
+  def self.invalid_request_error(error_msg, rcode, rbody, error_obj, errors)
+    InvalidRequestError.new(error_msg, rcode, rbody, error_obj, errors)
   end
 
-  def self.authentication_error(error_msg, rcode, rbody, error_obj)
-    AuthenticationError.new(error_msg, rcode, rbody, error_obj)
+  def self.authentication_error(error_msg, rcode, rbody, error_obj, errors)
+    AuthenticationError.new(error_msg, rcode, rbody, error_obj, errors)
   end
 
-  def self.api_error(error_msg, rcode, rbody, error_obj)
-    APIError.new(error_msg, rcode, rbody, error_obj)
+  def self.api_error(error_msg, rcode, rbody, error_obj, errors)
+    APIError.new(error_msg, rcode, rbody, error_obj, errors)
   end
 
   def self.handle_restclient_error(e)

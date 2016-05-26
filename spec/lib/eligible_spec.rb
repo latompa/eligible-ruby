@@ -66,4 +66,29 @@ describe Eligible do
       end
     end
   end
+
+  context "errors" do
+    let(:error_response) {
+      double("response", body: %q(
+        {"eligible_id":"UWHP1FPJQQE43",
+         "success":false,
+         "created_at":"2016-05-26T16:32:04Z",
+         "errors":[{"code":"invalid_request_error",
+                    "message":"provider_price should be present and should be a valid price",
+                    "param":"provider_price","expected_value":null}]}
+      ),code: "400")
+    }
+
+
+    it "will return errors" do
+      Eligible.api_key = "xyz"
+      expect(RestClient::Request).to receive(:execute).and_raise(RestClient::ExceptionWithResponse.new(error_response))
+      expect { Eligible::Coverage.get({}) }.to raise_error do |error|
+        expect(error).to be_a(Eligible::EligibleError)
+        expect(error.message).to eq("Multiple errors")
+        expect(error.errors).to eq([{:code=>"invalid_request_error", :message=>"provider_price should be present and should be a valid price", :param=>"provider_price", :expected_value=>nil}])
+      end
+    end
+
+  end
 end
