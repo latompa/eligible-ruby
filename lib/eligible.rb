@@ -244,7 +244,7 @@ module Eligible
   def self.handle_api_error(rcode, rbody)
     begin
       error_obj = Util.symbolize_names(Eligible::JSON.load(rbody))
-      fail EligibleError unless error_obj.keys.any?{|k| %i(error errors).include? k}
+      fail EligibleError unless error_obj.keys.any?{|k| [:error, :errors].include? k}
       error = error_obj[:error]
       errors = error_obj[:errors]
 
