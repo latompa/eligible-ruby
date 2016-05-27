@@ -6,13 +6,14 @@ module Eligible
     attr_reader :json_body
     attr_reader :errors
 
-    def initialize(message = nil, http_status = nil, http_body = nil, json_body = nil, errors = [])
+    def initialize(message = nil, http_status = nil, http_body = nil, json_body = nil)
       @message = message
       @http_status = http_status
       @http_body = http_body
       @json_body = json_body
-      @errors = errors
-      if @errors && @errors.size > 0
+      @errors = (@json_body || {}).fetch(:errors, [])
+
+      if @errors.size > 0
         @message = "Multiple errors"
       end
     end

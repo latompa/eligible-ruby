@@ -67,7 +67,7 @@ describe Eligible do
     end
   end
 
-  context "errors" do
+  context "error handling" do
     let(:error_response) {
       double("response", body: %q(
         {"eligible_id":"UWHP1FPJQQE43",
@@ -79,7 +79,6 @@ describe Eligible do
       ),code: "400")
     }
 
-
     it "will return errors" do
       Eligible.api_key = "xyz"
       expect(RestClient::Request).to receive(:execute).and_raise(RestClient::ExceptionWithResponse.new(error_response))
@@ -89,6 +88,5 @@ describe Eligible do
         expect(error.errors).to eq([{:code=>"invalid_request_error", :message=>"provider_price should be present and should be a valid price", :param=>"provider_price", :expected_value=>nil}])
       end
     end
-
   end
 end
