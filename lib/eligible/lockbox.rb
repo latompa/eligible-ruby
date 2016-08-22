@@ -1,5 +1,6 @@
 require 'openssl'
 require 'base64'
+require 'encryptor'
 
 module Eligible
   class Lockbox < APIResource
@@ -22,17 +23,20 @@ module Eligible
       params.delete(:private_key)
     end
 
-    def self.decrypt_data(data, private_key)
+    def self.decrypt_data(data, encrypted_key, private_key)
       pkey = OpenSSL::PKey::RSA.new(private_key)
-      pkey.private_decrypt(Base64.decode64(data))
+      aes_key = pkey.private_decrypt(Base64.decode64(encrypted_key))
+      sha_key = Digest::SHA256.hexdigest(aes_key)
+      ::Encryptor.decrypt(Base64.decode64(data), key: sha_key)
     end
 
     def self.get_and_decrypt_from_lockbox(params, api_key = nil)
       private_key = extract_private_key(params)
       delete_private_key!(params)
-      req = get(params, api_key)
-      enc_data = req.to_hash[:encrypted_data]
-      decrypt_data(enc_data, private_key)
+      req = get(params, api_key).to_hash
+      enc_data = req[:encrypted_data]
+      enc_key = req[:encrypted_key]
+      decrypt_data(enc_data, enc_key, private_key)
     end
   end
 end
