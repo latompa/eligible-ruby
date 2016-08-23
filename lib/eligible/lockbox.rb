@@ -23,9 +23,9 @@ module Eligible
       params.delete(:private_key)
     end
 
-    def self.decrypt_data(data, encrypted_key, private_key)
+    def self.decrypt_data(data, encrypted_data_key, private_key)
       pkey = OpenSSL::PKey::RSA.new(private_key)
-      aes_key = pkey.private_decrypt(Base64.decode64(encrypted_key))
+      aes_key = pkey.private_decrypt(Base64.decode64(encrypted_data_key))
       sha_key = Digest::SHA256.hexdigest(aes_key)
       ::Encryptor.decrypt(Base64.decode64(data), key: sha_key)
     end
@@ -34,9 +34,7 @@ module Eligible
       private_key = extract_private_key(params)
       delete_private_key!(params)
       req = get(params, api_key).to_hash
-      enc_data = req[:encrypted_data]
-      enc_key = req[:data_key]
-      decrypt_data(enc_data, enc_key, private_key)
+      decrypt_data(req[:encrypted_data], req[:data_key], private_key)
     end
   end
 end
