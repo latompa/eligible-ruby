@@ -65,7 +65,7 @@ describe 'Eligible::Lockbox' do
       params[:private_key] = 'xyz'
       returned_obj = instance_double('EligibleObject')
       allow(Eligible::Lockbox).to receive(:get).and_return(returned_obj)
-      allow(returned_obj).to receive(:to_hash).and_return({ encrypted_data: 'test', data_key: 'abc' })
+      allow(returned_obj).to receive(:to_hash).and_return({ encrypted_data: 'test', encrypted_key: 'abc' })
       expect(Eligible::Lockbox).to receive(:decrypt_data).with('test', 'abc', 'xyz')
       Eligible::Lockbox.get_and_decrypt_from_lockbox(params)
     end
