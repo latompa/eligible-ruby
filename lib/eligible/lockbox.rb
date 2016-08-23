@@ -34,7 +34,7 @@ module Eligible
       private_key = extract_private_key(params)
       delete_private_key!(params)
       req = get(params, api_key).to_hash
-      decrypt_data(req[:encrypted_data], req[:data_key], private_key)
+      decrypt_data(req[:encrypted_data], req[:encrypted_key], private_key)
     end
   end
 end
