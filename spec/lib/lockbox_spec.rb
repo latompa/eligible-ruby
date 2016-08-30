@@ -54,8 +54,9 @@ describe 'Eligible::Lockbox' do
     it 'should call private_decrypt on the data' do
       pkey = instance_double('OpenSSL::PKey::RSA')
       allow(OpenSSL::PKey::RSA).to receive(:new).and_return(pkey)
-      expect(pkey).to receive(:private_decrypt)
-      Eligible::Lockbox.decrypt_data('test', 'xyz')
+      expect(pkey).to receive(:private_decrypt).and_return('aws')
+      expect(::Encryptor).to receive(:decrypt)
+      Eligible::Lockbox.decrypt_data('test', 'abc', 'xyz')
     end
   end
 
@@ -64,8 +65,8 @@ describe 'Eligible::Lockbox' do
       params[:private_key] = 'xyz'
       returned_obj = instance_double('EligibleObject')
       allow(Eligible::Lockbox).to receive(:get).and_return(returned_obj)
-      allow(returned_obj).to receive(:to_hash).and_return({ encrypted_data: 'test' })
-      expect(Eligible::Lockbox).to receive(:decrypt_data).with('test', 'xyz')
+      allow(returned_obj).to receive(:to_hash).and_return({ encrypted_data: 'test', encrypted_key: 'abc' })
+      expect(Eligible::Lockbox).to receive(:decrypt_data).with('test', 'abc', 'xyz')
       Eligible::Lockbox.get_and_decrypt_from_lockbox(params)
     end
 
