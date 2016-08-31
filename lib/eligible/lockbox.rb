@@ -1,6 +1,5 @@
 require 'openssl'
 require 'base64'
-require 'encryptor'
 
 module Eligible
   class Lockbox < APIResource
@@ -27,7 +26,7 @@ module Eligible
       pkey = OpenSSL::PKey::RSA.new(private_key)
       aes_key = pkey.private_decrypt(Base64.decode64(encrypted_data_key))
       sha_key = Digest::SHA256.hexdigest(aes_key)
-      ::Encryptor.decrypt(Base64.decode64(data), key: sha_key)
+      Encryptor.decrypt(Base64.decode64(data), key: sha_key)
     end
 
     def self.get_and_decrypt_from_lockbox(params, api_key = nil)
