@@ -18,7 +18,6 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency('rest-client', '~> 1.8')
   gem.add_dependency('multi_json', '~> 1.7')
-  gem.add_dependency('encryptor', '~>1.1')
 
   gem.add_development_dependency('rake', '~> 10.5')
   gem.add_development_dependency('rspec', '~> 3.4')

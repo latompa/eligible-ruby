@@ -8,6 +8,7 @@ require 'rest_client'
 require 'multi_json'
 
 require 'eligible/version'
+require 'eligible/encryptor'
 require 'eligible/util'
 require 'eligible/json'
 require 'eligible/eligible_object'
