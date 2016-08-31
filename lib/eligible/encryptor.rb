@@ -16,7 +16,7 @@ module Eligible
     #
     # Run 'openssl list-cipher-commands' in your terminal to view a list all cipher algorithms that are supported on your platform
     def default_options
-      @default_options ||= { algorithm: 'aes-256-gcm',
+      @default_options ||= { algorithm: 'aes-256-cbc',
                              auth_data: '',
                              insecure_mode: false,
                              hmac_iterations: 2000,
