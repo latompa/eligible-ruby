@@ -55,7 +55,7 @@ describe 'Eligible::Lockbox' do
       pkey = instance_double('OpenSSL::PKey::RSA')
       allow(OpenSSL::PKey::RSA).to receive(:new).and_return(pkey)
       expect(pkey).to receive(:private_decrypt).and_return('aws')
-      expect(::Encryptor).to receive(:decrypt)
+      expect(Eligible::Encryptor).to receive(:decrypt)
       Eligible::Lockbox.decrypt_data('test', 'abc', 'xyz')
     end
   end
