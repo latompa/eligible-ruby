@@ -1,4 +1,4 @@
-describe 'Eligible::Payment' do
+describe Eligible::Payment do
   let(:params) { { test: true } }
   let(:api_key) { 'xyz' }
   let(:response) { { success: true } }
@@ -10,6 +10,13 @@ describe 'Eligible::Payment' do
     it 'should call Eligible.request with proper url' do
       allow(Eligible).to receive(:request).with(:get, '/payment/status.json', api_key, params).and_return([response, api_key])
       expect(Eligible::Payment.get(params, api_key)).to eq 'success'
+    end
+  end
+
+  describe '.batch' do
+    it 'should call Eligible.request with proper url' do
+      allow(Eligible).to receive(:request).with(:get, '/batch/payment/status.json', api_key, params).and_return([response, api_key])
+      expect(Eligible::Payment.batch(params, api_key)).to eq 'success'
     end
   end
 end
