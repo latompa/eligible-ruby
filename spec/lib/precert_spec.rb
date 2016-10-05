@@ -13,6 +13,13 @@ describe 'Eligible::Precert' do
     end
   end
 
+  describe '.require' do
+    it 'should call Eligible.request with proper url' do
+      allow(Eligible).to receive(:request).with(:get, '/precert/require.json', api_key, params).and_return([response, api_key])
+      expect(Eligible::Precert.require(params, api_key)).to eq 'success'
+    end
+  end
+
   describe '.create' do
     it 'should post to Eligible.request with proper url' do
       allow(Eligible).to receive(:request).with(:post, '/precert/create.json', api_key, params).and_return([response, api_key])
