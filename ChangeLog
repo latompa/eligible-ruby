@@ -1,3 +1,8 @@
+2016-11-18  Eligible  <support@eligible.com>
+
+	* 2.6.3
+	- Added a new certificate fingerprint
+
 2016-08-31  Eligible  <support@eligible.com>
 	* 2.6.2
 	- New APIs added in testing mode, no public-facing changes
@@ -10,7 +15,7 @@
 	- Documentation updates for the endpoints
 
 2016-02-23  Eligible  <support@eligible.com>
-	
+
 	* 2.6.0
 	- Added new endpoints customer, original signature pdf and payer.
 	- Added specs
