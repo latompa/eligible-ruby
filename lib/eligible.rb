@@ -152,7 +152,7 @@ module Eligible
     headers = {
       user_agent: "eligible-ruby/#{Eligible::VERSION}",
       authorization: "Bearer #{api_key}",
-      content_type: 'application/x-www-form-urlencoded'
+      content_type: 'application/json'
     }.merge(headers)
 
     headers[:eligible_version] = api_version if api_version
