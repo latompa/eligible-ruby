@@ -31,6 +31,7 @@ require 'eligible/precert'
 require 'eligible/referral'
 require 'eligible/public_key'
 require 'eligible/lockbox'
+require 'eligible/session_token'
 
 # Errors
 require 'eligible/errors/eligible_error'
