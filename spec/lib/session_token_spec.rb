@@ -14,11 +14,11 @@ describe Eligible::SessionToken do
     allow(Eligible::Util).to receive(:convert_to_eligible_object).with(response, api_key).and_return('success')
   end
 
-  describe '.get' do
+  describe '.create' do
     it 'calls Eligible.request with proper url' do
       params[:reference_id] = '123'
       allow(Eligible).to receive(:request).with(:post, '/session_tokens/create.json', api_key, params).and_return([response, api_key])
-      expect(Eligible::SessionToken.get(params, api_key)).to eq('success')
+      expect(Eligible::SessionToken.create(params, api_key)).to eq('success')
     end
   end
 end
