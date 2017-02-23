@@ -1,3 +1,9 @@
+2017-02-23 Eligible  <support@eligible.com>
+
+	* 2.8.1
+	- Upgrades internal rest-client dependency to 2.0.1
+	- Fixes mime-type dependency issue with newer Rails projects
+
 2017-02-23  Eligible  <support@eligible.com>
 
 	* 2.8.0
